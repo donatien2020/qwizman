@@ -1,0 +1,203 @@
+#{extends '/admin.html' /} #{set title:'Edit Organization' /}
+<body>
+	<div class="formContainer">
+		<span
+			class="msgAlert"
+			id="msgAlertCompany"
+		>${msg}</span>
+		<form
+			action="#"
+			method="GET"
+		>
+			<table>
+				<tr>
+					<td>&{'tinNumber'}<font
+						size="2"
+						color="red"
+					>*</font>:
+					</td>
+					<td><input
+						type="hidden"
+						name="companyId"
+						id="companyId"
+						value="${organization?.id}"
+					><input
+						type="text"
+						name="tinNumber"
+						id="companyTinNumber"
+						value="${organization?.tinNumber}"
+					><span class="error">#{error 'tinNumber'/}</span></td>
+				</tr>
+				<tr>
+					<td>&{'name'}<font
+						size="2"
+						color="red"
+					>*</font>:
+					</td>
+					<td><input
+						type="text"
+						name="name"
+						id="companyName"
+						value="${organization?.name}"
+					><span class="error">#{error 'name'/}</span></td>
+				</tr>
+				<tr>
+					<td>&{'description'}<font
+						size="2"
+						color="red"
+					>*</font>:
+					</td>
+					<td><textarea
+							name="description"
+							id="companyDescription"
+						>${organization?.description}</textarea><span
+						id="descriptionError"
+						class="error"
+					>#{error 'description' /}</span> <span
+						id="descriptionValid"
+						class="valid"
+					></span></td>
+				</tr>
+				<tr>
+					<td>&{'firstName'}:</td>
+					<td><input
+						type="text"
+						name="ownerFirstName"
+						id="ownerFistName"
+						value="${organization?.ownerFirstName}"
+					> <span class="error">#{error 'ownerFirstName' /}</span></td>
+				</tr>
+				<tr>
+					<td>&{'lastName'}:</td>
+					<td><input
+						type="text"
+						name="ownerLastName"
+						id="ownerLastName"
+						value="${organization?.ownerLastName}"
+					> <span class="error">#{error 'ownerLastName' /}</span></td>
+				</tr>
+				<tr>
+					<td>&{'type'}<font
+						size="2"
+						color="red"
+					>*</font>:
+					</td>
+					<td><select
+						name="typeOf"
+						id="typeOfId"
+					>
+							<option value="TRANSPORTATION">TRANSPORTATION</option>
+							<option value="SHOP">SHOP</option>
+							<option value="SUPPERMARKET">SUPPERMARKET</option>
+							<option value="HOTEL">HOTEL</option>
+							<option value="GOVERNANCE">GOVERNANCE</option>
+							<option value="NGO">NGO</option>
+							<option value="EDUCATIONAL">EDUCATIONAL</option>
+							<option value="BANKING">BANKING</option>
+							<option value="ANY">ANY</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>&{'phoneNumber'}:</td>
+					<td><input
+						type="text"
+						name="ownerPhoneNumber"
+						id="ownerPhoneNumber"
+						value="${organization?.ownerPhoneNumber}"
+					><span class="error">#{error 'ownerPhoneNumber' /}</span></td>
+				</tr>
+				<tr>
+					<td>&{'emailAddress'}:</td>
+					<td><input
+						type="text"
+						name="ownerEmail"
+						id="ownerEmail"
+						value="${organization?.ownerEmail}"
+					><span class="error">#{error 'ownerEmail' /}</span></td>
+				</tr>
+				<tr>
+					<td>&{'box'}:</td>
+					<td><input
+						type="text"
+						name="poBox"
+						id="companyPoBox"
+						value="${organization?.poBox}"
+					><span class="error">#{error 'poBox' /}</span></td>
+				</tr>
+				<tr>
+					<td>&{'website'}:</td>
+					<td><input
+						type="text"
+						name="website"
+						id="website"
+						value="${organization?.website}"
+					><span class="error">#{error 'website' /}</span></td>
+				</tr>
+				<tr>
+			<td>&{'level'}<font
+				size="2"
+				color="red"
+			>*</font>:
+			</td>
+			<td>#{select 'level', items: levels, valueProperty: 'id',
+				labelProperty: 'name',id:'select-level' /} <span class="error">#{error
+					'role' /}</span>
+			</td>
+		</tr>
+		<tr>
+				<td colspan="2"><fieldset>
+						<legend>&{'location'}</legend>
+						<table>
+							<tr>
+								<td><span id="intaraErrorEdit">&{'intara'}:&nbsp;</span><select
+									name="intara"
+									id="intaraEdit"
+								>
+										<option value="">&{'selectProvince'}</option>
+										 #{list items:intaras, as:'intara'}
+										<option value="${intara.code}">${intara}</option> 
+										#{/list}
+								</select></td>
+								<td><span id="akarereErrorEdit">&{'akarere'}:&nbsp;</span><select
+									name="akarere"
+									id="akarereEdit"
+								>
+										<option value="">&{'selectDistrict'}</option>
+								</select></td>
+								<td><span id="umurengeErrorEdit">&{'umurenge'}:&nbsp;</span><select
+									name="umurenge"
+									id="umurengeEdit"
+								>
+										<option value="">&{'selectSector'}</option>
+								</select></td>
+								<td><span id="akagaliErrorEdit">&{'akagali'}:&nbsp;</span><select
+									name="akagali"
+									id="akagaliEdit"
+								>
+										<option value="">&{'selectCell'}</option>
+								</select></td>
+								<td><span id="umuduguduErrorEdit">&{'umudugudu'}:&nbsp;</span><select
+									name="umudugudu"
+									id="umuduguduEdit"
+								>
+										<option value="">&{'selectVillage'}</option>
+								</select></td>
+							</tr>
+						</table>
+					</fieldset></td>
+			</tr>
+				<tr>
+					<td colspan="2"><a
+						href="#"
+						class="button-link"
+						id="editCompany"
+						onclick="editCompany();"
+					><img
+							src="@{'/public/images/add.png'}"
+							height="25"
+							width="25"
+						/>&nbsp;&nbsp;</a></td>
+				</tr>
+			</table>
+		</form>
+	</div>

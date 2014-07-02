@@ -1,0 +1,148 @@
+#{extends '/admin.html' /} #{set title:'Add New Operator' /}
+<html>
+<title>#{get 'title' /}</title> #{get 'moreStyles' /}
+</head>
+<body>
+<div class="formContainer">
+<span class="msgAlert" id="msgAlert">${msg}</span>
+		<form action="#" method="get">
+	
+	<table>
+		<tr>
+			<td>&{'firstName'}<font
+				size="2"
+				color="red"
+			>*</font>:
+			</td>
+			<td><input type="text" name="userId" size="8" id="userId"
+							value="${user.id}" hidden="hiedden"><input
+				type="text"
+				name="firstName" id="firstName"
+				value="${user.firstName}"
+			><span class="error">#{error 'firstName'/}</span></td>
+			
+		</tr>
+		<tr>
+			<td>&{'lastName'}<font
+				size="2"
+				color="red"
+			>*</font>:
+			</td>
+			<td><input
+				type="text"
+				name="lastName" id="lastName"
+				value="${user.lastName}"
+			><span class="error">#{error 'lastName'/}</span></td>
+			
+		</tr>
+		<tr>
+			<td>&{'username'}<font
+				size="2"
+				color="red"
+			>*</font>:
+			</td>
+			<td><input
+				type="text"
+				name="username" id="username"
+				value="${user.username}" onkeyup="confirmUsernameEdit(this);"
+			><span id="usernameErrorEdit" class="error">#{error 'username' /}</span> <span id="usernameValidEdit" class="valid"></span></td>
+		</tr>
+		<tr>
+			<td>&{'password'}<font
+				size="2"
+				color="red"
+			>*</font>:
+			</td>
+			<td><input
+				type="password"
+				name="password" id="passwordEdit" onkeyup="checkFormPasswordEdit(this);"
+				value="${flash.password}"
+			>&nbsp;&nbsp;&{'confirm'}:<input
+				type="password"
+				name="passwordConfirm" id="passwordConfirmEdit" 
+				value="" title="Password Confirmation" onkeyup="checkFormPasswordEdit(this);"
+			><span class="error" id="passwrodConfimationEdit">#{error 'password' /}</span><span id="passwordValidEdit" class="valid"></span></td>
+		</tr>
+		<tr>
+			<td>&{'phoneNumber'}:</td>
+			<td><input
+				type="text"
+				name="phoneNumber" id="phoneNumber"
+				value="${user.phoneNumber}"
+			> <span class="error">#{error 'phoneNumber' /}</span></td>
+		</tr>
+		<tr>
+			<td>&{'emailAddress'}:</td>
+			<td><input
+				type="text"
+				name="emailAddress" id="emailAddress"
+				value="${user.emailAddress}"
+			> <span class="error">#{error 'emailAddress' /}</span></td>
+		</tr>
+		
+		<tr>
+			<td>&{'role'}<font
+				size="2"
+				color="red"
+			>*</font>:
+			</td>
+			<td>#{select 'role', items: roles, valueProperty: 'id',
+				labelProperty: 'name',id:'select-Role' /} <span class="error">#{error
+					'role' /}</span>
+			</td>
+		</tr>
+		<tr>
+			<td>&{'box'}:</td>
+			<td><input
+				type="text"
+				name="box" id="box"
+				value="${user.box}"
+			><span class="error">#{error 'box' /}</span></td>
+		</tr>
+		<tr>
+			<td>&{'webSite'}:</td>
+			<td><input
+				type="text"
+				name="webSite" id="webSite"
+				value="${user.webSite}"
+			><span class="error">#{error 'webSite' /}</span></td>
+		</tr>
+		<tr>
+			<td>&{'physicalAddress'}:</td>
+			<td><input
+				type="text"
+				name="physicalAddress" id="physicalAddress"
+				value="${user.physicalAddress}"
+			><span class="error">#{error 'physicalAddress' /}</span></td>
+		</tr>
+		#{if session.get('type') != null && session.get('type')=='SUPERADMIN'}
+		
+		<tr>
+			<td>&{'organization'}:<font
+				size="2"
+				color="red"
+			>*</font>:
+			</td>
+			<td>#{select 'owner', items: owners, valueProperty: 'id',
+				labelProperty: 'name',id:'select-Company' /} <span class="error">#{error
+					'role' /}</span>
+			</td>
+		</tr>
+		#{/if}
+		<tr>
+			<td colspan="2"><a
+								href="#"
+								class="button-link"
+								id="editOperator"
+								onclick="editOperator();"
+							><img
+									src="@{'/public/images/add.png'}"
+									height="25"
+									width="25"
+								/></a></td>
+		</tr>
+	</table>
+	
+	
+	</form>
+	</div>

@@ -1,5 +1,9 @@
 package controllers;
 
-public class Roles extends CRUD{
+import play.mvc.With;
+import controllers.deadbolt.Deadbolt;
+
+@With(Deadbolt.class)
+public class ApplicationRoles extends CRUD{
 
 }

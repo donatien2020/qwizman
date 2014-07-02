@@ -1,0 +1,62 @@
+#{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
+title:'Loyalty Organizations' /}
+<div id="contentListing"><p id="crudListAdd">
+					<a href="@{Organizations.addNew()}">Add New</a>
+				</p>
+	#{if results != null && results?.size()>0}<table>
+		<tr>
+			<td>
+				<h2 id="crudListTitle">
+				#{if results != null && results?.size()>0}
+		
+					&{'totalCompanies'}:<span>${results?.size()}</span>
+					#{/if}
+				</h2>
+			</td>
+			<td><input
+					type="text"
+					name="search"
+					class="search rounded"
+					value="Search"
+					id="search"
+					onkeyup="getCompanies(this);"
+				/>
+				</p></td>
+		</tr>
+	</table>
+	<table
+		id="organizationList"
+		style="overflow: auto;"
+	>
+		
+		<thead>
+			<tr>
+				<th>&{'name'}</th>
+				<th>&{'firstName'}</th>
+				<th>&{'lastName'}</th>
+				<th>&{'phoneNumber'}</th>
+				<th>&{'type'}</th><th>&{'level'}</th><th colspan="2">&{'createdOn'}&nbsp;&nbsp;</th>
+			</tr>
+		</thead>
+		#{paginate.list items:results, as:'company' }
+		<tr>
+			<td>${company?.name}</td>
+			<td>${company?.ownerFirstName}</td>
+			<td>${company?.ownerLastName}</td>
+			<td>${company?.ownerPhoneNumber}</td>
+			<td>${company?.typeOf}</td><td>${company?.level?.name}</td>
+			<td>${company?.createdOn}</td>
+			<td><span class="crudListEdit"><a
+					href="@{Organizations.show(company?.id,'Editing')}"
+				>Edit</a></span></td>
+		</tr>
+		<tr>
+			<td colspan="4">#{paginate.controls items:results /}
+				#{paginate.summary items:results/}</td>
+		</tr>
+		#{/paginate.list} #{/if} #{else}
+		<h1>&{'nocompany'}</h1>
+		#{/else}
+		
+	</table>
+</div>

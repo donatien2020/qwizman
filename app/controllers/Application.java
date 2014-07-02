@@ -5,12 +5,15 @@ import play.mvc.*;
 
 import java.util.*;
 
-import models.*;
+import controllers.deadbolt.Deadbolt;
 
+import models.*;
+@With(Deadbolt.class)
 public class Application extends Controller {
 
     public static void index() {
-        render();
+    	 String user = Security.connected();
+        render("@index",user);
     }
 
 }

@@ -1,0 +1,158 @@
+#{extends '/admin.html' /} #{set title:'Add New Operator' /}
+<html>
+<title>#{get 'title' /}</title> #{get 'moreStyles' /}
+</head>
+<body>
+	<div class="formContainer">
+		<form
+			action="create"
+			method="post"
+			onsubmit="return checkForm(this);"
+		>
+			<table>
+				<tr>
+					<td>&{'firstName'}<font
+						size="2"
+						color="red"
+					>*</font>:
+					</td>
+					<td><input
+						type="text"
+						name="firstName"
+						value="${flash.firstName}"
+					><span class="error">#{error 'firstName'/}</span></td>
+				</tr>
+				<tr>
+					<td>&{'lastName'}<font
+						size="2"
+						color="red"
+					>*</font>:
+					</td>
+					<td><input
+						type="text"
+						name="lastName"
+						value="${flash.lastName}"
+					><span class="error">#{error 'lastName'/}</span></td>
+				</tr>
+				<tr>
+					<td>&{'username'}<font
+						size="2"
+						color="red"
+					>*</font>:
+					</td>
+					<td><input
+						type="text"
+						name="username"
+						id="username"
+						value="${flash.username}"
+						onkeyup="confirmUsername(this);"
+					/><span
+						id="usernameError"
+						class="error"
+					>#{error 'username' /}</span> <span
+						id="usernameValid"
+						class="valid"
+					></span></td>
+				</tr>
+				<tr>
+					<td>&{'password'}<font
+						size="2"
+						color="red"
+					>*</font>:
+					</td>
+					<td><input
+						type="password"
+						name="password"
+						id="password"
+						onkeyup="checkFormPassword(this);"
+						value="${flash.password}"
+					>&nbsp;&nbsp;&{'confirm'}:<input
+						type="password"
+						name="passwordConfirm"
+						id="passwordConfirm"
+						value=""
+						title="Password Confirmation"
+						onkeyup="checkFormPassword(this);"
+					><span
+						class="error"
+						id="passwrodConfimation"
+					>#{error 'password' /}</span><span
+						id="passwordValid"
+						class="valid"
+					></span></td>
+				</tr>
+				<tr>
+					<td>&{'phoneNumber'}:</td>
+					<td><input
+						type="text"
+						name="phoneNumber"
+						value="${flash.phoneNumber}"
+					> <span class="error">#{error 'phoneNumber' /}</span></td>
+				</tr>
+				<tr>
+					<td>&{'emailAddress'}:</td>
+					<td><input
+						type="text"
+						name="emailAddress"
+						value="${flash.emailAddress}"
+					> <span class="error">#{error 'emailAddress' /}</span></td>
+				</tr>
+				<tr>
+					<td>&{'roles'}<font
+						size="2"
+						color="red"
+					>*</font>:
+					</td>
+					<td>#{select 'role', items: roles, valueProperty: 'id',
+						labelProperty: 'name',id:'select-Role' /} <span class="error">#{error
+							'role' /}</span>
+					</td>
+				</tr>
+				<tr>
+					<td>&{'box'}:</td>
+					<td><input
+						type="text"
+						name="box"
+						value="${flash.box}"
+					><span class="error">#{error 'box' /}</span></td>
+				</tr>
+				<tr>
+					<td>&{'webSite'}:</td>
+					<td><input
+						type="text"
+						name="webSite"
+						value="${flash.webSite}"
+					><span class="error">#{error 'webSite' /}</span></td>
+				</tr>
+				<tr>
+					<td>&{'physicalAddress'}:</td>
+					<td><input
+						type="text"
+						name="physicalAddress"
+						value="${flash.physicalAddress}"
+					><span class="error">#{error 'physicalAddress' /}</span></td>
+				</tr>
+				 
+				 #{if session.get('type') != null && session.get('type')=='SUPERADMIN'}
+				<tr>
+					<td>&{'organization'}:<font
+						size="2"
+						color="red"
+					>*</font>:
+					</td>
+					<td>#{select 'owner', items: owners, valueProperty: 'id',
+						labelProperty: 'name',id:'select-Company' /} <span class="error">#{error
+							'role' /}</span>
+					</td>
+				</tr>
+				#{/if}
+				<tr>
+					<td colspan="2"><input
+						type="submit"
+						name="createOperator"
+						value="Create"
+					></td>
+				</tr>
+			</table>
+		</form>
+	</div>

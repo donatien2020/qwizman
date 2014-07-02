@@ -1,0 +1,103 @@
+ApplicationRole(superadmin):
+    name: SUPERADMIN
+
+ApplicationRole(admin):
+    name: ADMIN
+
+ApplicationRole(representator):
+    name: REPRESENTATOR
+
+ApplicationRole(headteacher):
+    name: HEADTEACHER
+
+ApplicationRole(teacher):
+    name: TEACHER
+
+ApplicationRole(student):
+    name: STUDENT
+
+ApplicationRole(anonimous):
+    name: ANONIMOUS
+
+Operator(superadminUser):
+    firstName: donatien
+    isActive: true
+    password: donatien
+    salt: 1232345678
+    emailAddress: donatien@yahoo.com
+    isAdmin: true
+    username: donatien
+    role: superadmin
+    typeOf: SUPERADMIN
+
+Operator(adminUser):
+    firstName: admin
+    isActive: true
+    password: admin
+    salt: 1232345678
+    emailAddress: admin@yahoo.com
+    isAdmin: true
+    username: admin
+    role: admin
+    createdBy: superadminUser
+    typeOf: ADMIN
+
+Operator(representator):
+    firstName: Representator
+    isActive: true
+    password: representator
+    salt: 1232345678
+    emailAddress: representator@yahoo.com
+    isAdmin: true
+    username: representator
+    role: representator
+    createdBy: superadminUser
+    typeOf: REPRESENTATOR
+
+Operator(headteacherUser):
+    firstName: headteacher
+    isActive: true
+    password: headteacher
+    salt: 1232345678
+    emailAddress: headteacher@yahoo.com
+    isAdmin: false
+    username: headteacher@yahoo.com
+    role: headteacher
+    createdBy: superadminUser
+    typeOf: HEADTEACHER
+
+Operator(teacherUser):
+    firstName: teacher
+    isActive: true
+    password: teacher
+    salt: 1232345678
+    emailAddress: teacher@yahoo.com
+    isAdmin: false
+    username: teacher
+    role: teacher
+    createdBy: superadminUser
+    typeOf: TEACHER
+
+Operator(studentUser):
+    firstName: student
+    isActive: true
+    password: student
+    salt: 1232345678
+    emailAddress: donatien@yahoo.com
+    isAdmin: false
+    username: student
+    role: student
+    createdBy: superadminUser
+    typeOf: STUDENT
+
+Operator(anonimousUser):
+    firstName: anonimous
+    isActive: true
+    password: anonimous
+    salt: 1232345678
+    emailAddress: donatien@yahoo.com
+    isAdmin: false
+    username: anonimous
+    role: anonimous
+    createdBy: superadminUser
+    typeOf: ANONIMOUS

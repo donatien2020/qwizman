@@ -8,6 +8,7 @@ require:
     - play -> search 2.0
     - play -> paginate 0.14
     - play -> jqueryui 1.0
+    - play -> deadbolt 1.5.4
 repositories: 
     - provided: 
         type:       local 
