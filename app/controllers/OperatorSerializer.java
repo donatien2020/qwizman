@@ -38,7 +38,7 @@ public boolean shouldSkipClass(Class<?> klass) {
 
 @Override
 public boolean shouldSkipField(FieldAttributes f) {
-	return !f.getName().toLowerCase().equals("id")&&!f.getName().toLowerCase().equals("firstname")&&!f.getName().toLowerCase().equals("name")
+	return !f.getName().toLowerCase().equals("firstname")
 			&& !f.getName().toLowerCase().equals("lastname")
 			&& !f.getName().toLowerCase().equals("phonenumber")
 			&& !f.getName().toLowerCase().equals("emailaddress")

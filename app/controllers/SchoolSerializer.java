@@ -18,12 +18,12 @@ public class SchoolSerializer extends Controller implements
 JsonSerializer<School> {
 
 @Override
-public JsonElement serialize(School organization, Type type,
+public JsonElement serialize(School scool, Type type,
 	JsonSerializationContext context) {
 
 Gson gson = new GsonBuilder().setExclusionStrategies(
 		new LocalExclusionStrategy()).create();
-JsonElement elem = gson.toJsonTree(organization);
+JsonElement elem = gson.toJsonTree(scool);
 JsonObject obj = elem.getAsJsonObject();
 return elem;
 }
@@ -37,10 +37,10 @@ public boolean shouldSkipClass(Class<?> klass) {
 
 @Override
 public boolean shouldSkipField(FieldAttributes f) {
-	return !f.getName().toLowerCase().equals("id")&&!f.getName().toLowerCase().equals("code")&&!f.getName().toLowerCase().equals("name")
+	return !f.getName().toLowerCase().equals("code")&&!f.getName().toLowerCase().equals("tinnumber")
 			&& !f.getName().toLowerCase().equals("typeof")
 			&& !f.getName().toLowerCase().equals("description")
-			&& !f.getName().toLowerCase().equals("ownerfirstname")
+			&& !f.getName().toLowerCase().equals("name")
 			&& !f.getName().toLowerCase().equals("ownerlastname")
 			&& !f.getName().toLowerCase().equals("ownerphonenumber")
 			&& !f.getName().toLowerCase().equals("owneremail")

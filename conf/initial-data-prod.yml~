@@ -1,0 +1,6 @@
+Operator(administrator):
+    name: RexivrtAdmin
+    status: 1
+    password: rexvirtadmin
+    email: service@rexvirt.com
+    isAdmin: true
