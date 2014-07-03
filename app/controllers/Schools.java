@@ -144,8 +144,11 @@ public class Schools extends Controller {
 	}
 
 	public static void dashboard() {
+		System.out.println(" go to dashboard ======================");
 		Operator user=Operators.getCurrentUser();
 		School ownerr=user.school;
+		System.out.println(" go to dashboard rendering ok  ======================");
+
 		render("Schools/dashboard.html",ownerr);
 	}
 }

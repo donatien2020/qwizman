@@ -8,6 +8,8 @@ public class Security extends Secure.Security {
 
     static boolean authenticate(String username, String password) {
     	operator = Operator.connect(username, password);
+		System.out.println(" found========================="+operator);
+
         return operator != null && operator.password.equals(password);
     }
    
@@ -18,6 +20,8 @@ public class Security extends Secure.Security {
 
     static void onAuthenticated() {
 		if (operator != null) {
+			System.out.println(" found= session========================"+operator);
+
 			session.put("type", operator.typeOf);
 			session.put("email", operator.emailAddress);
 			session.put("username", operator.username);

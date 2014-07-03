@@ -22,9 +22,12 @@ public class Admin extends Controller {
 				Operator user = Operator.find("byUsername", Security.connected())
 						.first();
 				if (user != null && user.id!=null) {
+					System.out.println(" found=========================");
 					session.put("user", user.firstName);
 					renderArgs.put("user",  user.firstName);
 				} else {
+					System.out.println(" not found=========================");
+
 					try {
 						Secure.logout();
 					} catch (Throwable e) {

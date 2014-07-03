@@ -98,16 +98,16 @@ public class Operator extends Model implements RoleHolder {
 				.first();
 	}
 
-	public static Operator connect1(String username, String password) {
-		Operator byUsername = getByUsername(username);
-		if (byUsername != null && byUsername.isActive) {
-			if (!encodePasswordForLogin(byUsername, password).equals(
-					byUsername.password))
-				return null;
-		}
-		return byUsername;
-
-	}
+//	public static Operator connect1(String username, String password) {
+//		Operator byUsername = getByUsername(username);
+//		if (byUsername != null && byUsername.isActive) {
+//			if (!encodePasswordForLogin(byUsername, password).equals(
+//					byUsername.password))
+//				return null;
+//		}
+//		return byUsername;
+//
+//	}
 
 	@Override
 	public String toString() {
