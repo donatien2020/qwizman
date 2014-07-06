@@ -108,30 +108,31 @@ for(var i in data){
 });
 
 function getCompanies(event){
-	var tableId="organizationList";
+	var tableId="schoolList";
 if(event.value!=""&&event.value!=" "){
 	var tableRows="";
 $.ajax({type : 'GET',
-    url : getAppContetGlobal()+'/organizations/getCompanysByCriterion',
+    url : getAppContetGlobal()+'/schools/getCompanysByCriterion',
     data : {criterion:event.value},
     success : function(data){
+    	alert(""+JSON.stringify(data));
     	 for(var i in data){
     		 if(i==0)
     		 clearTable(tableId);
-     	tableRows="<tr><td>"+data[i].name+"</td><td>"+data[i].ownerFirstName+"</td><td>"+data[i].ownerLastName+"</td><td>"+data[i].ownerPhoneNumber+"</td><td>"+data[i].typeOf+"</td><td>"+data[i].createdOn+"</td><td><a href=\"show/"+data[i].id+"/Editing\">Edit</td></tr>";
+     	tableRows="<tr><td>"+data[i].schoolName+"</td><td>"+data[i].ownerFirstName+"</td><td>"+data[i].ownerLastName+"</td><td>"+data[i].ownerPhoneNumber+"</td><td>"+data[i].typeOf+"</td><td>"+data[i].category+"</td><td>"+data[i].createdOn+"</td><td><a href=\"show/"+data[i].id+"/Editing\">Edit</td></tr>";
            }
   },error:function(e){
 	  alert("Error  ?"+JSON.stringify(e));
   },async:false
 });
-$('#organizationList').append(tableRows); 
+$('#schoolList').append(tableRows); 
 
 }
 }
 function editCompany(){
-	var  companyId=$("#companyId").val(); 
-	var  companyTinNumber=$("#companyTinNumber").val(); 
-	var  companyName=$("#companyName").val();
+	var  companyId=$("#schoolId").val(); 
+	var companyCategory=$("#companyCategory").val(); 
+	var  companyName=$("#schoolName").val();
 	var  companyDescription=$("#companyDescription").val();
 	var  ownerFistName=$("#ownerFistName").val(); 
 	var  ownerLastName=$("#ownerLastName").val();
@@ -140,15 +141,13 @@ function editCompany(){
 	var  ownerEmail=$("#ownerEmail").val();
 	var  webSite=$("#webSite").val(); 
 	var  companyPoBox=$("#companyPoBox").val();
-	var location=$("#umuduguduEdit").val();
-	var level=$("#select-level").val();
 	  $.ajax({type :'GET',
-          url : getAppContetGlobal()+'/organizations/modifyCompany',
-          data:{companyId:companyId,tinNumber:companyTinNumber,typeOf:typeOfId,name:companyName,description:companyDescription,ownerFirstName:ownerFistName,ownerLastName:ownerLastName,ownerPhoneNumber:ownerPhoneNumber,ownerEmail:ownerEmail,poBox:companyPoBox,website:webSite,level:level,location:location},
+          url : getAppContetGlobal()+'/schools/modifyCompany',
+          data:{companyId:companyId,category:companyCategory,typeOf:typeOfId,schoolName:companyName,description:companyDescription,ownerFistName:ownerFistName,ownerLastName:ownerLastName,ownerPhoneNumber:ownerPhoneNumber,ownerEmail:ownerEmail,poBox:companyPoBox,website:webSite},
           success : function(data){
                 $("#msgAlertCompany").html(data.message);
             },error:function(e){
-            	alert("test call error ok:"+JSON.stringify(e));
+            	alert("External Error :"+JSON.stringify(e));
             },async:false
         });
 }

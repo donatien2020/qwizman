@@ -20,7 +20,7 @@ import java.util.List;
 
 @Indexed
 @Entity
-@Table(name = "core_customer")
+@Table(name = "core_application_role")
 public class ApplicationRole extends Model implements Role {
 	@Required
 	public String name;

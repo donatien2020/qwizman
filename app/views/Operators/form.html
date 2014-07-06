@@ -133,16 +133,16 @@
 					><span class="error">#{error 'physicalAddress' /}</span></td>
 				</tr>
 				 
-				 #{if session.get('type') != null && session.get('type')=='SUPERADMIN'}
+				 #{if session.get('type') != null && (session.get('type')=='SUPERADMIN' || session.get('type')=='ADMIN')}
 				<tr>
-					<td>&{'organization'}:<font
+					<td>&{'school'}:<font
 						size="2"
 						color="red"
 					>*</font>:
 					</td>
-					<td>#{select 'owner', items: owners, valueProperty: 'id',
-						labelProperty: 'name',id:'select-Company' /} <span class="error">#{error
-							'role' /}</span>
+					<td>#{select 'school', items: schools, valueProperty: 'id',
+						labelProperty: 'name',id:'select-School' /} <span class="error">#{error
+							'school' /}</span>
 					</td>
 				</tr>
 				#{/if}

@@ -1,7 +1,7 @@
 #{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
-title:'Loyalty Organizations' /}
+title:'Schools' /}
 <div id="contentListing"><p id="crudListAdd">
-					<a href="@{Organizations.addNew()}">Add New</a>
+					<a href="@{Schools.addNew()}">Add New</a>
 				</p>
 	#{if results != null && results?.size()>0}<table>
 		<tr>
@@ -9,7 +9,7 @@ title:'Loyalty Organizations' /}
 				<h2 id="crudListTitle">
 				#{if results != null && results?.size()>0}
 		
-					&{'totalCompanies'}:<span>${results?.size()}</span>
+					&{'totalSchools'}:<span>${results?.size()}</span>
 					#{/if}
 				</h2>
 			</td>
@@ -25,7 +25,7 @@ title:'Loyalty Organizations' /}
 		</tr>
 	</table>
 	<table
-		id="organizationList"
+		id="schoolList"
 		style="overflow: auto;"
 	>
 		
@@ -35,27 +35,29 @@ title:'Loyalty Organizations' /}
 				<th>&{'firstName'}</th>
 				<th>&{'lastName'}</th>
 				<th>&{'phoneNumber'}</th>
-				<th>&{'type'}</th><th>&{'level'}</th><th colspan="2">&{'createdOn'}&nbsp;&nbsp;</th>
+				<th>&{'type'}</th><th>&{'category'}</th><th colspan="2">&{'createdOn'}&nbsp;&nbsp;</th>
 			</tr>
 		</thead>
-		#{paginate.list items:results, as:'company' }
+		#{paginate.list items:results, as:'school' }
 		<tr>
-			<td>${company?.name}</td>
-			<td>${company?.ownerFirstName}</td>
-			<td>${company?.ownerLastName}</td>
-			<td>${company?.ownerPhoneNumber}</td>
-			<td>${company?.typeOf}</td><td>${company?.level?.name}</td>
-			<td>${company?.createdOn}</td>
+			<td>${school?.schoolName}</td>
+			<td>${school?.ownerFirstName}</td>
+			<td>${school?.ownerLastName}</td>
+			<td>${school?.ownerPhoneNumber}</td>
+			<td>${school?.typeOf}</td><td>${school?.category}</td>
+			<td>${school?.createdOn}</td>
 			<td><span class="crudListEdit"><a
-					href="@{Organizations.show(company?.id,'Editing')}"
+					href="@{Schools.show(school?.id,'Editing')}"
 				>Edit</a></span></td>
 		</tr>
+		#{/paginate.list}
 		<tr>
 			<td colspan="4">#{paginate.controls items:results /}
 				#{paginate.summary items:results/}</td>
 		</tr>
-		#{/paginate.list} #{/if} #{else}
-		<h1>&{'nocompany'}</h1>
+		
+		 #{/if} #{else}
+		<h1>&{'noschool'}</h1>
 		#{/else}
 		
 	</table>

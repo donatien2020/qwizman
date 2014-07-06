@@ -22,3 +22,28 @@ GET     /favicon.ico                            404
 GET     /public/                                staticDir:public
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}
+#OPERATOR Routes Normal Call
+GET     /operators/index                      				Operators.index
+GET     /operators/addNew                     				Operators.addNew
+GET     /operators/show/{id}/{msg}                      	Operators.show
+PUT     /operators/create                               	Operators.create
+GET     ${ctx}/operators/modifyUser                     	Operators.modifyUser
+GET     ${ctx}/operators/getUsersByCriterion            	Operators.getUsersByCriterion
+#SCHOOL Routes Normal Call
+GET     /schools/index                      			    Schools.index
+GET     /schools/addNew                     				Schools.addNew
+GET     /schools/show/{id}/{msg}                      		Schools.show
+PUT     /schools/create                               		Schools.create
+GET     /schools/dashboard                            		Schools.dashboard
+GET     ${ctx}/schools/modifyCompany                  		Schools.modifyCompany
+GET     ${ctx}/schools/show/{id}/modify               		Schools.show
+GET     ${ctx}/schools/getCompanysByCriterion         		Schools.getCompanysByCriterion
+#CLASS Routes Normal Call
+GET     /classes/index                      			    Classes.index
+GET     /classes/addNew                     				Classes.addNew
+GET     /classes/show/{id}/{msg}                      		Classes.show
+PUT     /classes/create                               		Classes.create
+GET     /classes/dashboard                            		Classes.dashboard
+GET     ${ctx}/classes/modifyClasse                  		Classes.modifyClasse
+GET     ${ctx}/classes/show/{id}/modify               		Classes.show
+GET     ${ctx}/classes/getClassesByCriterion         		Classes.getClassesByCriterion

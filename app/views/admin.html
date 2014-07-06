@@ -10,6 +10,8 @@
 <script src="@{'/public/js/donFiles/Operator.js'}"
 	type="text/javascript"></script>
 <script src="@{'/public/js/donFiles/School.js'}" type="text/javascript"></script>
+<script src="@{'/public/js/donFiles/Classe.js'}" type="text/javascript"></script>
+
 
 #{get 'moreScripts' /}
 <script type="text/javascript">
@@ -36,11 +38,14 @@ $(function() {
 		</div>
 		<div id="menus">
 			<ul>
-				#{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN'],['PROMOTER']]}
-				#{deadbolt.restrict roles:[['SUPERADMIN']]}
+				#{deadbolt.restrict
+				roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER'],['STUDENT']]}
+				#{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN']]}
 				<li><a href="#">&{'scholCategories'}</a></li>
-				<li><a href="#">&{'schols'}</a></li>
-				<li><a href="#">&{'operators'}</a></li>
+				<li><a href="@{Schools.index()}">&{'schols'}</a></li>
+				<li><a href="@{Operators.index()}">&{'operators'}</a></li>
+				<li><a href="@{Operators.getTeachers()}">&{'teachers'}</a></li>
+				<li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
 				<li><a href="#">&{'classes'}</a></li>
 				<li><a href="#">&{'courses'}</a></li>
 				<li><a href="#">&{'chapters'}</a></li>
@@ -48,19 +53,14 @@ $(function() {
 				<li><a href="#">&{'departments'}</a></li>
 				<li><a href="#">&{'classLabels'}</a></li>
 				<li><a href="#">&{'classLevels'}</a></li> #{/deadbolt.restrict}
-				#{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN']]}
-				<li><a href="#">&{'operators'}</a></li> #{/deadbolt.restrict}
-				#{deadbolt.restrict roles:[['ADMIN']]}
-				<li><a href="#">&{'scholCategories'}</a></li>
-				<li><a href="#">&{'schols'}</a></li>
-				<li><a href="#">&{'operators'}</a></li>
-				<li><a href="#">&{'classes'}</a></li>
-				<li><a href="#">&{'courses'}</a></li>
-				<li><a href="#">&{'chapters'}</a></li>
-				<li><a href="#">&{'evaluations'}</a></li>
-				<li><a href="#">&{'departments'}</a></li>
-				<li><a href="#">&{'classLabels'}</a></li>
-				<li><a href="#">&{'classLevels'}</a></li>#{/deadbolt.restrict}
+				#{deadbolt.restrict roles:[['HEADTEACHER']]}
+				<li><a href="@{Operators.getTeachers()}">&{'teachers'}</a></li>
+				<li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
+				<li><a href="@{Classes.index()}">&{'classes'}</a></li>
+				#{/deadbolt.restrict} #{deadbolt.restrict roles:[['TEACHER']]}
+				<li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
+				<li><a href="@{Classes.index()}">&{'classes'}</a></li>
+				 #{/deadbolt.restrict}
 			</ul>
 			#{/deadbolt.restrict}
 		</div>

@@ -14,7 +14,7 @@
 				color="red"
 			>*</font>:
 			</td>
-			<td><input type="text" name="userId" size="8" id="userId"
+			<td><input type="hidden" name="userId" size="8" id="userId"
 							value="${user.id}" hidden="hiedden"><input
 				type="text"
 				name="firstName" id="firstName"
@@ -118,13 +118,13 @@
 		#{if session.get('type') != null && session.get('type')=='SUPERADMIN'}
 		
 		<tr>
-			<td>&{'organization'}:<font
+			<td>&{'school'}:<font
 				size="2"
 				color="red"
 			>*</font>:
 			</td>
-			<td>#{select 'owner', items: owners, valueProperty: 'id',
-				labelProperty: 'name',id:'select-Company' /} <span class="error">#{error
+			<td>#{select 'owner', items: schools, valueProperty: 'id',
+				labelProperty: 'schoolName',id:'select-School' /} <span class="error">#{error
 					'role' /}</span>
 			</td>
 		</tr>
