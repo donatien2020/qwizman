@@ -24,7 +24,6 @@ public class Schools extends Controller {
 	public static void index() {
 		ValuePaginator results = null;
 		try {
-
 			List<School> paginator = School.findAll();
 			results = new ValuePaginator(paginator);
 			results.setPageSize(3);
@@ -37,90 +36,66 @@ public class Schools extends Controller {
 	}
 
 	public static void addNew() {
-		List<Location> intaras = null;
 		try {
-			LocationLevel inatara = LocationLevel.find("code=?", "002").first();
-			if (inatara != null)
-				intaras = Location.find("level=?", inatara).fetch();
-			render("Schools/form.html", intaras);
+			render("Schools/form.html");
 		} catch (Exception e) {
 
 		}
-		render("Schools/form.html", intaras);
 	}
 
 	public static void show(String id, String msg) {
 		School school = null;
-		List<Location> intaras = null;
 		try {
 			if (Utils.isLong(id)) {
 				school = School.findById(Long.parseLong(id));
-				LocationLevel inatara = LocationLevel.find("code=?", "002")
-						.first();
-				if (inatara != null)
-					intaras = Location.find("level=?", inatara).fetch();
 			}
-			render("Schools/show.html", school, msg,
-					intaras);
+			render("Schools/show.html", school, msg);
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
-	public static void create(String tinNumber, String typeOf, String name,
-			String description, String ownerFirstName, String ownerLastName,
-			String ownerPhoneNumber, String ownerEmail, String poBox,
-			String website, String level, String umudugudu) {
-		try {
-			if (level != null && Utils.isLong(level) && umudugudu != "") {
-				Location locationObj = Location.find("code=?", umudugudu)
-						.first();
-				if (locationObj != null) {
-					School school = new School();
-					school.code = Utils.idGenerator(name);
-					school.creator = Operators.getCurrentUser();
-					school = school.save();
-				}
-			}
-			index();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void modifyCompany(String companyId, String tinNumber,
-			String typeOf, String name, String description,
+	public static void create(String typeOf, String name, String description,
 			String ownerFirstName, String ownerLastName,
 			String ownerPhoneNumber, String ownerEmail, String poBox,
-			String website, String level, String location) {
+			String website, String category) {
+		try {
+			School school = new School(category, Utils.idGenerator(name),
+					typeOf, name, description, ownerFirstName, ownerLastName,
+					ownerPhoneNumber, ownerEmail, poBox, website,
+					Operators.getCurrentUser());
+			school = school.save();
+
+		} catch (Exception e) {
+		}
+		index();
+	}
+
+	public static void modifyCompany(String companyId, String companyCategory,
+			String typeOf, String schoolName, String description,
+			String ownerFistName, String ownerLastName,
+			String ownerPhoneNumber, String ownerEmail, String poBox,
+			String webSite) {
 		String msg = "School not modified!";
 		try {
-			if (companyId != null && companyId != "" && Utils.isLong(companyId)
-					&& Utils.isLong(level) && location != "") {
-				School company = School.findById(Long
-						.parseLong(companyId));
-				Location locationObj = Location.find("code=?", location)
-						.first();
+			if (companyId != null && companyId != "" && Utils.isLong(companyId)) {
+				School company = School.findById(Long.parseLong(companyId));
 				if (company != null) {
-					company.tinNumber = tinNumber;
 					company.typeOf = typeOf;
-					company.name = name;
+					company.schoolName = schoolName;
 					company.description = description;
-					company.ownerFirstName = ownerFirstName;
+					company.ownerFirstName = ownerFistName;
 					company.ownerLastName = ownerLastName;
 					company.ownerEmail = ownerEmail;
 					company.poBox = poBox;
-					company.website = website;
-					if (locationObj != null)
-						company.location = locationObj;
+					company.website = webSite;
 					company = company.save();
-					msg = "Successifully Modified";
+					msg = "School Successifully Modified";
 				} else
 					msg = "School Not Found";
 			} else
-				msg = "Company Id Is Invalid!";
+				msg = "School Id Is Invalid!";
 		} catch (Exception e) {
-			e.printStackTrace();
+			msg = "Internal processing Error :" + e.getMessage();
 		}
 		renderJSON(new CustomerException(msg));
 	}
@@ -130,10 +105,9 @@ public class Schools extends Controller {
 			try {
 				String searchPatern = "%" + criterion + "%";
 				List<School> orgResult = School
-						.find("tinNumber like ? or name like ? or code like ? or name like ? or description like ? or ownerFirstName like ? or ownerPhoneNumber like ? or ownerEmail like ?",
+						.find("schoolName like ? or code like ? or description like ? or ownerFirstName like ? or ownerPhoneNumber like ? or ownerEmail like ?",
 								searchPatern, searchPatern, searchPatern,
-								searchPatern, searchPatern, searchPatern,
-								searchPatern, searchPatern).fetch();
+								searchPatern, searchPatern, searchPatern).fetch();
 				renderJSON(orgResult, new SchoolSerializer());
 			} catch (Exception e) {
 				renderJSON(new CustomerException(e.getMessage()));
@@ -144,11 +118,8 @@ public class Schools extends Controller {
 	}
 
 	public static void dashboard() {
-		System.out.println(" go to dashboard ======================");
-		Operator user=Operators.getCurrentUser();
-		School ownerr=user.school;
-		System.out.println(" go to dashboard rendering ok  ======================");
-
-		render("Schools/dashboard.html",ownerr);
+		Operator user = Operators.getCurrentUser();
+		School ownerr = user.school;
+		render("Schools/dashboard.html", ownerr);
 	}
 }

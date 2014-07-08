@@ -6,11 +6,11 @@ function getAppContetGlobal(){
 	else {
 	    currentPageUrl = this.href.toString().toLowerCase();
 	}
-	if(currentPageUrl.contains("loyalty_test"))
-		 return "/loyalty_test";
-	else if(currentPageUrl.contains("loyalty"))
-		 return "/loyalty";
-	return "/loyalty";
+	if(currentPageUrl.contains("umwarimu_test"))
+		 return "/umwarimu_test";
+	else if(currentPageUrl.contains("umwarimu"))
+		 return "/umwarimu";
+	return "/umwarimu";
 }
 function getLogoutUrl(){
 	var currentPageUrl = "";
@@ -69,6 +69,7 @@ $.ajax({type : 'GET',
     url : getAppContetGlobal()+'/operators/getUsersByCriterion',
     data : {criterion:event.value},
     success : function(data){
+    	alert(JSON.stringify(data));
     	 for(var i in data){
     		 if(i==0)
     		 clearTable(tableId);
@@ -296,10 +297,10 @@ function editOperator(){
 	var  box=$("#box").val();
 	var  webSite=$("#webSite").val(); 
 	var  role=$("#select-Role").val();
-	var company=$("#select-Company").val();
+	var company=$("#select-School").val();
 	  $.ajax({type :'GET',
           url : getAppContetGlobal()+'/operators/modifyUser',
-          data:{userId:userId,firstName:firstName,lastName:lastName,phoneNumber:phoneNumber,emailAddress:emailAddress,username:username,password:password,physicalAddress:physicalAddress,box:box,webSite:webSite,role:role,owner:company},
+          data:{userId:userId,firstName:firstName,lastName:lastName,phoneNumber:phoneNumber,emailAddress:emailAddress,username:username,password:password,physicalAddress:physicalAddress,box:box,webSite:webSite,role:role,school:company},
           success : function(data){
                 $("#msgAlert").html(data.message);
             },error:function(e){

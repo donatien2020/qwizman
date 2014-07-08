@@ -28,6 +28,8 @@ import play.data.validation.Required;
 import play.db.jpa.GenericModel;
 import play.db.jpa.Model;
 import play.modules.search.Indexed;
+import utils.helpers.UserRole;
+import utils.helpers.UserType;
 
 @Indexed
 @Entity
@@ -49,6 +51,7 @@ public class Operator extends Model implements RoleHolder {
 	public Boolean isActive;
 	public Boolean isAdmin;
 	// Super admin, Admin,Head Teacher,Second Head Teacher,Teacher,Student
+	@NotNull
 	public String typeOf;
 	@Required
 	@ManyToOne
@@ -86,28 +89,39 @@ public class Operator extends Model implements RoleHolder {
 		this.salt = salt;
 		this.isActive = new Boolean(true);
 		this.createdOn = new Date();
-		this.role = role;
+		if (role != null) {
+			this.role = role;
+			this.typeOf = role.name;
+			if (role.name != null
+					&& role.name.equals(UserType.ADMIN.getUserType()))
+				this.isAdmin = new Boolean(true);
+			else
+				this.isAdmin = new Boolean(false);
+		}
 	}
 
 	public static Operator getByUsername(String username) {
 		return Operator.find("byUsername", username).first();
 	}
 
-	public static Operator connect(String username, String password) {
+	public static Operator connect1(String username, String password) {
 		return Operator.find("byUsernameAndPassword", username, password)
 				.first();
 	}
 
-//	public static Operator connect1(String username, String password) {
-//		Operator byUsername = getByUsername(username);
-//		if (byUsername != null && byUsername.isActive) {
-//			if (!encodePasswordForLogin(byUsername, password).equals(
-//					byUsername.password))
-//				return null;
-//		}
-//		return byUsername;
-//
-//	}
+	public static Operator connect(String username, String password) {
+		Operator byUsername = getByUsername(username);
+		if (byUsername != null && byUsername.isActive) {
+			System.out.println(" byUsername :"+byUsername);
+			if (!encodePasswordForLogin(byUsername, password).equals(
+					byUsername.password)) {
+				return null;
+			}
+		}
+
+		return byUsername;
+
+	}
 
 	@Override
 	public String toString() {

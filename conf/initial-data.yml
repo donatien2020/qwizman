@@ -22,8 +22,8 @@ ApplicationRole(anonimous):
 Operator(superadminUser):
     firstName: donatien
     isActive: true
-    password: donatien
-    salt: 1232345678
+    password: 07ec9bf950252d0254d4d778698c2e4173f36dbc3f57f51f34d1b85a07c2eab0
+    salt: 1107133689
     emailAddress: donatien@yahoo.com
     isAdmin: true
     username: donatien
@@ -33,8 +33,8 @@ Operator(superadminUser):
 Operator(adminUser):
     firstName: admin
     isActive: true
-    password: admin
-    salt: 1232345678
+    password: 07ec9bf950252d0254d4d778698c2e4173f36dbc3f57f51f34d1b85a07c2eab0
+    salt: 1107133689
     emailAddress: admin@yahoo.com
     isAdmin: true
     username: admin
@@ -45,8 +45,8 @@ Operator(adminUser):
 Operator(representator):
     firstName: Representator
     isActive: true
-    password: representator
-    salt: 1232345678
+    password: 07ec9bf950252d0254d4d778698c2e4173f36dbc3f57f51f34d1b85a07c2eab0
+    salt: 1107133689
     emailAddress: representator@yahoo.com
     isAdmin: true
     username: representator
@@ -57,11 +57,11 @@ Operator(representator):
 Operator(headteacherUser):
     firstName: headteacher
     isActive: true
-    password: headteacher
-    salt: 1232345678
+    password: f1663cceeb67ba35c5a5cbf58b56050ddbe5ec5680ea9e55837b57524f29b876
+    salt: 2003427711
     emailAddress: headteacher@yahoo.com
     isAdmin: false
-    username: headteacher@yahoo.com
+    username: headteacha
     role: headteacher
     createdBy: superadminUser
     typeOf: HEADTEACHER
@@ -69,8 +69,8 @@ Operator(headteacherUser):
 Operator(teacherUser):
     firstName: teacher
     isActive: true
-    password: teacher
-    salt: 1232345678
+    password: 07ec9bf950252d0254d4d778698c2e4173f36dbc3f57f51f34d1b85a07c2eab0
+    salt: 1107133689
     emailAddress: teacher@yahoo.com
     isAdmin: false
     username: teacher
@@ -81,8 +81,8 @@ Operator(teacherUser):
 Operator(studentUser):
     firstName: student
     isActive: true
-    password: student
-    salt: 1232345678
+    password: 07ec9bf950252d0254d4d778698c2e4173f36dbc3f57f51f34d1b85a07c2eab0
+    salt: 1107133689
     emailAddress: donatien@yahoo.com
     isAdmin: false
     username: student
@@ -93,8 +93,8 @@ Operator(studentUser):
 Operator(anonimousUser):
     firstName: anonimous
     isActive: true
-    password: anonimous
-    salt: 1232345678
+    password: 07ec9bf950252d0254d4d778698c2e4173f36dbc3f57f51f34d1b85a07c2eab0
+    salt: 1107133689
     emailAddress: donatien@yahoo.com
     isAdmin: false
     username: anonimous

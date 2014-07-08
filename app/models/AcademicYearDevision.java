@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -36,6 +37,7 @@ public class AcademicYearDevision  extends GenericModel {
 	public Date endAt;
 	public Boolean devisionStatus;
 	@ManyToOne
+	@NotNull
 	public AccademicYear accademicYear;
 	@ManyToOne
 	public Operator createdBy;

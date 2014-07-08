@@ -17,19 +17,17 @@ import play.data.validation.Phone;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 import play.modules.search.Field;
+
 @Entity
-@Table(name="core_school")
-public class School extends Model{
-	@ManyToOne
-	public SchoolCategory category;
+@Table(name = "core_school")
+public class School extends Model {
+	public String category;
 	@NotNull
 	public String code;
 	@NotNull
-	public String tinNumber;
-	@NotNull
 	public String typeOf;
 	@NotNull
-	public String name;
+	public String schoolName;
 	@NotNull
 	public String description;
 	@NotNull
@@ -46,7 +44,6 @@ public class School extends Model{
 	public String poBox;
 	public String website;
 	public Boolean status;
-	@NotNull
 	@ManyToOne
 	public Location location;
 	public Date createdOn;
@@ -62,4 +59,27 @@ public class School extends Model{
 	public List<Operator> students = new ArrayList<Operator>();
 	@OneToMany(mappedBy = "school")
 	public List<AccademicYear> accademicYears = new ArrayList<AccademicYear>();
+
+	public School() {
+	}
+
+	public School(String category, String code, String typeOf, String schoolName,
+			String description, String ownerFirstName, String ownerLastName,
+			String ownerPhoneNumber, String ownerEmail, String poBox,
+			String website, Operator creator) {
+		this.category = category;
+		this.code = code;
+		this.typeOf = typeOf;
+		this.schoolName = schoolName;
+		this.description = description;
+		this.ownerFirstName = ownerFirstName;
+		this.ownerLastName = ownerLastName;
+		this.ownerPhoneNumber = ownerPhoneNumber;
+		this.ownerEmail = ownerEmail;
+		this.poBox = poBox;
+		this.website = website;
+		this.creator = creator;
+		this.status = true;
+		this.createdOn = new Date();
+	}
 }

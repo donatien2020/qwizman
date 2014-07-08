@@ -4,3 +4,4 @@
 secure.username=Your Username:
 secure.password=Your Password:
 secure.signin=Log in now !
+totalUsers=Total Operators

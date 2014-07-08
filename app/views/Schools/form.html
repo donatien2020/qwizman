@@ -1,179 +1,80 @@
 #{extends '/admin.html' /} #{set title:'Add New Operator' /} #{set
-title:'Loyalty Organizations' /}
+title:'Add Scholl' /}
 <div class="formContainer">
-	<form
-		action="create"
-		method="post"
-		onsubmit="return checkForm(this);"
-	>
+	<form action="create" method="post" onsubmit="return checkForm(this);">
 		<table>
 			<tr>
-				<td>&{'tinNumber'}<font
-					size="2"
-					color="red"
-				>*</font>:
+				<td>&{'category'}<font size="2" color="red">*</font>:
 				</td>
-				<td><input
-					type="text"
-					name="tinNumber"
-					value="${flash.tinNumber}"
-				><span class="error">#{error 'tinNumber'/}</span></td>
+				<td><select name="category">
+						<option value="NUSURRY">NUSURRY</option>
+						<option value="PRIMARY">PRIMARY</option>
+						<option value="SECONDANRY">SECONDANRY</option>
+						<option value="COLEGE">COLEGE</option>
+						<option value="UNUVERSITY">UNUVERSITY</option>
+
+				</select></td>
 			</tr>
 			<tr>
-				<td>&{'name'}<font
-					size="2"
-					color="red"
-				>*</font>:
+				<td>&{'name'}<font size="2" color="red">*</font>:
 				</td>
-				<td><input
-					type="text"
-					name="name"
-					value="${flash.name}"
-				><span class="error">#{error 'name'/}</span></td>
+				<td><input type="text" name="name" value="${flash.name}"><span
+					class="error">#{error 'name'/}</span></td>
 			</tr>
 			<tr>
-				<td>&{'description'}<font
-					size="2"
-					color="red"
-				>*</font>:
+				<td>&{'description'}<font size="2" color="red">*</font>:
 				</td>
-				<td><textarea
-						name="description"
-						id="description"
-						value="${flash.description}"
-					></textarea><span
-					id="descriptionError"
-					class="error"
-				>#{error 'description' /}</span> <span
-					id="descriptionValid"
-					class="valid"
-				></span></td>
+				<td><textarea name="description" id="description"
+						value="${flash.description}"></textarea><span
+					id="descriptionError" class="error">#{error 'description' /}</span>
+					<span id="descriptionValid" class="valid"></span></td>
 			</tr>
 			<tr>
 				<td>&{'firstName'}:</td>
-				<td><input
-					type="text"
-					name="ownerFirstName"
-					value="${flash.ownerFirstName}"
-				> <span class="error">#{error 'ownerFirstName' /}</span></td>
+				<td><input type="text" name="ownerFirstName"
+					value="${flash.ownerFirstName}"> <span class="error">#{error
+						'ownerFirstName' /}</span></td>
 			</tr>
 			<tr>
 				<td>&{'lastName'}:</td>
-				<td><input
-					type="text"
-					name="ownerLastName"
-					value="${flash.ownerLastName}"
-				> <span class="error">#{error 'ownerLastName' /}</span></td>
+				<td><input type="text" name="ownerLastName"
+					value="${flash.ownerLastName}"> <span class="error">#{error
+						'ownerLastName' /}</span></td>
 			</tr>
 			<tr>
-				<td>&{'type'}<font
-					size="2"
-					color="red"
-				>*</font>:
+				<td>&{'type'}<font size="2" color="red">*</font>:
 				</td>
 				<td><select name="typeOf">
-						<option value="TRANSPORTATION">TRANSPORTATION</option>
-						<option value="SHOP">SHOP</option>
-						<option value="SUPPERMARKET">SUPPERMARKET</option>
-						<option value="HOTEL">HOTEL</option>
-						<option value="GOVERNANCE">GOVERNANCE</option>
-						<option value="NGO">NGO</option>
-						<option value="EDUCATIONAL">EDUCATIONAL</option>
-						<option value="BANKING">BANKING</option>
-						<option value="ANY">ANY</option>
+						<option value="PUBLIC">PUBLIC</option>
+						<option value="PRIVATE">PRIVATE</option>
+						<option value="OTHER">OTHER</option>
 				</select></td>
 			</tr>
 			<tr>
 				<td>&{'phoneNumber'}</td>
-				<td><input
-					type="text"
-					name="ownerPhoneNumber"
-					value="${flash.ownerPhoneNumber}"
-				><span class="error">#{error 'ownerPhoneNumber' /}</span></td>
+				<td><input type="text" name="ownerPhoneNumber"
+					value="${flash.ownerPhoneNumber}"><span class="error">#{error
+						'ownerPhoneNumber' /}</span></td>
 			</tr>
 			<tr>
 				<td>&{'emailAddress'}:</td>
-				<td><input
-					type="text"
-					name="ownerEmail"
-					value="${flash.ownerEmail}"
-				><span class="error">#{error 'ownerEmail' /}</span></td>
+				<td><input type="text" name="ownerEmail"
+					value="${flash.ownerEmail}"><span class="error">#{error
+						'ownerEmail' /}</span></td>
 			</tr>
 			<tr>
 				<td>&{'box'}:</td>
-				<td><input
-					type="text"
-					name="poBox"
-					value="${flash.poBox}"
-				><span class="error">#{error 'poBox' /}</span></td>
+				<td><input type="text" name="poBox" value="${flash.poBox}"><span
+					class="error">#{error 'poBox' /}</span></td>
 			</tr>
 			<tr>
 				<td>&{'website'}:</td>
-				<td><input
-					type="text"
-					name="website"
-					value="${flash.website}"
-				><span class="error">#{error 'website' /}</span></td>
+				<td><input type="text" name="website" value="${flash.website}"><span
+					class="error">#{error 'website' /}</span></td>
 			</tr>
 			<tr>
-				<td>&{'level'}<font
-					size="2"
-					color="red"
-				>*</font>:
-				</td>
-				<td>#{select 'level', items: levels, valueProperty: 'id',
-					labelProperty: 'name',id:'select-level' /} <span class="error">#{error
-						'role' /}</span>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2"><fieldset>
-						<legend>&{'location'}</legend>
-						<table>
-							<tr>
-								<td><span id="intaraError">&{'intara'}:&nbsp;</span><select
-									name="intara"
-									id="intara"
-								>
-										<option value="">&{'selectProvince'}</option>
-										 #{list items:intaras, as:'intara'}
-										<option value="${intara.code}">${intara}</option> 
-										#{/list}
-								</select></td>
-								<td><span id="akarereError">&{'akarere'}:&nbsp;</span><select
-									name="akarere"
-									id="akarere"
-								>
-										<option value="">&{'selectDistrict'}</option>
-								</select></td>
-								<td><span id="umurengeError">&{'umurenge'}:&nbsp;</span><select
-									name="umurenge"
-									id="umurenge"
-								>
-										<option value="">&{'selectSector'}</option>
-								</select></td>
-								<td><span id="akagaliError">&{'akagali'}:&nbsp;</span><select
-									name="akagali"
-									id="akagali"
-								>
-										<option value="">&{'selectCell'}</option>
-								</select></td>
-								<td><span id="umuduguduError">&{'umudugudu'}:&nbsp;</span><select
-									name="umudugudu"
-									id="umudugudu"
-								>
-										<option value="">&{'selectVillage'}</option>
-								</select></td>
-							</tr>
-						</table>
-					</fieldset></td>
-			</tr>
-			<tr>
-				<td colspan="2"><input
-					type="submit"
-					name="createOrganization"
-					value="Create"
-				></td>
+				<td colspan="2"><input type="submit" name="createOrganization"
+					value="Create"></td>
 			</tr>
 		</table>
 	</form>
