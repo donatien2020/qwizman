@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.crypto.Data;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -25,11 +26,15 @@ public class AccademicYear extends GenericModel {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     public String id;
+	@NotNull
 	public String description;
-	public int yearLabel;
+	@NotNull
 	public Date startAt;
+	@NotNull
 	public Date endAt;
+	@NotNull
 	public Boolean yearStatus;
+	@NotNull
 	@ManyToOne
 	public School school;
 	@ManyToOne
@@ -37,5 +42,14 @@ public class AccademicYear extends GenericModel {
 	public Date createdOn;
 	@OneToMany(mappedBy = "accademicYear")
 	public List<AcademicYearDevision> devisions = new ArrayList<AcademicYearDevision>();
-
+	public AccademicYear(){}
+	public AccademicYear(String description,Date startAt,Date endAt,School school,Operator createdBy){
+		this.createdBy=createdBy;
+		this.createdOn=new Date();
+		this.description=description;
+		this.startAt=startAt;
+		this.endAt=endAt;
+		this.yearStatus=new Boolean(true);
+		this.school=school;
+	}
 }

@@ -18,7 +18,8 @@
 	border-radius: 15px 15px 0px 0px;
 	-webkit-border-radius: 15px 15px 0px 0px;
 	background-image: url(/public/images/urugwirobanner3ok.png);
-	background-repeat: no-repeat;
+	background-repeat: repeat;
+
 }
 
 #crud #crudHeader h1 {

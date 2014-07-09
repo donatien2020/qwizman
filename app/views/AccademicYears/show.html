@@ -1,0 +1,40 @@
+#{extends '/admin.html' /} #{set title:'Edit School' /}
+<body>
+	<div class="formContainer">
+		<span class="msgAlert" id="msgAlertYear">${msg}</span>
+				<form action="create" method="post" onsubmit="return checkForm(this);">
+		<table>
+		<tr>
+				<td>&{'description'}<font size="2" color="red">*</font>:
+				</td>
+				<td><input
+						type="text"
+						name="yearId"
+						id="yearId"
+						value="${accademicYear?.id}"
+					><textarea name="description" id="yearaccdescription"
+						>${accademicYear?.description}</textarea><span
+					id="descriptionError" class="error">#{error 'description' /}</span>
+					<span id="descriptionValid" class="valid"></span></td>
+			</tr>
+			<tr>
+				<td>&{'startAt'}<font size="2" color="red">*</font>:
+				</td>
+				<td><input type="text" name="startAt" id="yearaccStartAt" value="${accademicYear?.startAt}"><span
+					class="error">#{error 'startAt'/}</span></td>
+			</tr>
+			<tr>
+				<td>&{'endAt'}:</td>
+				<td><input type="text" name="endAt" id="yearaccEndAt"
+					value="${accademicYear?.endAt}"> <span class="error">#{error
+						'endAt' /}</span></td>
+			</tr>
+			<tr>
+					<td colspan="2"><a href="#" class="button-link"
+						id="editClasse" onclick="editAccYear();"><img
+							src="@{'/public/images/add.png'}" height="25" width="25" /></a></td>
+				</tr>
+		</table>
+	</form>
+
+	</div>

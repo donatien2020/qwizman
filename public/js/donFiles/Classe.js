@@ -21,7 +21,6 @@ $('#classeList').append(tableRows);
 }
 }
 function editClass(){
-	alert("hello");
 	var  classId=$("#classId").val(); 
 	var fullName=$("#fullNameIdClass").val(); 
 	var  emailAddress=$("#emailAddressIdClass").val();
