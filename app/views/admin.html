@@ -5,18 +5,110 @@
 <title>#{get 'title' /}</title>
 <link rel="stylesheet" media="screen"
 	href="@{'/public/stylesheets/crud.css'}" />
+		<link
+	rel="shortcut icon"
+	type="image/png"
+	href="@{'/public/images/favicon.ico'}"
+/>
+#{get 'moreStyles' /}
+	<link
+	rel="stylesheet"
+	href="@{'/public/blueprint-1.0/950px/screen.css'}"
+	type="text/css"
+	media="screen, projection"
+/>
+
+<link
+	rel="stylesheet"
+	href="@{'/public/jquery-ui-1.9/themes/base/jquery.ui.all.css'}"
+	type="text/css"
+/>
 <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}"
 	type="text/javascript"></script>
 <script src="@{'/public/js/donFiles/Operator.js'}"
 	type="text/javascript"></script>
 <script src="@{'/public/js/donFiles/School.js'}" type="text/javascript"></script>
 <script src="@{'/public/js/donFiles/Classe.js'}" type="text/javascript"></script>
+<script src="@{'/public/js/donFiles/AccademicYear.js'}" type="text/javascript"></script>
 
+	#{get 'moreScripts'/}
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.core.js'}"
+></script>
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.widget.js'}"
+></script>
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.position.js'}"
+></script>
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.button.js'}"
+></script>
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.menu.js'}"
+></script>
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.tabs.js'}"
+></script>
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.menubar.js'}"
+></script>
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.dialog.js'}"
+></script>
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.mouse.js'}"
+></script>
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.draggable.js'}"
+></script>
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.droppable.js'}"
+></script>
 
-#{get 'moreScripts' /}
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.resizable.js'}"
+></script>
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/ui/jquery.ui.selectable.js'}"
+></script>
+<script
+	type="text/javascript"
+	src="@{'/public/jquery-ui-1.9/js/jquery.dialogextend.js'}"
+></script>
+<script src="@{'/public/jquery-ui-1.9/ui/jquery.ui.datepicker.js'}"></script>
 <script type="text/javascript">
 $(function() {
-
+	jQuery('#accStartAt').datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
+	jQuery('#accEndAt').datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
+	
+	jQuery('#yearaccStartAt').datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
+	jQuery('#yearaccEndAt').datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
 });
 </script>
 
@@ -57,6 +149,7 @@ $(function() {
 				<li><a href="@{Operators.getTeachers()}">&{'teachers'}</a></li>
 				<li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
 				<li><a href="@{Classes.index()}">&{'classes'}</a></li>
+				<li><a href="@{AccademicYears.index()}">&{'accYears'}</a></li>
 				#{/deadbolt.restrict} #{deadbolt.restrict roles:[['TEACHER']]}
 				<li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
 				<li><a href="@{Classes.index()}">&{'classes'}</a></li>

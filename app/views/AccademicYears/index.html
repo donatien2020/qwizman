@@ -1,0 +1,55 @@
+#{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
+title:'AccademicYears' /}
+<div id="contentListing">
+	<p id="crudListAdd">
+		<a href="@{AccademicYears.addNew()}">Add New</a>
+	</p>
+	#{if results != null && results?.size()>0}
+	<table>
+		<tr>
+			<td>
+				<h2 id="crudListTitle">
+					#{if results != null && results?.size()>0} &{'totalAccademicYears'}:<span>${results?.size()}</span>
+					#{/if}
+				</h2>
+			</td>
+			<td><input type="text" name="search" class="search rounded"
+				value="Search" id="search" onkeyup="getAccademicYears(this);" />
+				</p></td>
+		</tr>
+	</table>
+	<table id="accYearList" style="overflow: auto;">
+
+		<thead>
+			<tr>
+				<th>&{'description'}</th>
+				<th>&{'startAt'}</th>
+				<th>&{'endAt'}</th>
+				<th>&{'createdBy'}</th>
+				<th colspan="2">&{'createdOn'}&nbsp;&nbsp;</th>#{deadbolt.restrict
+				roles:[['SUPERADMIN']]} <th>&{'school'}</th>#{/deadbolt.restrict}
+			</tr>
+		</thead>
+		#{paginate.list items:results, as:'accYear' }
+		<tr>
+			<td>${accYear?.description}</td>
+			<td>${accYear?.startAt}</td>
+			<td>${accYear?.endAt}</td>
+			<td>${accYear?.createdBy?.username}</td>
+			<td>${accYear?.createdOn}</td>
+			<td><span class="crudListEdit"><a
+					href="@{AccademicYears.show(accYear?.id,'Editing')}">Edit</a></span></td>#{deadbolt.restrict
+				roles:[['SUPERADMIN']]} <th>${accYear?.school?.schoolName}</th>#{/deadbolt.restrict}
+		</tr>
+		#{/paginate.list}
+		<tr>
+			<td colspan="4">#{paginate.controls items:results /}
+				#{paginate.summary items:results/}</td>
+		</tr>
+
+		#{/if} #{else}
+		<h1>&{'noaccYear'}</h1>
+		#{/else}
+
+	</table>
+</div>

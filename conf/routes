@@ -47,3 +47,12 @@ GET     /classes/dashboard                            		Classes.dashboard
 GET     ${ctx}/classes/modifyClasse                  		Classes.modifyClasse
 GET     ${ctx}/classes/show/{id}/modify               		Classes.show
 GET     ${ctx}/classes/getClassesByCriterion         		Classes.getClassesByCriterion
+ACCADEMIC YEAR Routes Normal Call
+GET     /accademicYears/index                      			AccademicYears.index
+GET     /accademicYears/addNew                     			AccademicYears.addNew
+GET     /accademicYears/show/{id}/{msg}                     AccademicYears.show
+PUT     /accademicYears/create                              AccademicYears.create
+GET     /accademicYears/dashboard                           AccademicYears.dashboard
+GET     ${ctx}/accademicYears/modifyAccademicYear           AccademicYears.modifyAccademicYear
+GET     ${ctx}/accademicYears/show/{id}/modify              AccademicYears.show
+GET     ${ctx}/accademicYears/getAccademicYearsByCriterion  AccademicYears.getAccademicYearsByCriterion
