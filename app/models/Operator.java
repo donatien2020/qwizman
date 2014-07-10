@@ -40,6 +40,7 @@ public class Operator extends Model implements RoleHolder {
 	@Required
 	@NotNull
 	public String firstName;
+	@NotNull
 	public String lastName;
 	@Email
 	public String emailAddress;
@@ -50,6 +51,8 @@ public class Operator extends Model implements RoleHolder {
 	public String webSite;
 	public Boolean isActive;
 	public Boolean isAdmin;
+	@NotNull
+	public String degree;
 	// Super admin, Admin,Head Teacher,Second Head Teacher,Teacher,Student
 	@NotNull
 	public String typeOf;
@@ -74,7 +77,7 @@ public class Operator extends Model implements RoleHolder {
 	public Operator(String firstName, String lastName, String phoneNumber,
 			String emailAddress, String username, String password,
 			String physicalAddress, String box, String webSite, String salt,
-			ApplicationRole role) {
+			ApplicationRole role,String degree) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
@@ -98,6 +101,7 @@ public class Operator extends Model implements RoleHolder {
 			else
 				this.isAdmin = new Boolean(false);
 		}
+		this.degree=degree;
 	}
 
 	public static Operator getByUsername(String username) {
@@ -112,7 +116,6 @@ public class Operator extends Model implements RoleHolder {
 	public static Operator connect(String username, String password) {
 		Operator byUsername = getByUsername(username);
 		if (byUsername != null && byUsername.isActive) {
-			System.out.println(" byUsername :"+byUsername);
 			if (!encodePasswordForLogin(byUsername, password).equals(
 					byUsername.password)) {
 				return null;

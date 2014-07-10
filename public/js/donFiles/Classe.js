@@ -1,5 +1,4 @@
 function getClasses(event){
-	alert("");
 	var tableId="classeList";
 if(event.value!=""&&event.value!=" "){
 	var tableRows="";
@@ -10,7 +9,7 @@ $.ajax({type : 'GET',
     	 for(var i in data){
     		 if(i==0)
     		 clearTable(tableId);
-     	tableRows="<tr><td>"+data[i].schoolName+"</td><td>"+data[i].ownerFirstName+"</td><td>"+data[i].ownerLastName+"</td><td>"+data[i].ownerPhoneNumber+"</td><td>"+data[i].typeOf+"</td><td>"+data[i].category+"</td><td>"+data[i].createdOn+"</td><td><a href=\"show/"+data[i].id+"/Editing\">Edit</td></tr>";
+     	tableRows=tableRows+"<tr><td><a href=\"dashboard/"+data[i].id+"\">"+data[i].fullName+"</a></td><td>"+data[i].emailAddress+"</td><td>"+data[i].phoneNumber+"</td><td>"+data[i].physicalAddress+"</td><td>"+data[i].classlabel+"</td><td>"+data[i].classlevel+"</td><td>"+data[i].tuturaire.lastName+"&nbsp;"+data[i].tuturaire.username+"</td><td>"+data[i].creator.username+"</td><td>"+data[i].createdOn+"</td><td><span class=\"crudListEdit\"><a href=\"show/"+data[i].id+"/Editing\">Edit</a></span>\</td></tr>";
            }
   },error:function(e){
 	  alert("Error  ?"+JSON.stringify(e));

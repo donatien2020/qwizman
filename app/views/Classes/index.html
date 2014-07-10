@@ -11,50 +11,61 @@ title:'Classes' /}
 				<h2 id="crudListTitle">
 					#{if results != null && results?.size()>0} &{'totalClasses'}:<span>${results?.size()}</span>
 					#{/if}
-				</h2>
+				</h2></td>
+			<td><input
+				type="text"
+				name="search"
+				class="search rounded"
+				value="Search"
+				id="search"
+				onkeyup="getClasses(this);"
+			/>
+				</p>
 			</td>
-			<td><input type="text" name="search" class="search rounded"
-				value="Search" id="search" onkeyup="getClasses(this);" />
-				</p></td>
 		</tr>
 	</table>
-	<table id="classeList" style="overflow: auto;">
-
+	<table
+		id="classeList"
+		style="overflow: auto;"
+	>
 		<thead>
 			<tr>
 				<th>&{'fullName'}</th>
 				<th>&{'emailAddress'}</th>
 				<th>&{'phoneNumber'}</th>
-				<th>&{'phoneNumber'}</th>
 				<th>&{'physicalAddress'}</th>
 				<th>&{'classlabel'}</th>
 				<th>&{'classlevel'}</th>
+				<th>&{'tuturaire'}</th>
 				<th>&{'createdBy'}</th>
 				<th colspan="2">&{'createdOn'}&nbsp;&nbsp;</th>
 			</tr>
 		</thead>
 		#{paginate.list items:results, as:'classe' }
 		<tr>
-			<td>${classe?.fullName}</td>
+			<td><a href="@{Classes.dashboard(classe?.id)}">${classe?.fullName}</a>
+			</td>
 			<td>${classe?.emailAddress}</td>
 			<td>${classe?.phoneNumber}</td>
 			<td>${classe?.physicalAddress}</td>
 			<td>${classe?.classlabel}</td>
 			<td>${classe?.classlevel}</td>
+			<td>${classe?.tuturaire?.lastName}&nbsp;${classe?.tuturaire?.username}</td>
 			<td>${classe?.creator.username}</td>
 			<td>${classe?.createdOn}</td>
 			<td><span class="crudListEdit"><a
-					href="@{Classes.show(classe?.id,'Editing')}">Edit</a></span></td>
+					href="@{Classes.show(classe?.id,'Editing')}"
+				>Edit</a>
+			</span>
+			</td>
 		</tr>
 		#{/paginate.list}
 		<tr>
-			<td colspan="4">#{paginate.controls items:results /}
+			<td colspan="10">#{paginate.controls items:results /}
 				#{paginate.summary items:results/}</td>
 		</tr>
-
 		#{/if} #{else}
 		<h1>&{'noclasse'}</h1>
 		#{/else}
-
 	</table>
 </div>

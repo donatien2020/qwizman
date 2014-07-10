@@ -1,3 +1,50 @@
-#{extends '/admin.html' /} #{set title:'Add New Operator' /} #{set
-title:'School Dashboard' /}
-${ownerr?.schoolName}
+#{extends '/admin.html' /} #{set title:'Class dashbord' /} #{set
+title:'Add Class' /}
+<div class="formContainer">
+	<table><tr>
+					<td>&{'fullName'}<font size="2" color="red">*</font>:
+					</td>
+					<td><input
+						type="hidden"
+						name="classIdDasbord"
+						id="classIdDasbord"
+						value="${classe?.id}"
+					>${classe?.fullName}</td>
+				</tr>
+				<tr>
+					<td>&{'emailAddress'}<font size="2" color="red">*</font>:
+					</td>
+					<td>${classe?.emailAddress}</td>
+				</tr>
+				<tr>
+					<td>&{'phoneNumber'}:</td>
+					<td>${classe?.phoneNumber}</td>
+				</tr>
+				<tr>
+					<td>&{'physicalAddress'}:</td>
+					<td>${classe?.physicalAddress}</td>
+				</tr>
+
+				<tr>
+					<td>&{'box'}:</td>
+					<td>${classe?.box}</td>
+				</tr>
+				<tr>
+					<td>&{'webSite'}:</td>
+					<td>${classe?.webSite}</td>
+				</tr>
+				<tr>
+					<td>&{'classlabel'}:</td>
+					<td>${classe?.classlabel}</td>
+				</tr>
+				<tr>
+					<td>&{'classlevel'}:</td>
+					<td>${classe?.classlevel}</td>
+				</tr>
+				<tr>
+					<td>&{'tuturaire'}:</td>
+					<td>${classe?.tuturaire?.lastName}&nbsp;${classe?.tuturaire?.username}</td>
+				</tr>
+				
+			</table>
+</div>

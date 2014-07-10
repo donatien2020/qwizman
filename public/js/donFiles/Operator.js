@@ -298,9 +298,10 @@ function editOperator(){
 	var  webSite=$("#webSite").val(); 
 	var  role=$("#select-Role").val();
 	var company=$("#select-School").val();
+	var degree =$("#degree").val();
 	  $.ajax({type :'GET',
           url : getAppContetGlobal()+'/operators/modifyUser',
-          data:{userId:userId,firstName:firstName,lastName:lastName,phoneNumber:phoneNumber,emailAddress:emailAddress,username:username,password:password,physicalAddress:physicalAddress,box:box,webSite:webSite,role:role,school:company},
+          data:{userId:userId,firstName:firstName,lastName:lastName,phoneNumber:phoneNumber,emailAddress:emailAddress,username:username,password:password,physicalAddress:physicalAddress,box:box,webSite:webSite,role:role,school:company,degree:degree},
           success : function(data){
                 $("#msgAlert").html(data.message);
             },error:function(e){

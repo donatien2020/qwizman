@@ -44,6 +44,9 @@ public class Classe extends Model {
 	public Date createdOn;
 	@ManyToOne
 	public Operator creator;
+	@NotNull
+	@ManyToOne
+	public Operator tuturaire;
 	@ManyToOne
 	public Operator lastUpdatedBy;
 	public Date lastUpdateOn;
@@ -56,7 +59,7 @@ public class Classe extends Model {
 	public Classe(String fullName, String emailAddress, String phoneNumber,
 			String physicalAddress, String box, String webSite,
 			String classlabel, String classlevel, School school,
-			Operator creator) {
+			Operator creator,Operator tuturaire) {
 		this.fullName = fullName;
 		this.emailAddress = emailAddress;
 		this.phoneNumber = phoneNumber;
@@ -68,5 +71,6 @@ public class Classe extends Model {
 		this.school = school;
 		this.creator = creator;
 		this.createdOn=new Date();
+		this.tuturaire=tuturaire;
 	}
 }

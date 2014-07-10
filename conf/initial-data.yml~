@@ -61,7 +61,7 @@ Operator(headteacherUser):
     salt: 2003427711
     emailAddress: headteacher@yahoo.com
     isAdmin: false
-    username: headteacher@yahoo.com
+    username: headteacha
     role: headteacher
     createdBy: superadminUser
     typeOf: HEADTEACHER

@@ -44,14 +44,40 @@ title:'Add Class' /}
 			</tr>
 			<tr>
 				<td>&{'classlabel'}:</td>
-				<td><input type="text" name="classlabel" value="${flash.classlabel}"><span
-					class="error">#{error 'classlabel' /}</span></td>
+				<td><select name="classlabel" id="classlabel">
+						<option value="A">A</option>
+						<option value="B">B</option>
+						<option value="C">C</option>
+						<option value="D">D</option>
+						<option value="E">E</option>
+						<option value="F">F</option>
+						<option value="CS">CS</option>
+						<option value="ENG">ENG</option>
+				</select></td>
 			</tr>
 			<tr>
 				<td>&{'classlevel'}:</td>
-				<td><input type="text" name="classlevel" value="${flash.classlevel}"><span
-					class="error">#{error 'classlevel' /}</span></td>
+				<td><select name="classlevel" id="classlevel">
+						<option value="NURSARY">NURSARY</option>
+						<option value="PRIMARY">PRIMARY</option>
+						<option value="ORDINARY">ORDINARY</option>
+						<option value="SECONDARY">SECONDARY</option>
+						<option value="COLLEDGE">COLLEDGE</option>
+						<option value="UNIVERSITY">UNIVERSITY</option>
+				</select></td>
 			</tr>
+			
+				<tr>
+					<td>&{'tuturaire'}<font
+						size="2"
+						color="red"
+					>*</font>:
+					</td>
+					<td>#{select 'tuturaire', items: tuturaires, valueProperty: 'id',
+						labelProperty: 'lastName',id:'select-Tuturaire' /} <span class="error">#{error
+							'lastName' /}</span>
+					</td>
+				</tr>
 			<tr>
 				<td colspan="2"><input type="submit" name="createOrganization"
 					value="Create"></td>

@@ -109,6 +109,15 @@ $(function() {
 		changeMonth: true,
 		changeYear: true
 	});
+	jQuery('#yearaccDivEndAt').datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
+	jQuery('#yearaccStartAtDiv').datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
+	
 });
 </script>
 
@@ -150,6 +159,7 @@ $(function() {
 				<li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
 				<li><a href="@{Classes.index()}">&{'classes'}</a></li>
 				<li><a href="@{AccademicYears.index()}">&{'accYears'}</a></li>
+				<li><a href="@{AcademicYearDevisions.index()}">&{'accYearDivisions'}</a></li>
 				#{/deadbolt.restrict} #{deadbolt.restrict roles:[['TEACHER']]}
 				<li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
 				<li><a href="@{Classes.index()}">&{'classes'}</a></li>

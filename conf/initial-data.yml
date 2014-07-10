@@ -29,6 +29,8 @@ Operator(superadminUser):
     username: donatien
     role: superadmin
     typeOf: SUPERADMIN
+    degree: A0
+    lastName: Test
 
 Operator(adminUser):
     firstName: admin
@@ -41,6 +43,8 @@ Operator(adminUser):
     role: admin
     createdBy: superadminUser
     typeOf: ADMIN
+    degree: A0
+    lastName: Test
 
 Operator(representator):
     firstName: Representator
@@ -53,6 +57,8 @@ Operator(representator):
     role: representator
     createdBy: superadminUser
     typeOf: REPRESENTATOR
+    degree: A0
+    lastName: Test
 
 Operator(headteacherUser):
     firstName: headteacher
@@ -65,6 +71,8 @@ Operator(headteacherUser):
     role: headteacher
     createdBy: superadminUser
     typeOf: HEADTEACHER
+    degree: A0
+    lastName: Test
 
 Operator(teacherUser):
     firstName: teacher
@@ -77,6 +85,8 @@ Operator(teacherUser):
     role: teacher
     createdBy: superadminUser
     typeOf: TEACHER
+    degree: A0
+    lastName: Test
 
 Operator(studentUser):
     firstName: student
@@ -89,6 +99,8 @@ Operator(studentUser):
     role: student
     createdBy: superadminUser
     typeOf: STUDENT
+    degree: A0
+    lastName: Test
 
 Operator(anonimousUser):
     firstName: anonimous
@@ -101,3 +113,5 @@ Operator(anonimousUser):
     role: anonimous
     createdBy: superadminUser
     typeOf: ANONIMOUS
+    degree: A0
+    lastName: Test

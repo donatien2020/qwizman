@@ -78,11 +78,18 @@ public class AccademicYears extends Controller {
 	public static void create(String description, String startAt, String endAt) {
 		try {
 			if (Operators.getCurrentUser().school != null) {
-				AccademicYear accademicYears = new AccademicYear(description,
-						formater.parse(startAt), formater.parse(endAt),
-						Operators.getCurrentUser().school,
-						Operators.getCurrentUser());
-				accademicYears = accademicYears.save();
+				AccademicYear yearExist = AccademicYear.find(
+						"school=? and yearStatus=?",
+						Operators.getCurrentUser().school, new Boolean(true))
+						.first();
+				if (yearExist == null) {
+					AccademicYear accademicYears = new AccademicYear(
+							description, formater.parse(startAt),
+							formater.parse(endAt),
+							Operators.getCurrentUser().school,
+							Operators.getCurrentUser());
+					accademicYears = accademicYears.save();
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,7 +126,7 @@ public class AccademicYears extends Controller {
 			try {
 				String searchPatern = "%" + criterion + "%";
 				List<AccademicYear> yearResult = AccademicYear.find(
-						"description like ?",searchPatern).fetch();
+						"description like ?", searchPatern).fetch();
 				renderJSON(yearResult, new AccademicYearSerializer());
 			} catch (Exception e) {
 				renderJSON(new CustomerException(e.getMessage()));

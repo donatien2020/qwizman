@@ -1,0 +1,45 @@
+#{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
+title:'AcademicYearDevisions' /}
+<div id="contentListing">
+	<p id="crudListAdd">
+		<a href="@{AcademicYearDevisions.addNew()}">Add New</a>
+	</p>
+	#{if results != null && results?.size()>0}
+	<table
+		id="accYearDevList"
+		style="overflow: auto;"
+	>
+		<thead>
+			<tr>
+				<th>&{'description'}</th>
+				<th>&{'devisionLabel'}</th>
+				<th>&{'startAt'}</th>
+				<th>&{'endAt'}</th>
+				<th>&{'createdBy'}</th>
+				<th colspan="2">&{'createdOn'}&nbsp;&nbsp;</th>
+			</tr>
+		</thead>
+		#{paginate.list items:results, as:'accYearDev' }
+		<tr>
+			<td>${accYearDev?.description}</td>
+			<td>${accYearDev?.devisionLabel}</td>
+			<td>${accYearDev?.startAt}</td>
+			<td>${accYearDev?.endAt}</td>
+			<td>${accYearDev?.createdBy?.username}</td>
+			<td>${accYearDev?.createdOn}</td>
+			<td><span class="crudListEdit"><a
+					href="@{AcademicYearDevisions.show(accYearDev?.id,'Editing')}"
+				>Edit</a>
+			</span>
+			</td>
+		</tr>
+		#{/paginate.list}
+		<tr>
+			<td colspan="7">#{paginate.controls items:results /}
+				#{paginate.summary items:results/}</td>
+		</tr>
+		#{/if} #{else}
+		<h1>&{'noaccYearDev'}</h1>
+		#{/else}
+	</table>
+</div>

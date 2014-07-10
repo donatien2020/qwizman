@@ -44,15 +44,24 @@ GET     /classes/addNew                     				Classes.addNew
 GET     /classes/show/{id}/{msg}                      		Classes.show
 PUT     /classes/create                               		Classes.create
 GET     /classes/dashboard                            		Classes.dashboard
+GET     /classes/dashboard/{id}                       Classes.dashboard
 GET     ${ctx}/classes/modifyClasse                  		Classes.modifyClasse
 GET     ${ctx}/classes/show/{id}/modify               		Classes.show
 GET     ${ctx}/classes/getClassesByCriterion         		Classes.getClassesByCriterion
 ACCADEMIC YEAR Routes Normal Call
-GET     /accademicYears/index                      			AccademicYears.index
-GET     /accademicYears/addNew                     			AccademicYears.addNew
-GET     /accademicYears/show/{id}/{msg}                     AccademicYears.show
-PUT     /accademicYears/create                              AccademicYears.create
-GET     /accademicYears/dashboard                           AccademicYears.dashboard
-GET     ${ctx}/accademicYears/modifyAccademicYear           AccademicYears.modifyAccademicYear
-GET     ${ctx}/accademicYears/show/{id}/modify              AccademicYears.show
-GET     ${ctx}/accademicYears/getAccademicYearsByCriterion  AccademicYears.getAccademicYearsByCriterion
+GET     /accademicyears/index                      			AccademicYears.index
+GET     /accademicyears/addNew                     			AccademicYears.addNew
+GET     /accademicyears/show/{id}/{msg}                     AccademicYears.show
+PUT     /accademicyears/create                              AccademicYears.create
+GET     /accademicyears/dashboard                           AccademicYears.dashboard
+GET     ${ctx}/accademicyears/modifyAccademicYear           AccademicYears.modifyAccademicYear
+GET     ${ctx}/accademicyears/show/{id}/Editing             AccademicYears.show
+GET     ${ctx}/accademicyears/getAccademicYearsByCriterion  AccademicYears.getAccademicYearsByCriterion
+ACCADEMIC YEAR Division Routes Normal Call
+GET     /academicyeardevisions/index                      	       AcademicYearDevisions.index
+GET     /academicyeardevisions/addNew                     	       AcademicYearDevisions.addNew
+GET     /academicyeardevisions/show/{id}/{msg}                     AcademicYearDevisions.show
+PUT     /academicyeardevisions/create                       	   AcademicYearDevisions.create
+GET     /academicyeardevisions/dashboard                     	   AcademicYearDevisions.dashboard
+GET     ${ctx}/academicyeardevisions/modifyAcademicYearDevision    AcademicYearDevisions.modifyAcademicYearDevision
+GET     ${ctx}/academicyeardevisions/show/{id}/Editing             AcademicYearDevisions.show

@@ -50,7 +50,8 @@ public class Classes extends Controller {
 
 	public static void addNew() {
 		try {
-			render("Classes/form.html");
+			List<Operator> tuturaires=Operators.getTeachersList();
+			render("Classes/form.html",tuturaires);
 		} catch (Exception e) {
 		}
 	}
@@ -67,15 +68,29 @@ public class Classes extends Controller {
 		render("Classes/show.html", classe, msg);
 	}
 
+	public static void dashboard(String id) {
+		Classe classe = null;
+		String msg = "Class Dashboard";
+		try {
+			if (Utils.isLong(id)) {
+				classe = Classe.findById(Long.parseLong(id));
+				msg = "Class " + classe.fullName + " Dashbord";
+			}
+		} catch (Exception e) {
+		}
+		render("Classes/dashboard.html", classe, msg);
+	}
+
 	public static void create(String fullName, String emailAddress,
 			String phoneNumber, String physicalAddress, String box,
-			String webSite, String classlabel, String classlevel) {
+			String webSite, String classlabel, String classlevel,String tuturaire) {
 		try {
-			if (Operators.getCurrentUser().school != null) {
+			if (Operators.getCurrentUser().school != null && Utils.isLong(tuturaire)) {
+				Operator tutu=Operator.findById(Long.parseLong(tuturaire));
 				Classe classe = new Classe(fullName, emailAddress, phoneNumber,
 						physicalAddress, box, webSite, classlabel, classlevel,
 						Operators.getCurrentUser().school,
-						Operators.getCurrentUser());
+						Operators.getCurrentUser(),tutu);
 				classe = classe.save();
 			}
 		} catch (Exception e) {
