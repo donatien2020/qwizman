@@ -136,4 +136,14 @@ public class AccademicYears extends Controller {
 
 	}
 
+	public static AccademicYear getCurrentYear() {
+		try {
+			if (Operators.getCurrentUser().school != null)
+				return AccademicYear.find("school=? and yearStatus=?",
+						Operators.getCurrentUser().school, new Boolean(true))
+						.first();
+		} catch (Exception e) {
+		}
+		return null;
+	}
 }

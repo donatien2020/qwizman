@@ -20,6 +20,7 @@ public class StudentClasse extends Model {
 	@ManyToOne
 	@NotNull
 	public Classe classe;
+	@NotNull
 	public String status;
 	public Date createdOn;
 	@ManyToOne
@@ -28,6 +29,22 @@ public class StudentClasse extends Model {
 	public Operator lastUpdatedBy;
 	@ManyToOne
 	@NotNull
+	// when an accademic year is closed it load all student, teachers with the
+	// same status
 	public AcademicYearDevision accademicYearDevision;
 	public Date lastUpdateOn;
+
+	public StudentClasse() {
+	}
+
+	public StudentClasse(Operator student, Classe classe, String status,
+			Operator creator, AcademicYearDevision accademicYearDevision) {
+		this.status = status;
+		this.student = student;
+		this.classe = classe;
+		this.creator = creator;
+		this.lastUpdatedBy = creator;
+		this.lastUpdateOn = new Date();
+		this.accademicYearDevision = accademicYearDevision;
+	}
 }

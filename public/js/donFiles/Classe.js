@@ -39,3 +39,51 @@ function editClass(){
             },async:false
         });
 }
+
+
+
+function getClassStudents(){
+	$("#studentsDialog").dialog("open");
+	loadClassStudents();
+}
+
+function loadClassStudents(){
+	var classId=$("#classIdDasbord").val();
+	if(classId!=""&&classId!=" "){
+		var tableRows="<table>";
+	$.ajax({type : 'GET',
+	    url : getAppContetGlobal()+'/classes/loadClassStudents',
+	    data : {classId:classId},
+	    success : function(data){
+	    	if(data.length>0)
+	    	 for(var i in data){
+	     	tableRows=tableRows+"<tr><td>"+data[i].student.username+""+data[i].student.firstName+"</td><td>"+data[i].student.lastName+"</td><td>"+data[i].student.emailAddress+"</td></tr>";
+	           }
+	  },error:function(e){
+		  alert("Error  ?"+JSON.stringify(e));
+	  },async:false
+	});
+	tableRows=tableRows+"</table>";
+	$("#studentsListing").html(tableRows);
+	}
+}
+function addStudentToClass(event){
+	var classId=$("#classIdDasbord").val();
+	var studentId=event.value;
+	if(studentId!=""&&studentId!=" "){
+	$.ajax({type : 'GET',
+	    url : getAppContetGlobal()+'/classes/addStudentToClass',
+	    data : {classId:classId,studentId:studentId},
+	    success : function(data){
+	    	$("#studentMsg").html(data.message);
+	    	loadClassStudents();
+	  },error:function(e){
+		  alert("Error  ?"+JSON.stringify(e));
+	  },async:false
+	});
+	}
+}
+
+function getClassTechers(){
+	$("#teachersDialog").dialog("open");
+}

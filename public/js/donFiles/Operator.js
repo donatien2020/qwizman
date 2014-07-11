@@ -1,3 +1,76 @@
+
+$(function() {
+	$("#teachersDialog").dialog({
+		overlay : {
+			backgroundColor : "#000",
+			opacity : 0.5
+		},
+		position : {
+			my : "left+100",
+			at : "left top+200",
+			of : window
+		},
+		title : 'Teacher-Class-Course Maping Form',
+		autoOpen : false,
+		closeOnEscape : true,
+		height : 'auto',
+		width : 1000,
+		modal : true,
+		draggable : true,
+		resizable : true,
+		buttons : {"Confirm" : function() {
+			processWinning();},
+			Cancel : function() {
+				$(this).dialog("close");
+			}
+		},
+		close : function() {
+			$(this).dialog("close");
+		}
+	}).dialogExtend({
+		minimizable : true,
+		collapsable : true
+	});
+	$("#studentsDialog").dialog({
+		overlay : {
+			backgroundColor : "#000",
+			opacity : 0.5
+		},
+		position : {
+			my : "left+100",
+			at : "left top+200",
+			of : window
+		},
+		title : 'Student-Class Maping Form',
+		autoOpen : false,
+		closeOnEscape : true,
+		height : 'auto',
+		width : 1000,
+		modal : true,
+		draggable : true,
+		resizable : true,
+		buttons : {"Confirm" : function() {
+			processWinning();},
+			Cancel : function() {
+				$(this).dialog("close");
+			}
+		},
+		close : function() {
+			$(this).dialog("close");
+		}
+	}).dialogExtend({
+		minimizable : true,
+		collapsable : true
+	});
+	
+	var closeBtn3 = $('.ui-dialog-titlebar-close');
+	closeBtn3
+			.append('<span class="ui-button-icon-primary ui-icon ui-icon-closethick">');
+	$(".ui-dialog-titlebar").addClass("ui-widget-header-custom");
+});
+
+
+
 function getAppContetGlobal(){
 	var currentPageUrl = "";
 	if (typeof this.href === "undefined") {

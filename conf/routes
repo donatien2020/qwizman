@@ -44,11 +44,13 @@ GET     /classes/addNew                     				Classes.addNew
 GET     /classes/show/{id}/{msg}                      		Classes.show
 PUT     /classes/create                               		Classes.create
 GET     /classes/dashboard                            		Classes.dashboard
-GET     /classes/dashboard/{id}                       Classes.dashboard
+GET     /classes/dashboard/{id}                       		Classes.dashboard
 GET     ${ctx}/classes/modifyClasse                  		Classes.modifyClasse
 GET     ${ctx}/classes/show/{id}/modify               		Classes.show
 GET     ${ctx}/classes/getClassesByCriterion         		Classes.getClassesByCriterion
-ACCADEMIC YEAR Routes Normal Call
+GET     ${ctx}/classes/loadClassStudents 					Classes.loadClassStudents
+GET     ${ctx}/classes/addStudentToClass 					Classes.addStudentToClass
+#ACCADEMIC YEAR Routes Normal Call
 GET     /accademicyears/index                      			AccademicYears.index
 GET     /accademicyears/addNew                     			AccademicYears.addNew
 GET     /accademicyears/show/{id}/{msg}                     AccademicYears.show
@@ -57,7 +59,7 @@ GET     /accademicyears/dashboard                           AccademicYears.dashb
 GET     ${ctx}/accademicyears/modifyAccademicYear           AccademicYears.modifyAccademicYear
 GET     ${ctx}/accademicyears/show/{id}/Editing             AccademicYears.show
 GET     ${ctx}/accademicyears/getAccademicYearsByCriterion  AccademicYears.getAccademicYearsByCriterion
-ACCADEMIC YEAR Division Routes Normal Call
+#ACCADEMIC YEAR Division Routes Normal Call
 GET     /academicyeardevisions/index                      	       AcademicYearDevisions.index
 GET     /academicyeardevisions/addNew                     	       AcademicYearDevisions.addNew
 GET     /academicyeardevisions/show/{id}/{msg}                     AcademicYearDevisions.show

@@ -116,35 +116,8 @@ public class Operators extends Controller {
 	public static void getStudents() {
 		try {
 			String msg = "students";
-			Operator currentUser = Operators.getCurrentUser();
 			ValuePaginator results = null;
-			List<Operator> paginator = null;
-			if (currentUser != null
-					&& currentUser.typeOf.equals(UserType.SUPERADMIN
-							.getUserType()) && currentUser.school == null) {
-				paginator = Operator.find("typeOf=? ",
-						UserType.STUDENT.getUserType()).fetch();
-			} else if (currentUser != null
-					&& currentUser.school == null
-					&& (currentUser.typeOf.equals(UserType.ADMIN.getUserType()) || currentUser.typeOf
-							.equals(UserType.REPRESENTATOR.getUserType())))
-				paginator = Operator.find("typeOf=? AND createdBy=? ",
-						UserType.STUDENT.getUserType(), currentUser).fetch();
-			else if (currentUser != null
-					&& currentUser.school != null
-					&& currentUser.typeOf.equals(UserType.HEADTEACHER
-							.getUserType()))
-				paginator = Operator.find("school=? AND typeOf=?",
-						currentUser.school, UserType.STUDENT.getUserType())
-						.fetch();
-			else if (currentUser != null
-					&& currentUser.school != null
-					&& currentUser.typeOf
-							.equals(UserType.TEACHER.getUserType()))
-				paginator = Operator.find(
-						"school=? AND typeOf=? AND createdBy=? ",
-						currentUser.school, UserType.STUDENT.getUserType(),
-						currentUser).fetch();
+			List<Operator> paginator = getStudentsList();
 
 			if (paginator != null && paginator.size() > 0) {
 				results = new ValuePaginator(paginator);
@@ -156,6 +129,39 @@ public class Operators extends Controller {
 		} catch (Exception e) {
 		}
 
+	}
+	
+	public static List<Operator> getStudentsList(){
+		List<Operator> paginator = null;
+		Operator currentUser = Operators.getCurrentUser();
+
+		if (currentUser != null
+				&& currentUser.typeOf.equals(UserType.SUPERADMIN
+						.getUserType()) && currentUser.school == null) {
+			paginator = Operator.find("typeOf=? ",
+					UserType.STUDENT.getUserType()).fetch();
+		} else if (currentUser != null
+				&& currentUser.school == null
+				&& (currentUser.typeOf.equals(UserType.ADMIN.getUserType()) || currentUser.typeOf
+						.equals(UserType.REPRESENTATOR.getUserType())))
+			paginator = Operator.find("typeOf=? AND createdBy=? ",
+					UserType.STUDENT.getUserType(), currentUser).fetch();
+		else if (currentUser != null
+				&& currentUser.school != null
+				&& currentUser.typeOf.equals(UserType.HEADTEACHER
+						.getUserType()))
+			paginator = Operator.find("school=? AND typeOf=?",
+					currentUser.school, UserType.STUDENT.getUserType())
+					.fetch();
+		else if (currentUser != null
+				&& currentUser.school != null
+				&& currentUser.typeOf
+						.equals(UserType.TEACHER.getUserType()))
+			paginator = Operator.find(
+					"school=? AND typeOf=? AND createdBy=? ",
+					currentUser.school, UserType.STUDENT.getUserType(),
+					currentUser).fetch();
+		return paginator;
 	}
 
 	public static void addNew(String pageParam) {

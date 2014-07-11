@@ -5,21 +5,27 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import play.db.jpa.Model;
 import play.modules.search.Indexed;
+
 @Indexed
 @Entity
-@Table(name="school_teacher_class_course")
-public class TeacherClassCourse extends Model{
+@Table(name = "school_teacher_class_course")
+public class TeacherClassCourse extends Model {
 	@ManyToOne
+	@NotNull
 	public Operator teacher;
 	@ManyToOne
+	@NotNull
 	public Classe classe;
 	@ManyToOne
 	public Course course;
+	@NotNull
 	public String status;
 	@ManyToOne
+	@NotNull
 	public AcademicYearDevision accademicYearDevision;
 	public Date createdOn;
 	@ManyToOne
@@ -27,4 +33,21 @@ public class TeacherClassCourse extends Model{
 	@ManyToOne
 	public Operator lastUpdatedBy;
 	public Date lastUpdateOn;
+
+	public TeacherClassCourse() {
+	}
+
+	public TeacherClassCourse(Operator teacher, Classe classe, Course course,
+			AcademicYearDevision accademicYearDevision, Operator creator,String status) {
+		this.teacher = teacher;
+		this.classe = classe;
+		this.course = course;
+		this.accademicYearDevision = accademicYearDevision;
+		this.creator = creator;
+		this.status=status;
+		this.createdOn = new Date();
+		this.lastUpdatedBy=creator;
+		this.lastUpdateOn=new Date();
+
+	}
 }

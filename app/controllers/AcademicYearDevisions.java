@@ -118,9 +118,9 @@ public class AcademicYearDevisions extends Controller {
 							accademicYearDev.endAt = end;
 							accademicYearDev = accademicYearDev.save();
 							msg = "Successifully Modified!";
-						}else
+						} else
 							msg = "Accademic Year Division end date should be less than or eqwal to the end of the year";
-					}else
+					} else
 						msg = "Accademic Year Division Start Date should be less tha its end date!";
 				} else
 					msg = "Accademic Year Division Not Found";
@@ -131,4 +131,15 @@ public class AcademicYearDevisions extends Controller {
 		}
 	}
 
+	public static AcademicYearDevision getCurrentDivision() {
+		try {
+			AccademicYear year = AccademicYears.getCurrentYear();
+			if (year != null)
+				return AcademicYearDevision.find(
+						"accademicYear=? and devisionStatus=?", year,
+						new Boolean(true)).first();
+		} catch (Exception e) {
+		}
+		return null;
+	}
 }

@@ -1,50 +1,142 @@
 #{extends '/admin.html' /} #{set title:'Class dashbord' /} #{set
 title:'Add Class' /}
 <div class="formContainer">
-	<table><tr>
-					<td>&{'fullName'}<font size="2" color="red">*</font>:
-					</td>
-					<td><input
-						type="hidden"
-						name="classIdDasbord"
-						id="classIdDasbord"
-						value="${classe?.id}"
-					>${classe?.fullName}</td>
-				</tr>
-				<tr>
-					<td>&{'emailAddress'}<font size="2" color="red">*</font>:
-					</td>
-					<td>${classe?.emailAddress}</td>
-				</tr>
-				<tr>
-					<td>&{'phoneNumber'}:</td>
-					<td>${classe?.phoneNumber}</td>
-				</tr>
-				<tr>
-					<td>&{'physicalAddress'}:</td>
-					<td>${classe?.physicalAddress}</td>
-				</tr>
-
-				<tr>
-					<td>&{'box'}:</td>
-					<td>${classe?.box}</td>
-				</tr>
-				<tr>
-					<td>&{'webSite'}:</td>
-					<td>${classe?.webSite}</td>
-				</tr>
-				<tr>
-					<td>&{'classlabel'}:</td>
-					<td>${classe?.classlabel}</td>
-				</tr>
-				<tr>
-					<td>&{'classlevel'}:</td>
-					<td>${classe?.classlevel}</td>
-				</tr>
-				<tr>
-					<td>&{'tuturaire'}:</td>
-					<td>${classe?.tuturaire?.lastName}&nbsp;${classe?.tuturaire?.username}</td>
-				</tr>
-				
-			</table>
+	<table>
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>&{'fullName'}<font
+							size="2"
+							color="red"
+						>*</font>:</td>
+						<td><input
+							type="text"
+							name="classIdDasbord"
+							id="classIdDasbord"
+							value="${classe?.id}"
+						>${classe?.fullName}</td>
+					</tr>
+					<tr>
+						<td>&{'emailAddress'}<font
+							size="2"
+							color="red"
+						>*</font>:</td>
+						<td>${classe?.emailAddress}</td>
+					</tr>
+					<tr>
+						<td>&{'phoneNumber'}:</td>
+						<td>${classe?.phoneNumber}</td>
+					</tr>
+					<tr>
+						<td>&{'physicalAddress'}:</td>
+						<td>${classe?.physicalAddress}</td>
+					</tr>
+					<tr>
+						<td>&{'box'}:</td>
+						<td>${classe?.box}</td>
+					</tr>
+					<tr>
+						<td>&{'webSite'}:</td>
+						<td>${classe?.webSite}</td>
+					</tr>
+					<tr>
+						<td>&{'classlabel'}:</td>
+						<td>${classe?.classlabel}</td>
+					</tr>
+					<tr>
+						<td>&{'classlevel'}:</td>
+						<td>${classe?.classlevel}</td>
+					</tr>
+					<tr>
+						<td>&{'tuturaire'}:</td>
+						<td>${classe?.tuturaire?.lastName}&nbsp;${classe?.tuturaire?.username}</td>
+					</tr>
+				</table></td>
+			<td valign="top">
+				<table>
+					<tr>
+						<td><p id="crudListAdd">
+								<a href="#" onclick="getClassTechers();">Teachers</a>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td><p id="crudListAdd">
+								<a href="#" onclick="getClassStudents();">Students</a>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td><p id="crudListAdd">
+								<a href="#" onclick="getClassStudents();">Course Materials</a>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td><p id="crudListAdd">
+								<a href="#" onclick="getClassStudents();">Evaluations</a>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td><p id="crudListAdd">
+								<a href="#" onclick="getClassStudents();">School Reports</a>
+							</p>
+						</td>
+					</tr>
+				</table></td>
+		</tr>
+	</table>
+	
+	<div id="teachersDialog">
+		<table>
+			<tr>
+				<td colspan="2"><span id="techerListingSpiner"><img
+					src="@{'/public/images/spinner.GIF'}"
+					height="20"
+					width="23"
+				/></span></td>
+			</tr>
+			<tr><td colspan="2"><div id="techersListing"></div>
+				</td>
+			</tr>
+			<tr>
+				<td>Choose Teach:</td>
+				<td><select id="techerId" name="techerId">
+				<option value="">Choose Teacher</option>
+				 #{list items:techers, as:'teacher'}
+					<option value="${teacher.id}">${teacher}</option>
+					#{/list}
+				</select>
+				</td>
+			</tr>
+			
+		</table>
+	</div>
+	
+	<div id="studentsDialog">
+		<table>
+			<tr><td colspan="2"><span id="studentMsg"></span><span id="studentsListingSpiner"><img
+					src="@{'/public/images/spinner.GIF'}"
+					height="20"
+					width="23"
+				/></span></td>
+			</tr>
+			<tr><td colspan="2"><div id="studentsListing"></div>
+				</td>
+			</tr>
+			<tr>
+				<td>Choose Student:</td>
+				<td><select id="studentId" name="studentId" onchange="addStudentToClass(this);">
+				<option value="">Choose Student</option>
+				 #{list items:students, as:'student'}
+					<option value="${student.id}">${student}</option>
+					#{/list}
+				</select>
+				</td>
+			</tr>
+			
+		</table>
+	</div>
 </div>
