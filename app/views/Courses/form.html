@@ -1,0 +1,26 @@
+#{extends '/admin.html' /} #{set title:'Add New Operator' /} #{set
+title:'Add Class' /}
+<div class="formContainer">
+	<form action="create" method="post" onsubmit="return checkForm(this);">
+		<table>
+
+			<tr>
+				<td>&{'name'}<font size="2" color="red">*</font>:
+				</td>
+				<td><input type="text" name="name" value="${flash.name}"><span
+					class="error">#{error 'name'/}</span></td>
+			</tr>
+			<tr>
+				<td>&{'content'}<font size="2" color="red">*</font>:
+				</td>
+				<td><textarea name="content" id="content"></textarea><span
+					id="contentError" class="error">#{error 'content' /}</span>
+					<span id="contentValid" class="valid"></span></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" name="createCourse"
+					value="Create"></td>
+			</tr>
+		</table>
+	</form>
+</div>

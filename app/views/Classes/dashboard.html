@@ -11,7 +11,7 @@ title:'Add Class' /}
 							color="red"
 						>*</font>:</td>
 						<td><input
-							type="text"
+							type="hidden"
 							name="classIdDasbord"
 							id="classIdDasbord"
 							value="${classe?.id}"
@@ -92,7 +92,7 @@ title:'Add Class' /}
 	<div id="teachersDialog">
 		<table>
 			<tr>
-				<td colspan="2"><span id="techerListingSpiner"><img
+				<td colspan="2"><span id="teacherMsg"></span><span id="techerListingSpiner"><img
 					src="@{'/public/images/spinner.GIF'}"
 					height="20"
 					width="23"
@@ -102,8 +102,14 @@ title:'Add Class' /}
 				</td>
 			</tr>
 			<tr>
-				<td>Choose Teach:</td>
-				<td><select id="techerId" name="techerId">
+				<td><select id="courseId" name="courseId">
+				<option value="">Choose Course</option>
+				 #{list items:classes, as:'course'}
+					<option value="${course.id}">${course}</option>
+					#{/list}
+				</select>
+				</td>
+				<td><select id="techerId" name="techerId" onchange="addTeacherCourseToClass(this);">
 				<option value="">Choose Teacher</option>
 				 #{list items:techers, as:'teacher'}
 					<option value="${teacher.id}">${teacher}</option>

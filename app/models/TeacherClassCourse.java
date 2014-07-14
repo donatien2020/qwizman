@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import play.db.jpa.Model;
 import play.modules.search.Indexed;
+import utils.helpers.TeacherStatus;
 
 @Indexed
 @Entity
@@ -38,13 +39,13 @@ public class TeacherClassCourse extends Model {
 	}
 
 	public TeacherClassCourse(Operator teacher, Classe classe, Course course,
-			AcademicYearDevision accademicYearDevision, Operator creator,String status) {
+			AcademicYearDevision accademicYearDevision, Operator creator) {
 		this.teacher = teacher;
 		this.classe = classe;
 		this.course = course;
 		this.accademicYearDevision = accademicYearDevision;
 		this.creator = creator;
-		this.status=status;
+		this.status=TeacherStatus.PERMANANTRYACTIVE.getTeacherStatus();
 		this.createdOn = new Date();
 		this.lastUpdatedBy=creator;
 		this.lastUpdateOn=new Date();

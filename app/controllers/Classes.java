@@ -11,9 +11,11 @@ import controllers.deadbolt.Deadbolt;
 import models.AcademicYearDevision;
 import models.ApplicationRole;
 import models.Classe;
+import models.Course;
 import models.Operator;
 import models.School;
 import models.StudentClasse;
+import models.TeacherClassCourse;
 import play.db.jpa.JPA;
 import play.libs.WS;
 import play.libs.WS.HttpResponse;
@@ -75,6 +77,7 @@ public class Classes extends Controller {
 		String msg = "Class Dashboard";
 		List<Operator> techers = Operators.getTeachersList();
 		List<Operator> students = Operators.getStudentsList();
+		List<Course> classes = Courses.getCourses();
 		try {
 			if (Utils.isLong(id)) {
 				classe = Classe.findById(Long.parseLong(id));
@@ -82,7 +85,7 @@ public class Classes extends Controller {
 			}
 		} catch (Exception e) {
 		}
-		render("Classes/dashboard.html", classe, msg, techers, students);
+		render("Classes/dashboard.html", classe, msg, techers, students,classes);
 	}
 
 	public static void create(String fullName, String emailAddress,
@@ -162,7 +165,6 @@ public class Classes extends Controller {
 							"classe=? and accademicYearDevision=?", classe,
 							division).fetch();
 					if (students != null && students.size() > 0){
-						System.out.println(" serrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
 						renderJSON(students,new StudentClasseSerializer());
 					}else
 						msg = "This Class Is Empty";
@@ -209,6 +211,69 @@ public class Classes extends Controller {
 		} catch (Exception e) {
 			msg = e.getMessage();
 		}
+		renderJSON(new CustomerException(msg));
+	}
+	
+	
+	
+	
+	public static void loadClassTeacherCourses(String classId) {
+		String msg = "Teachers Loading Started !";
+		try {
+			if (classId != null && Utils.isLong(classId)) {
+				AcademicYearDevision division = AcademicYearDevisions
+						.getCurrentDivision();
+				Classe classe = Classe.findById(Long.parseLong(classId));
+				if (division != null && classe != null) {
+					List<TeacherClassCourse> teachers = TeacherClassCourse.find(
+							"classe=? and accademicYearDevision=?", classe,
+							division).fetch();
+					if (teachers != null && teachers.size() > 0){
+						renderJSON(teachers,new TeacherClassCourseSerializer());
+					}else
+						msg = "This Class Is Empty";
+				} else
+					msg = "Accademic Year devision or classe not found";
+			} else
+				msg = "Invalid Class Id";
+		} catch (Exception e) {
+			msg = e.getMessage();
+		}
+		renderJSON(new CustomerException(msg));
+	}
+
+	public static void addTeacherToClass(String classId, String teacherId, String courseId) {
+		String msg = "Teachers Adding Started !";
+		try {
+			if (classId != null && Utils.isLong(classId) && teacherId != null
+					&& Utils.isLong(teacherId)) {
+				AcademicYearDevision division = AcademicYearDevisions
+						.getCurrentDivision();
+				Classe classe = Classe.findById(Long.parseLong(classId));
+				Course course = Course.findById(Long.parseLong(courseId));
+				Operator teacher = Operator.findById(Long.parseLong(teacherId));
+				if (division != null && classe != null && teacher != null &&course!=null) {
+					TeacherClassCourse teacherClassExist = TeacherClassCourse
+							.find("teacher=? and classe=? and course=? and accademicYearDevision=?",
+									teacher, classe,course, division).first();
+					if (teacherClassExist == null) {
+						TeacherClassCourse teacherClassCourse = new TeacherClassCourse(teacher,classe,course,division,Operators.getCurrentUser());
+						teacherClassCourse = teacherClassCourse.save();
+						if (teacherClassCourse != null
+								&& teacherClassCourse.teacher != null)
+							msg = "Teacher successifully added";
+						else
+							msg = "This Class Is Empty";
+					} else
+						msg = "This Teacher -course assignement Is Already done!";
+				} else
+					msg = "Accademic Year devision or classe or course not found";
+			} else
+				msg = "Invalid parameters";
+		} catch (Exception e) {
+			msg = e.getMessage();
+		}
+		
 		renderJSON(new CustomerException(msg));
 	}
 }

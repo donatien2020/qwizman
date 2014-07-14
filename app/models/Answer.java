@@ -28,4 +28,5 @@ public class Answer extends GenericModel {
 	public Date answeredOn;
 	@ManyToOne
 	public Operator attendant;
+	
 }

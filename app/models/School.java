@@ -59,6 +59,8 @@ public class School extends Model {
 	public List<Operator> students = new ArrayList<Operator>();
 	@OneToMany(mappedBy = "school")
 	public List<AccademicYear> accademicYears = new ArrayList<AccademicYear>();
+	@OneToMany(mappedBy = "school")
+	public List<Evaluation> evaluations = new ArrayList<Evaluation>();
 
 	public School() {
 	}
@@ -81,5 +83,9 @@ public class School extends Model {
 		this.creator = creator;
 		this.status = true;
 		this.createdOn = new Date();
+	}
+	@Override
+	public String toString() {
+		return this.schoolName;
 	}
 }

@@ -1,0 +1,27 @@
+#{extends '/admin.html' /} #{set title:'Edit School' /}
+<body>
+	<div course="formContainer">
+		<span course="msgAlert" id="msgAlertClass">${msg}</span>
+		<form action="/courses/modifyCourse" method="post" onsubmit="return checkForm(this);">
+			<table>
+				<tr>
+					<td>&{'name'}<font size="2" color="red">*</font>:
+					</td>
+					<td><input type="hidden" name="courseId" id="courseId"
+						value="${course?.id}"><input type="text" name="name" value="${course.name}"><span
+						course="error">#{error 'name'/}</span></td>
+				</tr>
+				<tr>
+					<td>&{'content'}<font size="2" color="red">*</font>:
+					</td>
+					<td><textarea name="content" id="content">${course.content}</textarea><span id="contentError"
+						class="error">#{error 'content' /}</span> <span id="contentValid"
+						class="valid"></span></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" name="editCourse"
+					value="Modify"></td>
+				</tr>
+			</table>
+		</form>
+	</div>

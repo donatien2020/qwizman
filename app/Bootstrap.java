@@ -1,5 +1,7 @@
 import java.util.Properties;
 
+import models.Operator;
+
 import play.*;
 import play.jobs.*;
 import play.test.*;

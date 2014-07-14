@@ -73,4 +73,8 @@ public class Classe extends Model {
 		this.createdOn=new Date();
 		this.tuturaire=tuturaire;
 	}
+	@Override
+	public String toString() {
+		return this.fullName;
+	}
 }

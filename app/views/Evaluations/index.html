@@ -1,0 +1,54 @@
+#{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
+title:'Evaluations' /}
+<div id="descriptionListing">
+	<p id="crudListAdd">
+		<a href="@{Evaluations.addNew()}">Add New</a>
+	</p>
+	#{if results != null && results?.size()>0}
+	<table>
+		<tr>
+			<td>
+				<h2 id="crudListTitle">
+					#{if results != null && results?.size()>0} &{'totalEvaluations'}:<span>${results?.size()}</span>
+					#{/if}
+				</h2>
+			</td>
+			<td><input type="text" name="search" class="search rounded"
+				value="Search" id="search" onkeyup="getEvaluations(this);" /></td>
+		</tr>
+	</table>
+	<table id="evaluationList" style="overflow: auto;">
+		<thead>
+			<tr>
+				
+				<th>&{'name'}</th>
+				<th>&{'description'}</th>
+				<th>&{'totalMarks'}</th>
+				<th>&{'course'}</th>
+				<th>&{'creator'}</th>
+				<th colspan="2">&{'createdOn'}</th>
+			</tr>
+		</thead>
+		#{paginate.list items:results, as:'evaluation' }
+		<tr>
+			
+			<td><a href="@{Evaluations.dashboard(evaluation?.id)}">${evaluation?.name}</a>
+			</td>
+			<td>${evaluation?.description}</td>
+			<td>${evaluation?.totalMarks}</td>
+			<td>${evaluation?.course?.name}</td>
+			<td>${evaluation?.createdBy.username}</td>
+			<td>${evaluation?.createdOn}</td>
+			<td><span class="crudListEdit"><a
+					href="@{Evaluations.show(evaluation?.id,'Editing')}">Edit</a> </span></td>
+		</tr>
+		#{/paginate.list}
+		<tr>
+			<td colspan="10">#{paginate.controls items:results /}
+				#{paginate.summary items:results/}</td>
+		</tr>
+		#{/if} #{else}
+		<h1>&{'noevaluation'}</h1>
+		#{/else}
+	</table>
+</div>

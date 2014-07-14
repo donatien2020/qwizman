@@ -29,7 +29,9 @@ type="text/javascript"></script>
 type="text/javascript"></script>
 <script src="@{'/public/js/donFiles/School.js'}" type="text/javascript"></script>
 <script src="@{'/public/js/donFiles/Classe.js'}" type="text/javascript"></script>
+<script src="@{'/public/js/donFiles/Course.js'}" type="text/javascript"></script>
 <script src="@{'/public/js/donFiles/AccademicYear.js'}" type="text/javascript"></script>
+<script src="@{'/public/js/donFiles/Evaluation.js'}" type="text/javascript"></script>
 
 #{get 'moreScripts'/}
 <script
@@ -161,6 +163,8 @@ roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER'],['
 <li><a href="@{Classes.index()}">&{'classes'}</a></li>
 <li><a href="@{AccademicYears.index()}">&{'accYears'}</a></li>
 <li><a href="@{AcademicYearDevisions.index()}">&{'accYearDivisions'}</a></li>
+<li><a href="@{Courses.index()}">&{'courses'}</a></li>
+<li><a href="@{Evaluations.index()}">&{'evaluations'}</a></li>
 #{/deadbolt.restrict} #{deadbolt.restrict roles:[['TEACHER']]}
 <li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
 <li><a href="@{Classes.index()}">&{'classes'}</a></li>
@@ -171,13 +175,13 @@ roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER'],['
 <div id="crudContent">
 <table>
 <tr>
-<td width="15%">Left Side</td>
-<td align="left">#{doLayout /}</td>
+<td width="2%"></td>
+<td align="left">#{doLayout /}</td><td width="2%"></td>
 </tr>
 </table>
 </div>
 <div id="crudFooter">
-Developed By: <a href="http://www.pivotaccess.com/">EWALA LTD!</a>
+Developed By: <a href="http://www.urugwiro.com/">EWALA LTD!</a>
 </div>
 </div>
 </body>

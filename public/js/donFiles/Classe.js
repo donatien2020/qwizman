@@ -86,4 +86,44 @@ function addStudentToClass(event){
 
 function getClassTechers(){
 	$("#teachersDialog").dialog("open");
+	loadClassTeacherCourses();
+}
+function loadClassTeacherCourses(){
+	var classId=$("#classIdDasbord").val();
+	$("#techersListing").html("");
+	if(classId!=""&&classId!=" "){
+		var tableRows="<table>";
+	$.ajax({type : 'GET',
+	    url : getAppContetGlobal()+'/classes/loadClassTeacherCourses',
+	    data : {classId:classId},
+	    success : function(data){
+	    	if(data.length>0)
+	    	 for(var i in data){
+	     	tableRows=tableRows+"<tr><td>"+data[i].teacher.username+""+data[i].teacher.firstName+"</td><td>"+data[i].teacher.lastName+"</td><td>"+data[i].teacher.emailAddress+"</td><td>"+data[i].course.code+"</td><td>"+data[i].course.name+"</td></tr>";
+	           }
+	  },error:function(e){
+		  alert("Error  ?"+JSON.stringify(e));
+	  },async:false
+	});
+	tableRows=tableRows+"</table>";
+	$("#techersListing").html(tableRows);
+	}
+}
+function addTeacherCourseToClass(event){
+	var classId=$("#classIdDasbord").val();
+	var courseId=$("#courseId").val();
+	var teacherId=event.value;
+	if(teacherId!=""&&classId!=""){
+	$.ajax({type : 'GET',
+	    url : getAppContetGlobal()+'/classes/addTeacherToClass',
+	    data : {classId:classId,teacherId:teacherId,courseId:courseId},
+	    success : function(data){
+	    	alert("data"+JSON.stringify(data));
+	    	$("#teacherMsg").html(data.message);
+	    	loadClassTeacherCourses();
+	  },error:function(e){
+		  alert("Error  ?"+JSON.stringify(e));
+	  },async:false
+	});
+	}
 }

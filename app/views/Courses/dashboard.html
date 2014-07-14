@@ -1,0 +1,50 @@
+#{extends '/admin.html' /} #{set title:'Class dashbord' /} #{set
+title:'Add Class' /}
+<div course="formContainer">
+	<table>
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>&{'name'}<font
+							size="2"
+							color="red"
+						>*</font>:</td>
+						<td><input
+							type="hidden"
+							name="courseIdDasbord"
+							id="courseIdDasbord"
+							value="${course?.id}"
+						>${course?.name}</td>
+					</tr>
+					<tr>
+						<td>&{'content'}<font
+							size="2"
+							color="red"
+						>*</font>:</td>
+						<td>${course?.content}</td>
+					</tr>
+					
+					
+				</table></td>
+			<td valign="top">
+				<table>
+					
+					<tr>
+						<td><p id="crudListAdd">
+								<a href="#" onclick="getCourseMaterials();">Course Materials</a>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td><p id="crudListAdd">
+								<a href="#" onclick="getEvaluations();">Evaluations</a>
+							</p>
+						</td>
+					</tr>
+				</table></td>
+		</tr>
+	</table>
+	
+	
+</div>

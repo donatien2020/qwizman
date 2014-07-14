@@ -40,4 +40,8 @@ public class Chapter extends GenericModel{
 	public Operator creator;
 	@ManyToOne
 	public AcademicYearDevision accademicYearDevision;
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

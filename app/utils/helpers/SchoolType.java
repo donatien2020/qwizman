@@ -5,13 +5,13 @@ public enum SchoolType {
 			"HOTEL"), GOVERNANCE("GOVERNANCE"), NGO("NGO"), EDUCATIONAL(
 			"EDUCATIONAL"), ANY("ANY"), BANKING("BANKING");
 
-	private String organizationType;
+	private String schoolType;
 
-	private SchoolType(String organizationType) {
-		this.organizationType = organizationType;
+	private SchoolType(String schoolType) {
+		this.schoolType = schoolType;
 	}
 
 	public String getOrganizationType() {
-		return this.organizationType;
+		return this.schoolType;
 	}
 }

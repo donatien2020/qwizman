@@ -1,0 +1,78 @@
+#{extends '/admin.html' /} #{set title:'Class dashbord' /} #{set
+title:'Add Class' /}
+<div class="formContainer">
+
+	<table>
+	
+	<tr><td valign="top">
+				<table>
+
+					<tr>
+
+						<td>
+							<table>
+								<tr>
+									<td>&{'name'}<font size="2" color="red">*</font>:
+									</td>
+									<td><input type="hidden" name="evaluationIdDasbord"
+										id="evaluationIdDasbord" value="${evaluation?.id}">${evaluation?.name}</td>
+								</tr>
+								<tr>
+									<td>&{'description'}<font size="2" color="red">*</font>:
+									</td>
+									<td>${evaluation?.description}</td>
+								</tr>
+								<tr>
+									<td>&{'type'}<font size="2" color="red">*</font>:
+									</td>
+									<td>${evaluation?.evalType}</td>
+								</tr>
+								<tr>
+									<td>&{'totalMarks'}<font size="2" color="red">*</font>:
+									</td>
+									<td>${evaluation?.totalMarks}</td>
+								</tr>
+
+
+							</table>
+						</td>
+
+					</tr>
+				</table>
+			</td></tr>
+		<tr>
+			<td>
+				<table>
+
+
+
+					<tr>
+						<td><span id="questionAdded">List Of Questions</span><a href="#" onclick="loadQuestions();">Load</a></td>
+					</tr>
+					<tr>
+						<td>
+							<div id="questionList">Questions</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<td>Question<span id="crudListAdd"><a href="#" onclick="addQuestion();">Add</a></span></td>
+									<td>Marks</td>
+									<td>Max Options</td>
+								</tr>
+								<tr>
+									<td><textarea name="content" id="content" cols="5"></textarea></td>
+									<td><input type="text" name="marks" id="marks" size="3" /></td>
+									<td><input type="text" name="maxAllowedOptions" id="maxAllowedOptions" size="3" /></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+			
+		</tr>
+	</table>
+</div>

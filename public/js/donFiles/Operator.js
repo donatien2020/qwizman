@@ -18,8 +18,7 @@ $(function() {
 		modal : true,
 		draggable : true,
 		resizable : true,
-		buttons : {"Confirm" : function() {
-			processWinning();},
+		buttons : {
 			Cancel : function() {
 				$(this).dialog("close");
 			}
@@ -49,8 +48,7 @@ $(function() {
 		modal : true,
 		draggable : true,
 		resizable : true,
-		buttons : {"Confirm" : function() {
-			processWinning();},
+		buttons : {
 			Cancel : function() {
 				$(this).dialog("close");
 			}

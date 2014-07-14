@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import play.data.validation.MaxSize;
 import play.data.validation.MinSize;
@@ -25,17 +26,16 @@ import play.modules.search.Indexed;
  *Each school will define its own courses
  */
 public class Course extends Model {
-	@Required
-	@MaxSize(100)
 	@Unique
+	@NotNull
 	public String code;
 	@Required
-	@MaxSize(100)
+	@NotNull
 	public String name;
-	@Required
-	@MaxSize(10000)
+	@NotNull
 	public String content;
 	@ManyToOne
+	@NotNull
 	public School school;
 	@OneToMany(mappedBy = "course")
 	public List<TeacherClassCourse> teachers = new ArrayList<TeacherClassCourse>();
@@ -46,4 +46,21 @@ public class Course extends Model {
 	public Date createdOn;
 	@ManyToOne
 	public Operator creator;
+
+	public Course() {
+	}
+
+	public Course(String code, String name, String content, School school,
+			Operator creator) {
+		this.code = code;
+		this.name = name;
+		this.content = content;
+		this.school = school;
+		this.creator = creator;
+		this.createdOn = new Date();
+	}
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

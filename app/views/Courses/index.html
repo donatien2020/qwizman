@@ -1,0 +1,50 @@
+#{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
+title:'Courses' /}
+<div id="contentListing">
+	<p id="crudListAdd">
+		<a href="@{Courses.addNew()}">Add New</a>
+	</p>
+	#{if results != null && results?.size()>0}
+	<table>
+		<tr>
+			<td>
+				<h2 id="crudListTitle">
+					#{if results != null && results?.size()>0} &{'totalCourses'}:<span>${results?.size()}</span>
+					#{/if}
+				</h2>
+			</td>
+			<td><input type="text" name="search" class="search rounded"
+				value="Search" id="search" onkeyup="getCourses(this);" /></td>
+		</tr>
+	</table>
+	<table id="courseList" style="overflow: auto;">
+		<thead>
+			<tr>
+				<th>&{'code'}</th>
+				<th>&{'name'}</th>
+				<th>&{'content'}</th>
+				<th>&{'creator'}</th>
+				<th colspan="2">&{'createdOn'}</th>
+			</tr>
+		</thead>
+		#{paginate.list items:results, as:'course' }
+		<tr>
+			<td>${course?.code}</td>
+			<td><a href="@{Courses.dashboard(course?.id)}">${course?.name}</a>
+			</td>
+			<td>${course?.content}</td>
+			<td>${course?.creator.username}</td>
+			<td>${course?.createdOn}</td>
+			<td><span class="crudListEdit"><a
+					href="@{Courses.show(course?.id,'Editing')}">Edit</a> </span></td>
+		</tr>
+		#{/paginate.list}
+		<tr>
+			<td colspan="10">#{paginate.controls items:results /}
+				#{paginate.summary items:results/}</td>
+		</tr>
+		#{/if} #{else}
+		<h1>&{'nocourse'}</h1>
+		#{/else}
+	</table>
+</div>

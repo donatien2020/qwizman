@@ -30,11 +30,13 @@ import play.db.jpa.Model;
 import play.modules.search.Indexed;
 import utils.helpers.UserRole;
 import utils.helpers.UserType;
+import utils.helpers.Utils;
 
 @Indexed
 @Entity
 @Table(name = "core_operator")
 public class Operator extends Model implements RoleHolder {
+	public String code;
 	public String username;
 	public String password;
 	@Required
@@ -78,6 +80,7 @@ public class Operator extends Model implements RoleHolder {
 			String emailAddress, String username, String password,
 			String physicalAddress, String box, String webSite, String salt,
 			ApplicationRole role,String degree) {
+		this.code=Utils.idGenerator(firstName);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
