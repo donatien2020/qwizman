@@ -35,4 +35,16 @@ public class QuestionOption extends GenericModel {
 	public Operator createdBy;
 	@OneToMany(mappedBy = "questionOption")
 	public List<Answer> answers = new ArrayList<Answer>();
+
+	public QuestionOption() {
+	}
+
+	public QuestionOption(String content, BigDecimal marks, Question question,Operator createdBy) {
+		this.content = content;
+		this.marks = marks;
+		this.question = question;
+		this.createdBy=createdBy;
+		this.createdOn=new Date();
+
+	}
 }

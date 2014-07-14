@@ -91,5 +91,7 @@ GET     ${ctx}/evaluations/getEvaluationsByCriterion        Evaluations.getEvalu
 GET     ${ctx}/evaluations/addQuestion   					Evaluations.addQuestion
 GET     ${ctx}/evaluations/loadQuestions 					Evaluations.loadQuestions
 GET     ${ctx}/evaluations/removeQuestion 					Evaluations.removeQuestion
+GET     ${ctx}/evaluations/addQuestionOption  			    Evaluations.addQuestionOption
+GET     ${ctx}/evaluations/removeQuestionOption             Evaluations.removeQuestionOption
 
 
