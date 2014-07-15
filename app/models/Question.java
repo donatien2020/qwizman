@@ -53,10 +53,8 @@ public class Question extends GenericModel {
 	public List<QuestionOption> options = new ArrayList<QuestionOption>();
 	@OneToMany(mappedBy = "question")
 	public List<AssesmentProcess> assesments = new ArrayList<AssesmentProcess>();
-
 	public Question() {
 	}
-
 	public Question(String content, BigDecimal maxAllowedOptions,
 			BigDecimal marks, Evaluation evaluation, Operator creator) {
 		this.content = content;

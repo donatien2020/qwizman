@@ -43,7 +43,7 @@ public boolean shouldSkipField(FieldAttributes f) {
 			&& !f.getName().toLowerCase().equals("totalmarks")
 			&& !f.getName().toLowerCase().equals("qStatus")
 			&& !f.getName().toLowerCase().equals("marks")
-			&& !f.getName().toLowerCase().equals("maxallowedoptions")
+			&& !f.getName().toLowerCase().equals("maxallowedoptions") && !f.getName().toLowerCase().equals("options")
 			&& !f.getName().toLowerCase().equals("qstatus")
 			&& !f.getName().toLowerCase().equals("fullname")&& !f.getName().toLowerCase().equals("createdby")&& !f.getName().toLowerCase().equals("creator")
 			&& !f.getName().toLowerCase().equals("content")

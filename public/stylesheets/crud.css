@@ -542,3 +542,33 @@ input{float: left; display: inline;}
 	display: inline;
 	font-size: 8px;
 }
+.bluec{
+	float:center;
+	color: blue;
+	text-decoration:blink;
+	display: inline;
+	font-size: 10px;
+}
+
+.crudListAdd a {
+	margin: 0;
+	position: relative;
+	top: 0;
+	right: 0;
+	background: #54BD06;
+	padding: 3px 10px;
+	font-size: 90%;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	color: #fff !important;
+	text-decoration: none;
+}
+.formTable{
+	border: 1px solid #ccc;
+    background: #fff;
+    padding: 1px;
+    text-align: right;
+    font-family: sans-serif serif;
+    font-style: italic ;
+    color: blue;
+}

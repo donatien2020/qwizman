@@ -61,6 +61,51 @@ $(function() {
 		collapsable : true
 	});
 	
+	
+	
+	$("#questionOptionDialog").dialog({
+		overlay : {
+			backgroundColor : "#000",
+			opacity : 0.5
+		},
+		position : {
+			my : "left+100",
+			at : "left top+200",
+			of : window
+		},
+		title : 'Add Question Options',
+		autoOpen : false,
+		closeOnEscape : true,
+		height : 'auto',
+		width : 500,
+		modal : true,
+		draggable : true,
+		resizable : true,
+		buttons : {
+			Cancel : function() {
+				$(this).dialog("close");
+			}
+		},
+		close : function() {
+			$(this).dialog("close");
+		}
+	}).dialogExtend({
+		minimizable : true,
+		collapsable : true
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	var closeBtn3 = $('.ui-dialog-titlebar-close');
 	closeBtn3
 			.append('<span class="ui-button-icon-primary ui-icon ui-icon-closethick">');

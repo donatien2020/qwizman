@@ -161,11 +161,16 @@ public class Evaluations extends Controller {
 				Evaluation evaluation = Evaluation.find("id=?", evaluationId)
 						.first();
 				if (evaluation != null) {
+					BigDecimal currentMarks=getEvaluationMark(evaluationId).add(new BigDecimal(marks));
+					if(currentMarks.doubleValue()<=evaluation.totalMarks.doubleValue()){
 					Question question = new Question(content, new BigDecimal(
 							maxOptions), new BigDecimal(marks), evaluation,
 							Operators.getCurrentUser());
 					question = question.save();
-					msg = "Quession Successifully added !";
+					msg = "Quession " + question.content
+							+ "Successifully added !";
+					}else
+						msg = "Total Evaluation Marks Unbalanced !";
 
 				} else
 					msg = "Evaluation not found";
@@ -228,5 +233,103 @@ public class Evaluations extends Controller {
 			msg = e.getMessage();
 		}
 		renderJSON(new CustomerException(msg));
+	}
+
+	public static void addQuestionOption(String qestionId, String content,
+			String marks) {
+		String msg = "Question Option Not Added !";
+		try {
+			if (qestionId != null && content != null && marks != null
+					&& Utils.isDouble(marks)) {
+				Question question = Question.find("id=?", qestionId).first();
+				BigDecimal currentMarks=getQuestionMark(qestionId).add(new BigDecimal(marks));
+				
+				if (question != null ) {
+					if(currentMarks.doubleValue()<=question.marks.doubleValue()){
+					QuestionOption option = new QuestionOption(content,
+							new BigDecimal(marks), question,
+							Operators.getCurrentUser());
+					option = option.save();
+					msg = "Quession Option " + option.content
+							+ " Successifully added !";
+					}else
+						msg = "The Sum Of total Marks Unbalanced !";
+				} else
+					msg = "Question not found";
+				
+
+			} else
+				msg = "Invalid Parameters";
+		} catch (Exception e) {
+			msg = e.getMessage();
+		}
+		renderJSON(new CustomerException(msg));
+	}
+
+	public static void removeQuestionOption(String optionId) {
+		String msg = "Question Not Found !";
+		try {
+			if (optionId != null) {
+				QuestionOption question = QuestionOption.find("id=?", optionId)
+						.first();
+				if (question != null) {
+					if (question.answers == null
+							|| question.answers.size() == 0) {
+
+						question.delete();
+						msg = "Question Successifully Deleted !";
+
+					} else
+						msg = "Can't delete any allread answered Question Option";
+
+				} else
+					msg = "Question not found";
+
+			} else
+				msg = "Invalid Parameters";
+		} catch (Exception e) {
+			msg = e.getMessage();
+		}
+		renderJSON(new CustomerException(msg));
+	}
+
+	public static BigDecimal getQuestionMark(String questionId) {
+		BigDecimal totalMarks = new BigDecimal("0.0");
+		try {
+			
+			if (questionId != null) {
+				Question question = Question.find("id=?", questionId).first();
+				if (question != null) {
+
+					for (QuestionOption option : question.options) {
+						totalMarks = totalMarks.add(option.marks);
+					}
+
+				}
+
+			}
+		} catch (Exception e) {
+
+		}
+		return totalMarks;
+	}
+	public static BigDecimal getEvaluationMark(String evaluationId){
+		BigDecimal totalMarks = new BigDecimal("0.0");
+		try {
+			if (evaluationId != null) {
+				Evaluation evaluation = Evaluation.find("id=?", evaluationId).first();
+				if (evaluation != null) {
+
+					for (Question question : evaluation.questions) {
+						totalMarks = totalMarks.add(question.marks);
+					}
+
+				}
+
+			}
+		} catch (Exception e) {
+
+		}
+		return totalMarks;
 	}
 }
