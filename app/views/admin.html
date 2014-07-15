@@ -146,17 +146,16 @@ Loged In As ${session.get('type')}
 roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER'],['STUDENT']]}
 #{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN']]}
 <li><a href="#">&{'scholCategories'}</a></li>
-<li><a href="@{Schools.index()}">&{'schols'}</a></li>
+<li><a href="@{Schools.index()}">&{'schools'}</a></li>
 <li><a href="@{Operators.index()}">&{'operators'}</a></li>
 <li><a href="@{Operators.getTeachers()}">&{'teachers'}</a></li>
 <li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
-<li><a href="#">&{'classes'}</a></li>
-<li><a href="#">&{'courses'}</a></li>
-<li><a href="#">&{'chapters'}</a></li>
-<li><a href="#">&{'evaluations'}</a></li>
-<li><a href="#">&{'departments'}</a></li>
-<li><a href="#">&{'classLabels'}</a></li>
-<li><a href="#">&{'classLevels'}</a></li> #{/deadbolt.restrict}
+<li><a href="@{Classes.index()}">&{'classes'}</a></li>
+<li><a href="@{AccademicYears.index()}">&{'accYears'}</a></li>
+<li><a href="@{AcademicYearDevisions.index()}">&{'accYearDivisions'}</a></li>
+<li><a href="@{Courses.index()}">&{'courses'}</a></li>
+<li><a href="@{Evaluations.index()}">&{'evaluations'}</a></li>
+<li><a href="#">&{'departments'}</a></li> #{/deadbolt.restrict}
 #{deadbolt.restrict roles:[['HEADTEACHER']]}
 <li><a href="@{Operators.getTeachers()}">&{'teachers'}</a></li>
 <li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
