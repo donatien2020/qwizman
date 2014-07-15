@@ -61,7 +61,6 @@ function loadQuestions(){
 	tableRows=tableRows+"<table>";
 	$('#questionList').html(tableRows); 
 
-	
 }
 function removeQuestion(event){
 	$.ajax({type : 'GET',

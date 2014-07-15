@@ -21,10 +21,10 @@ import org.hibernate.annotations.GenericGenerator;
 
 import models.deadbolt.Role;
 import models.deadbolt.RoleHolder;
-
 import play.data.validation.Email;
 import play.data.validation.Phone;
 import play.data.validation.Required;
+import play.data.validation.Unique;
 import play.db.jpa.GenericModel;
 import play.db.jpa.Model;
 import play.modules.search.Indexed;
@@ -37,6 +37,7 @@ import utils.helpers.Utils;
 @Table(name = "core_operator")
 public class Operator extends Model implements RoleHolder {
 	public String code;
+	@Unique
 	public String username;
 	public String password;
 	@Required

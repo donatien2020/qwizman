@@ -332,4 +332,6 @@ public class Evaluations extends Controller {
 		}
 		return totalMarks;
 	}
+	public static void getMyEvaluations() {
+	}
 }

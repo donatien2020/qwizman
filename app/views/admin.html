@@ -164,9 +164,13 @@ roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER'],['
 <li><a href="@{AcademicYearDevisions.index()}">&{'accYearDivisions'}</a></li>
 <li><a href="@{Courses.index()}">&{'courses'}</a></li>
 <li><a href="@{Evaluations.index()}">&{'evaluations'}</a></li>
-#{/deadbolt.restrict} #{deadbolt.restrict roles:[['TEACHER']]}
-<li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
-<li><a href="@{Classes.index()}">&{'classes'}</a></li>
+#{/deadbolt.restrict} 
+#{deadbolt.restrict roles:[['TEACHER']]}
+<li><a href="@{Operators.getMyStudentsByClass()}">&{'myStudents'}</a></li>
+<li><a href="@{Classes.getMyClassCourses()}">&{'myCourses'}</a></li>
+<li><a href="@{Evaluations.getMyEvaluations()}">&{'myEvaluations'}</a></li>
+#{/deadbolt.restrict} #{deadbolt.restrict roles:[['STUDENT']]}
+<li><a href="@{Classes.getStudenClass()}">&{'myClass'}</a></li>
 #{/deadbolt.restrict}
 </ul>
 #{/deadbolt.restrict}

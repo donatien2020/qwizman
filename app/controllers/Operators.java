@@ -224,8 +224,10 @@ public class Operators extends Controller {
 			String lastName, String phoneNumber, String emailAddress,
 			String username, String password, String physicalAddress,
 			String box, String webSite, String role, String school,String degree) {
+		String msg = "Operator not modified!";
+
 		try {
-			String msg = "Operator not modified!";
+			System.out.println("password :"+password);
 			School schoolOb = null;
 			if (Utils.isLong(school)) {
 				schoolOb = School.findById(Long.parseLong(school));
@@ -243,11 +245,12 @@ public class Operators extends Controller {
 						user.username = username;
 						user.degree=degree;
 						if (password != null && password != ""
-								&& !password.isEmpty() && password.length() > 5) {
+								&& !password.isEmpty()) {
 							String salt = Utils.idGenerator(password);
 							user.password = user.encriptThis(password, salt);
 							user.salt = salt;
-						}
+						}else
+							System.out.println(" unverfied condition ");
 						user.physicalAddress = physicalAddress;
 						user.box = box;
 						user.webSite = webSite;
@@ -256,16 +259,18 @@ public class Operators extends Controller {
 						if (schoolOb != null)
 							user.school = schoolOb;
 						user.typeOf = roleApp.name;
-						user = user.save();
-						msg = "Successifully Modified!";
+						 user.save();
+						msg = "Successifully Modified !!";
 					} else
 						msg = "Role Not found !";
 				} else
 					msg = "Operator Not Found";
 			}
-			renderJSON(new CustomerException(msg));
+			
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		renderJSON(new CustomerException(msg));
 	}
 
 	public static List<ApplicationRole> getRoles(String pageParam) {
@@ -356,7 +361,7 @@ public class Operators extends Controller {
 			renderJSON(new CustomerException("Invalid Search Criterion!"));
 
 	}
-
+public static void getMyStudentsByClass(){}
 	public static Operator getCurrentUser() {
 		try {
 			return Operator.find("byUsername", Security.connected()).first();

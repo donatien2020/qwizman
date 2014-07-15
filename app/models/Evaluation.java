@@ -48,6 +48,9 @@ public class Evaluation extends GenericModel {
 	public Course course;
 	@ManyToOne
 	@NotNull
+	public Classe classe;
+	@ManyToOne
+	@NotNull
 	public AcademicYearDevision accademicYearDevision;
 	@OneToMany(mappedBy = "evaluation")
 	public List<Question> questions = new ArrayList<Question>();
