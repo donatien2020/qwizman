@@ -128,8 +128,6 @@ public class Evaluations extends Controller {
 						creator, courseObj,
 						AcademicYearDevisions.getCurrentDivision()).first();
 				if (classe != null) {
-					System.out
-							.println(" savingggggggggggggggggggggggggggggggggggg");
 					Evaluation evaluation = new Evaluation(name, description,
 							evalType, new BigDecimal(totalMarks),
 							new BigDecimal(duration), courseObj,

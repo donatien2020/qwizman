@@ -12,7 +12,7 @@ title:'Classes' /}
 					#{if results != null && results?.size()>0} &{'totalClasses'}:<span>${results?.size()}</span>
 					#{/if}
 				</h2></td>
-			<td><input
+			<td>#{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER']]}<input
 				type="text"
 				name="search"
 				class="search rounded"
@@ -20,7 +20,7 @@ title:'Classes' /}
 				id="search"
 				onkeyup="getClasses(this);"
 			/>
-				</p>
+				#{/deadbolt.restrict}
 			</td>
 		</tr>
 	</table>
@@ -53,10 +53,10 @@ title:'Classes' /}
 			<td>${classe?.tuturaire?.lastName}&nbsp;${classe?.tuturaire?.username}</td>
 			<td>${classe?.creator.username}</td>
 			<td>${classe?.createdOn}</td>
-			<td><span class="crudListEdit"><a
+			<td>#{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER']]}<span class="crudListEdit"><a
 					href="@{Classes.show(classe?.id,'Editing')}"
 				>Edit</a>
-			</span>
+			</span>#{/deadbolt.restrict}
 			</td>
 		</tr>
 		#{/paginate.list}

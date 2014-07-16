@@ -166,7 +166,6 @@ public class Operators extends Controller {
 
 	public static void addNew(String pageParam) {
 		try {
-			System.out.println("add :" + pageParam);
 			List<ApplicationRole> roles = getRoles(pageParam);
 			List<School> schools = getSchools();
 			render("Operators/form.html", roles, schools);
@@ -228,7 +227,6 @@ public class Operators extends Controller {
 		String msg = "Operator not modified!";
 
 		try {
-			System.out.println("password :" + password);
 			School schoolOb = null;
 			if (Utils.isLong(school)) {
 				schoolOb = School.findById(Long.parseLong(school));
@@ -370,19 +368,16 @@ public class Operators extends Controller {
 		List<Operator> students = new ArrayList<Operator>();
 		ValuePaginator results = null;
 		try {
-			System.out.println("============================================================1");
 			EntityManager em = JPA.em();
 			List<Classe> classes = Classes.getTeacherClasses(getCurrentUser());
-			System.out.println("============================================================2");
-			System.out.println("============================================================ classes 2"+classes);
-			
-AcademicYearDevision division=AcademicYearDevisions.getCurrentDivision();
-System.out.println("============================================================2 division:"+division);
+
+			AcademicYearDevision division = AcademicYearDevisions
+					.getCurrentDivision();
 			List<StudentClasse> stds = em
 					.createQuery(
 							"select ts from StudentClasse ts where ts.classe in (:classes) and ts.accademicYearDevision=:devision")
-					.setParameter("classes", classes).setParameter("devision",division).getResultList();
-			System.out.println(" found :"+stds.size());
+					.setParameter("classes", classes)
+					.setParameter("devision", division).getResultList();
 			for (StudentClasse student : stds)
 				students.add(student.student);
 			if (students != null && students.size() > 0) {
@@ -394,7 +389,6 @@ System.out.println("============================================================
 		} catch (Exception e) {
 
 		}
-		////////////////////////
 		render("Operators/students.html", results, msg);
 	}
 

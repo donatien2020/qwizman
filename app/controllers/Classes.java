@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.h2.constant.SysProperties;
@@ -36,8 +37,6 @@ public class Classes extends Controller {
 			Operator currentUser = Operators.getCurrentUser();
 			ValuePaginator results = null;
 			List<Classe> paginator = new ArrayList<Classe>();
-			System.out.println("currentUser.typeOf :" + currentUser.typeOf
-					+ "sc" + currentUser.school);
 			if (currentUser != null
 					&& currentUser.typeOf.equals(UserType.HEADTEACHER
 							.getUserType()) && currentUser.school != null) {
@@ -68,12 +67,13 @@ public class Classes extends Controller {
 
 	public static List<Classe> getTeacherClasses(Operator teacher) {
 		List<Classe> classes = new ArrayList<Classe>();
-		try {
-			List<TeacherClassCourse> teacherClasses = TeacherClassCourse.find(
-					"teacher=? and accademicYearDevision=?", teacher,
-					AcademicYearDevisions.getCurrentDivision()).fetch();
-			for (TeacherClassCourse classe : teacherClasses)
-				classes.add(classe.classe);
+		try {			
+			EntityManager em = JPA.em();
+			classes=em
+			.createQuery(
+					"select DISTINCT ts.classe from TeacherClassCourse ts where ts.teacher=:teacher and ts.accademicYearDevision=:devision")
+			.setParameter("teacher", teacher)
+			.setParameter("devision", AcademicYearDevisions.getCurrentDivision()).getResultList();
 		} catch (Exception e) {
 
 		}

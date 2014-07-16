@@ -9,7 +9,7 @@ title:'Loyalty Users' /}
 					&{'totalStudents'}:<span>${results.size()}</span>
 				</h2>
 			</td>
-			<td>
+			<td>#{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER']]}
 					&nbsp;<input
 					type="text"
 					name="search"
@@ -17,7 +17,7 @@ title:'Loyalty Users' /}
 					value="Search"
 					id="search"
 					onkeyup="getUsers(this);"
-				/>
+				/>#{/deadbolt.restrict}
 				</td>
 		</tr>
 	</table>
