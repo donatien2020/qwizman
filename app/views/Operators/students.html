@@ -1,0 +1,57 @@
+#{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
+title:'Loyalty Users' /}
+<div id="contentListing">
+#{if results != null && results.size()>0}
+	<table>
+		<tr>
+			<td>
+				<h2 id="crudListTitle">
+					&{'totalStudents'}:<span>${results.size()}</span>
+				</h2>
+			</td>
+			<td>
+					&nbsp;<input
+					type="text"
+					name="search"
+					class="search rounded"
+					value="Search"
+					id="search"
+					onkeyup="getUsers(this);"
+				/>
+				</td>
+		</tr>
+	</table>
+	<table
+		id="operatoList"
+		style="overflow: auto;"
+	>
+		
+		<thead>
+			<tr>
+				<th>&{'username'}</th>
+				<th>&{'firstName'}</th>
+				<th>&{'lastName'}</th>
+				<th>&{'emailAddress'}</th>
+				<th>&{'phoneNumber'}</th>
+				<th colspan="2">&{'role'}&nbsp;</th>
+			</tr>
+		</thead>
+		#{paginate.list items:results, as:'user' }
+		<tr>
+			<td>${user?.username}</td>
+			<td>${user?.firstName}</td>
+			<td>${user?.lastName}</td>
+			<td>${user?.emailAddress}</td>
+			<td>${user?.phoneNumber}</td>
+			<td>${user?.role?.name}</td>
+			
+		</tr>
+		#{/paginate.list} #{/if} #{else}
+		<h1>&{'nouser'}</h1>
+		#{/else}
+		<tr>
+			<td colspan="7">#{paginate.controls items:results /}
+				#{paginate.summary items:results/}</td>
+		</tr>
+	</table>
+</div>

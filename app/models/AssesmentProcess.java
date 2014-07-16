@@ -10,11 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
-
 import play.db.jpa.GenericModel;
 import play.modules.search.Indexed;
+import org.hibernate.annotations.GenericGenerator;
+
 @Indexed
 @Entity
 @Table(name="proc_assesment_process")
@@ -32,5 +31,12 @@ public Question question;
 public Date assecedOn;
 @ManyToOne
 public Operator attendant;
+public AssesmentProcess(){}
+public AssesmentProcess(Assesment assesment,Question question,Operator attendant){
+	this.assesment=assesment;
+	this.question=question;
+	this.attendant=attendant;
+	this.assecedOn=new Date();
+}
 
 }

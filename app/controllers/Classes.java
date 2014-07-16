@@ -36,6 +36,8 @@ public class Classes extends Controller {
 			Operator currentUser = Operators.getCurrentUser();
 			ValuePaginator results = null;
 			List<Classe> paginator = new ArrayList<Classe>();
+			System.out.println("currentUser.typeOf :" + currentUser.typeOf
+					+ "sc" + currentUser.school);
 			if (currentUser != null
 					&& currentUser.typeOf.equals(UserType.HEADTEACHER
 							.getUserType()) && currentUser.school != null) {
@@ -45,13 +47,8 @@ public class Classes extends Controller {
 					&& currentUser.typeOf
 							.equals(UserType.TEACHER.getUserType())
 					&& currentUser.school != null) {
-				List<TeacherClassCourse> teacherClasses = TeacherClassCourse
-						.find("teacher=? and accademicYearDevision=?",
-								currentUser,
-								AcademicYearDevisions.getCurrentDivision())
-						.fetch();
-				for (TeacherClassCourse classe : teacherClasses)
-					paginator.add(classe.classe);
+
+				paginator = getTeacherClasses(currentUser);
 
 			} else {
 				paginator = Classe.find("school=? and creator=?",
@@ -67,6 +64,20 @@ public class Classes extends Controller {
 		} catch (Exception e) {
 		}
 
+	}
+
+	public static List<Classe> getTeacherClasses(Operator teacher) {
+		List<Classe> classes = new ArrayList<Classe>();
+		try {
+			List<TeacherClassCourse> teacherClasses = TeacherClassCourse.find(
+					"teacher=? and accademicYearDevision=?", teacher,
+					AcademicYearDevisions.getCurrentDivision()).fetch();
+			for (TeacherClassCourse classe : teacherClasses)
+				classes.add(classe.classe);
+		} catch (Exception e) {
+
+		}
+		return classes;
 	}
 
 	public static void addNew() {
@@ -90,11 +101,11 @@ public class Classes extends Controller {
 	}
 
 	public static void dashboard(String id) {
-		Classe classe = null;
 		String msg = "Class Dashboard";
 		List<Operator> techers = Operators.getTeachersList();
 		List<Operator> students = Operators.getStudentsList();
 		List<Course> classes = Courses.getCourses();
+		Classe classe = null;
 		try {
 			if (Utils.isLong(id)) {
 				classe = Classe.findById(Long.parseLong(id));
@@ -107,10 +118,18 @@ public class Classes extends Controller {
 	}
 
 	public static void getStudenClass() {
-		Classe classe = null;
+		Classe classe =  getStudenClasse();
 		String msg = "Your Class Room Is Ready !";
 		try {
-			List<Evaluation> evaluations = null;
+			classe =  getStudenClasse();
+		} catch (Exception e) {
+		}
+		render("Classes/dashboard.html", classe, msg);
+	}
+
+	public static Classe getStudenClasse() {
+		Classe classe = null;
+		try {
 			Operator student = Operators.getCurrentUser();
 			if (student != null && student.school != null
 					&& student.role.name.equals(UserRole.STUDENT.getUserRole())) {
@@ -122,16 +141,13 @@ public class Classes extends Controller {
 							division).first();
 					if (classStd != null) {
 						classe = classStd.classe;
-						msg = "Class " + classe.fullName + "  is ready Now !";
-					} else
-						msg = "Your Class can't be retrieved";
-				} else
-					msg = "Your Are not load for this acadmic year division !";
-			} else
-				msg = "Your Are not A valid student of this school !";
+
+					}
+				}
+			}
 		} catch (Exception e) {
 		}
-		render("Classes/dashboard.html", classe, msg);
+		return classe;
 	}
 
 	public static void create(String fullName, String emailAddress,

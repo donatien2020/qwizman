@@ -3,14 +3,18 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.h2.constant.SysProperties;
 
 import controllers.deadbolt.Deadbolt;
+import models.AcademicYearDevision;
 import models.ApplicationRole;
+import models.Classe;
 import models.Operator;
 import models.School;
+import models.StudentClasse;
 import play.db.jpa.JPA;
 import play.libs.WS;
 import play.libs.WS.HttpResponse;
@@ -130,14 +134,14 @@ public class Operators extends Controller {
 		}
 
 	}
-	
-	public static List<Operator> getStudentsList(){
+
+	public static List<Operator> getStudentsList() {
 		List<Operator> paginator = null;
 		Operator currentUser = Operators.getCurrentUser();
 
 		if (currentUser != null
-				&& currentUser.typeOf.equals(UserType.SUPERADMIN
-						.getUserType()) && currentUser.school == null) {
+				&& currentUser.typeOf.equals(UserType.SUPERADMIN.getUserType())
+				&& currentUser.school == null) {
 			paginator = Operator.find("typeOf=? ",
 					UserType.STUDENT.getUserType()).fetch();
 		} else if (currentUser != null
@@ -148,17 +152,13 @@ public class Operators extends Controller {
 					UserType.STUDENT.getUserType(), currentUser).fetch();
 		else if (currentUser != null
 				&& currentUser.school != null
-				&& currentUser.typeOf.equals(UserType.HEADTEACHER
-						.getUserType()))
-			paginator = Operator.find("school=? AND typeOf=?",
-					currentUser.school, UserType.STUDENT.getUserType())
-					.fetch();
-		else if (currentUser != null
-				&& currentUser.school != null
 				&& currentUser.typeOf
-						.equals(UserType.TEACHER.getUserType()))
-			paginator = Operator.find(
-					"school=? AND typeOf=? AND createdBy=? ",
+						.equals(UserType.HEADTEACHER.getUserType()))
+			paginator = Operator.find("school=? AND typeOf=?",
+					currentUser.school, UserType.STUDENT.getUserType()).fetch();
+		else if (currentUser != null && currentUser.school != null
+				&& currentUser.typeOf.equals(UserType.TEACHER.getUserType()))
+			paginator = Operator.find("school=? AND typeOf=? AND createdBy=? ",
 					currentUser.school, UserType.STUDENT.getUserType(),
 					currentUser).fetch();
 		return paginator;
@@ -195,7 +195,7 @@ public class Operators extends Controller {
 	public static void create(String firstName, String lastName,
 			String phoneNumber, String emailAddress, String username,
 			String password, String physicalAddress, String box,
-			String webSite, String role, String school,String degree) {
+			String webSite, String role, String school, String degree) {
 		try {
 			ApplicationRole roleApp = null;
 			if (Utils.isLong(role)) {
@@ -209,7 +209,7 @@ public class Operators extends Controller {
 				schoolOb = getCurrentUser().school;
 			Operator operator = new Operator(firstName, lastName, phoneNumber,
 					emailAddress, username, password, physicalAddress, box,
-					webSite, Utils.idGenerator(password), roleApp,degree);
+					webSite, Utils.idGenerator(password), roleApp, degree);
 			operator.createdBy = getCurrentUser();
 			operator.school = schoolOb;
 			operator = operator.save();
@@ -223,11 +223,12 @@ public class Operators extends Controller {
 	public static void modifyUser(String userId, String firstName,
 			String lastName, String phoneNumber, String emailAddress,
 			String username, String password, String physicalAddress,
-			String box, String webSite, String role, String school,String degree) {
+			String box, String webSite, String role, String school,
+			String degree) {
 		String msg = "Operator not modified!";
 
 		try {
-			System.out.println("password :"+password);
+			System.out.println("password :" + password);
 			School schoolOb = null;
 			if (Utils.isLong(school)) {
 				schoolOb = School.findById(Long.parseLong(school));
@@ -243,13 +244,13 @@ public class Operators extends Controller {
 						user.phoneNumber = phoneNumber;
 						user.emailAddress = emailAddress;
 						user.username = username;
-						user.degree=degree;
+						user.degree = degree;
 						if (password != null && password != ""
 								&& !password.isEmpty()) {
 							String salt = Utils.idGenerator(password);
 							user.password = user.encriptThis(password, salt);
 							user.salt = salt;
-						}else
+						} else
 							System.out.println(" unverfied condition ");
 						user.physicalAddress = physicalAddress;
 						user.box = box;
@@ -258,15 +259,17 @@ public class Operators extends Controller {
 						user.createdBy = getCurrentUser();
 						if (schoolOb != null)
 							user.school = schoolOb;
+						else
+							user.school = getCurrentUser().school;
 						user.typeOf = roleApp.name;
-						 user.save();
+						user.save();
 						msg = "Successifully Modified !!";
 					} else
 						msg = "Role Not found !";
 				} else
 					msg = "Operator Not Found";
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -361,7 +364,40 @@ public class Operators extends Controller {
 			renderJSON(new CustomerException("Invalid Search Criterion!"));
 
 	}
-public static void getMyStudentsByClass(){}
+
+	public static void getMyStudentsByClass() {
+		String msg = "Student List";
+		List<Operator> students = new ArrayList<Operator>();
+		ValuePaginator results = null;
+		try {
+			System.out.println("============================================================1");
+			EntityManager em = JPA.em();
+			List<Classe> classes = Classes.getTeacherClasses(getCurrentUser());
+			System.out.println("============================================================2");
+			System.out.println("============================================================ classes 2"+classes);
+			
+AcademicYearDevision division=AcademicYearDevisions.getCurrentDivision();
+System.out.println("============================================================2 division:"+division);
+			List<StudentClasse> stds = em
+					.createQuery(
+							"select ts from StudentClasse ts where ts.classe in (:classes) and ts.accademicYearDevision=:devision")
+					.setParameter("classes", classes).setParameter("devision",division).getResultList();
+			System.out.println(" found :"+stds.size());
+			for (StudentClasse student : stds)
+				students.add(student.student);
+			if (students != null && students.size() > 0) {
+				results = new ValuePaginator(students);
+				results.setPageSize(30);
+				results.setBoundaryControlsEnabled(true);
+				results.setPagesDisplayed(0);
+			}
+		} catch (Exception e) {
+
+		}
+		////////////////////////
+		render("Operators/students.html", results, msg);
+	}
+
 	public static Operator getCurrentUser() {
 		try {
 			return Operator.find("byUsername", Security.connected()).first();

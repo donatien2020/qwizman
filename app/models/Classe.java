@@ -41,6 +41,8 @@ public class Classe extends Model {
 	public List<TeacherClassCourse> courses = new ArrayList<TeacherClassCourse>();
 	@OneToMany(mappedBy = "classe")
 	public List<StudentClasse> students = new ArrayList<StudentClasse>();
+	@OneToMany(mappedBy = "classe")
+	public List<Evaluation> evaluations = new ArrayList<Evaluation>();
 	public Date createdOn;
 	@ManyToOne
 	public Operator creator;

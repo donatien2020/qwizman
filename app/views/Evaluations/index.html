@@ -13,8 +13,8 @@ title:'Evaluations' /}
 					#{/if}
 				</h2>
 			</td>
-			<td><input type="text" name="search" class="search rounded"
-				value="Search" id="search" onkeyup="getEvaluations(this);" /></td>
+			<td>#{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER']}<input type="text" name="search" class="search rounded"
+				value="Search" id="search" onkeyup="getEvaluations(this);" />#{/deadbolt.restrict}</td>
 		</tr>
 	</table>
 	<table id="evaluationList" style="overflow: auto;">
@@ -39,8 +39,14 @@ title:'Evaluations' /}
 			<td>${evaluation?.course?.name}</td>
 			<td>${evaluation?.createdBy.username}</td>
 			<td>${evaluation?.createdOn}</td>
+			#{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER'],['STUDENT']]}
 			<td><span class="crudListEdit"><a
 					href="@{Evaluations.show(evaluation?.id,'Editing')}">Edit</a> </span></td>
+					#{deadbolt.restrict roles:[['STUDENT']]}
+					<td><span class="crudListEdit"><a
+					href="@{Evaluations.takeEvaluation(evaluation?.id)}">Take</a> </span></td>
+					#{/deadbolt.restrict}
+					#{/deadbolt.restrict}
 		</tr>
 		#{/paginate.list}
 		<tr>

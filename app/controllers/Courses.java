@@ -2,7 +2,11 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.sun.org.apache.bcel.internal.generic.LSTORE;
+
 import models.AcademicYearDevision;
+import models.Classe;
 import models.Course;
 import models.Operator;
 import models.School;
@@ -19,29 +23,7 @@ public class Courses extends Controller {
 		ValuePaginator results = null;
 
 		try {
-			Operator currentUser = Operators.getCurrentUser();
-			List<Course> paginator = new ArrayList<Course>();
-			if (currentUser != null
-					&& currentUser.typeOf != null
-					&& currentUser.typeOf.equals(UserType.HEADTEACHER
-							.getUserType()) && currentUser.school != null) {
-				paginator = Course.find("school=?", currentUser.school).fetch();
-			} else if (currentUser != null
-					&& currentUser.typeOf != null
-					&& currentUser.typeOf
-							.equals(UserType.TEACHER.getUserType())
-					&& currentUser.school != null) {
-				List<TeacherClassCourse> teacherClasses = TeacherClassCourse
-						.find("teacher=? and accademicYearDevision=?",
-								currentUser,
-								AcademicYearDevisions.getCurrentDivision())
-						.fetch();
-				for (TeacherClassCourse classe : teacherClasses)
-					paginator.add(classe.course);
-				paginator = Course.find("creator=?", currentUser).fetch();
-			} else
-				paginator = Course.find("creator=?", currentUser).fetch();
-
+			List<Course> paginator = getCourses();
 			if (paginator != null && paginator.size() > 0) {
 				results = new ValuePaginator(paginator);
 				results.setPageSize(10);
@@ -56,18 +38,45 @@ public class Courses extends Controller {
 
 	public static List<Course> getCourses() {
 		Operator currentUser = Operators.getCurrentUser();
-		List<Course> courses = null;
+		List<Course> paginator = new ArrayList<Course>();
 		if (currentUser != null
+				&& currentUser.typeOf != null
+				&& (currentUser.typeOf
+						.equals(UserType.SUPERADMIN.getUserType())
+						|| currentUser.typeOf.equals(UserType.REPRESENTATOR
+								.getUserType()) || currentUser.typeOf
+							.equals(UserType.ADMIN.getUserType()))
+				&& currentUser.school == null) {
+			paginator = Course.findAll();
+		} else if (currentUser != null
 				&& currentUser.typeOf != null
 				&& currentUser.typeOf
 						.equals(UserType.HEADTEACHER.getUserType())
 				&& currentUser.school != null) {
-			courses = Course.find("school=?", currentUser.school).fetch();
-		} else
-			courses = Course.find("creator=? and school=?", currentUser,
-					currentUser.school).fetch();
-
-		return courses;
+			paginator = Course.find("school=?", currentUser.school).fetch();
+		} else if (currentUser != null && currentUser.typeOf != null
+				&& currentUser.typeOf.equals(UserType.TEACHER.getUserType())
+				&& currentUser.school != null) {
+			List<TeacherClassCourse> teacherClasses = TeacherClassCourse.find(
+					"teacher=? and accademicYearDevision=?", currentUser,
+					AcademicYearDevisions.getCurrentDivision()).fetch();
+			for (TeacherClassCourse classe : teacherClasses)
+				paginator.add(classe.course);
+			List<Course> courses = new ArrayList<Course>();
+			courses = Course.find("creator=?", currentUser).fetch();
+			if (courses != null)
+				paginator.addAll(courses);
+		} else if (currentUser != null && currentUser.typeOf != null
+				&& currentUser.typeOf.equals(UserType.STUDENT.getUserType())
+				&& currentUser.school != null) {
+			List<TeacherClassCourse> teacherClasses = TeacherClassCourse.find(
+					"classe=? and accademicYearDevision=?", Classes.getStudenClasse(),
+					AcademicYearDevisions.getCurrentDivision()).fetch();
+			for (TeacherClassCourse classee : teacherClasses)
+				paginator.add(classee.course);
+		}else
+			paginator = Course.find("creator=?", currentUser).fetch();
+		return paginator;
 	}
 
 	public static List<Course> getMyCourses() {

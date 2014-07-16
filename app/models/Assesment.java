@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -26,12 +27,25 @@ public class Assesment extends GenericModel{
     public String id;
 	public String assesmentNote;
 	@ManyToOne
+	@NotNull
 	public Evaluation evaluation;
 	@ManyToOne
+	@NotNull
 	public Operator attendant;
+	@NotNull
 	public BigDecimal obtainedMarks;
+	@NotNull
 	public Date attendedOn;
 	@OneToMany(mappedBy = "assesment")
 	public List<AssesmentProcess> processes = new ArrayList<AssesmentProcess>();
+	
+	public Assesment(){}
+	public Assesment(Evaluation evaluation,Operator attendant){
+		this.evaluation=evaluation;
+		this.attendant=attendant;
+		this.obtainedMarks=new BigDecimal("0.0");
+		this.attendedOn=new Date();
+		this.assesmentNote="Start";
+	}
 	
 }

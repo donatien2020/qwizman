@@ -61,6 +61,7 @@ title:'Add Class' /}
 				<table>
 				#{deadbolt.restrict roles:[['HEADTEACHER'],['TEACHER'],['STUDENT']]}
 				#{deadbolt.restrict roles:[['HEADTEACHER'],['TEACHER']]}
+				#{deadbolt.restrict roles:[['HEADTEACHER']]}
 					<tr>
 						<td><p id="crudListAdd">
 								<a
@@ -69,6 +70,7 @@ title:'Add Class' /}
 								>Teachers</a>
 							</p></td>
 					</tr>
+					#{/deadbolt.restrict}
 					<tr>
 						<td><p id="crudListAdd">
 								<a
@@ -89,8 +91,16 @@ title:'Add Class' /}
 					<tr>
 						<td><p id="crudListAdd">
 								<a
-									href="#"
-									onclick="getClassStudents();"
+									href="@{Courses.index()}"
+									
+								>Courses</a>
+							</p></td>
+					</tr>
+					<tr>
+						<td><p id="crudListAdd">
+								<a
+									href="@{Evaluations.index()}"
+									
 								>Evaluations</a>
 							</p></td>
 					</tr>
@@ -98,7 +108,7 @@ title:'Add Class' /}
 						<td><p id="crudListAdd">
 								<a
 									href="#"
-									onclick="getClassStudents();"
+									
 								>School Reports</a>
 							</p></td>
 					</tr>

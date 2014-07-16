@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import models.AcademicYearDevision;
+import models.Assesment;
+import models.AssesmentProcess;
 import models.Classe;
 import models.Course;
 import models.Evaluation;
@@ -14,22 +16,41 @@ import models.TeacherClassCourse;
 import play.modules.paginate.ValuePaginator;
 import play.mvc.Controller;
 import utils.helpers.CustomerException;
+import utils.helpers.UserRole;
 import utils.helpers.UserType;
 import utils.helpers.Utils;
 
 public class Evaluations extends Controller {
 	public static void index() {
 		ValuePaginator results = null;
-
 		try {
+			AcademicYearDevision division = AcademicYearDevisions
+					.getCurrentDivision();
 			Operator currentUser = Operators.getCurrentUser();
 			List<Evaluation> paginator = null;
 			if (currentUser != null
 					&& currentUser.typeOf != null
+					&& currentUser.typeOf.equals(UserType.SUPERADMIN
+							.getUserType()) && currentUser.school == null) {
+				paginator = Evaluation.findAll();
+			} else if (currentUser != null
+					&& currentUser.typeOf != null
 					&& currentUser.typeOf.equals(UserType.HEADTEACHER
 							.getUserType()) && currentUser.school != null) {
-				paginator = Evaluation.find("school=?", currentUser.school)
-						.fetch();
+				paginator = Evaluation.find(
+						"school=? and accademicYearDevision=?",
+						currentUser.school, division).fetch();
+			} else if (currentUser != null
+					&& currentUser.school != null
+					&& currentUser.role.name.equals(UserRole.STUDENT
+							.getUserRole())) {
+				Classe Classe = Classes.getStudenClasse();
+				if (Classe != null && division != null) {
+					paginator = Evaluation
+							.find("school=? and classe=? and accademicYearDevision=?",
+									currentUser.school, Classe, division)
+							.fetch();
+				}
 			} else
 				paginator = Evaluation.find("createdBy=?", currentUser).fetch();
 
@@ -107,12 +128,13 @@ public class Evaluations extends Controller {
 						creator, courseObj,
 						AcademicYearDevisions.getCurrentDivision()).first();
 				if (classe != null) {
-					System.out.println(" savingggggggggggggggggggggggggggggggggggg");
+					System.out
+							.println(" savingggggggggggggggggggggggggggggggggggg");
 					Evaluation evaluation = new Evaluation(name, description,
 							evalType, new BigDecimal(totalMarks),
 							new BigDecimal(duration), courseObj,
 							AcademicYearDevisions.getCurrentDivision(),
-							creator.school, creator,classe.classe);
+							creator.school, creator, classe.classe);
 					evaluation = evaluation.save();
 				}
 			}
@@ -167,25 +189,29 @@ public class Evaluations extends Controller {
 			if (evaluationId != null && content != null && marks != null
 					&& maxOptions != null && Utils.isDouble(marks)
 					&& Utils.isDouble(maxOptions)) {
-				Evaluation evaluation = Evaluation.find("id=?", evaluationId)
-						.first();
-				if (evaluation != null) {
-					BigDecimal currentMarks = getEvaluationMark(evaluationId)
-							.add(new BigDecimal(marks));
-					if (currentMarks.doubleValue() <= evaluation.totalMarks
-							.doubleValue()) {
-						Question question = new Question(content,
-								new BigDecimal(maxOptions), new BigDecimal(
-										marks), evaluation,
-								Operators.getCurrentUser());
-						question = question.save();
-						msg = "Quession " + question.content
-								+ "Successifully added !";
-					} else
-						msg = "Total Evaluation Marks Unbalanced !";
+				if (Double.parseDouble(maxOptions) <= 3
+						&& Double.parseDouble(maxOptions) > 0) {
+					Evaluation evaluation = Evaluation.find("id=?",
+							evaluationId).first();
+					if (evaluation != null) {
+						BigDecimal currentMarks = getEvaluationMark(
+								evaluationId).add(new BigDecimal(marks));
+						if (currentMarks.doubleValue() <= evaluation.totalMarks
+								.doubleValue()) {
+							Question question = new Question(content,
+									new BigDecimal(maxOptions), new BigDecimal(
+											marks), evaluation,
+									Operators.getCurrentUser());
+							question = question.save();
+							msg = "Quession " + question.content
+									+ "Successifully added !";
+						} else
+							msg = "Total Evaluation Marks Unbalanced !";
 
+					} else
+						msg = "Evaluation not found";
 				} else
-					msg = "Evaluation not found";
+					msg = "Max Options must be >0 and <=3";
 
 			} else
 				msg = "Invalid Parameters";
@@ -348,6 +374,49 @@ public class Evaluations extends Controller {
 		return totalMarks;
 	}
 
-	public static void getMyEvaluations() {
+	public static void takeEvaluation(String id) {
+		String msg = "Evaluation not available";
+		Evaluation evaluation = null;
+		try {
+			Operator attendnt = Operators.getCurrentUser();
+			evaluation = Evaluation.find("id=?", id).first();
+			if (evaluation != null) {
+
+				Assesment assessment = null;
+				Assesment assessmentExist = Assesment.find(
+						"evaluation=? and attendant=?", evaluation, attendnt)
+						.first();
+				if (assessmentExist == null) {
+					assessment = new Assesment(evaluation, attendnt);
+					assessment = assessment.save();
+				} else
+					assessment = assessmentExist;
+				if (assessment.id != null) {
+
+					for (Question question : evaluation.questions) {
+						AssesmentProcess process = null;
+						AssesmentProcess processExist = AssesmentProcess.find(
+								"assesment=? and question=? and attendant=?",
+								assessment, question, attendnt).first();
+						if (processExist == null) {
+							process = new AssesmentProcess(assessment,
+									question, attendnt);
+							process = process.save();
+						} else
+							process = processExist;
+						if (process.id != null) {
+							msg = "Assesment Started !";
+						} else
+							msg = "Assesment Failed Inthe Midle";
+					}
+					render("Evaluations/dashboard.html", assessment, msg);
+				} else
+					msg = "Assesment Completly Failed ";
+
+			} else
+				msg = "This Evaluation is not ready";
+		} catch (Exception e) {
+		}
+		render("Evaluations/dashboard.html", evaluation, msg);
 	}
 }
