@@ -20,12 +20,25 @@ public class Courses extends Controller {
 
 		try {
 			Operator currentUser = Operators.getCurrentUser();
-			List<Course> paginator = null;
+			List<Course> paginator = new ArrayList<Course>();
 			if (currentUser != null
 					&& currentUser.typeOf != null
 					&& currentUser.typeOf.equals(UserType.HEADTEACHER
 							.getUserType()) && currentUser.school != null) {
 				paginator = Course.find("school=?", currentUser.school).fetch();
+			} else if (currentUser != null
+					&& currentUser.typeOf != null
+					&& currentUser.typeOf
+							.equals(UserType.TEACHER.getUserType())
+					&& currentUser.school != null) {
+				List<TeacherClassCourse> teacherClasses = TeacherClassCourse
+						.find("teacher=? and accademicYearDevision=?",
+								currentUser,
+								AcademicYearDevisions.getCurrentDivision())
+						.fetch();
+				for (TeacherClassCourse classe : teacherClasses)
+					paginator.add(classe.course);
+				paginator = Course.find("creator=?", currentUser).fetch();
 			} else
 				paginator = Course.find("creator=?", currentUser).fetch();
 

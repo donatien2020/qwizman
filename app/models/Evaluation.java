@@ -70,7 +70,7 @@ public class Evaluation extends GenericModel {
 
 	public Evaluation(String name, String description, String evalType,
 			BigDecimal totalMarks,BigDecimal duration, Course course,
-			AcademicYearDevision accademicYearDevision, School school,Operator createdBy) {
+			AcademicYearDevision accademicYearDevision, School school,Operator createdBy,Classe classe) {
 		this.name = name;
 		this.description = description;
 		this.evalType = evalType;
@@ -81,6 +81,7 @@ public class Evaluation extends GenericModel {
 		this.createdOn = new Date();
 		this.school=school;
 		this.duration=duration;
+		this.classe=classe;
 	}
 
 	@Override

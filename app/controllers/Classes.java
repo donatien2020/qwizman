@@ -35,11 +35,27 @@ public class Classes extends Controller {
 		try {
 			Operator currentUser = Operators.getCurrentUser();
 			ValuePaginator results = null;
-			List<Classe> paginator = null;
+			List<Classe> paginator = new ArrayList<Classe>();
 			if (currentUser != null
 					&& currentUser.typeOf.equals(UserType.HEADTEACHER
 							.getUserType()) && currentUser.school != null) {
 				paginator = Classe.find("school=?", currentUser.school).fetch();
+			} else if (currentUser != null
+					&& currentUser.typeOf != null
+					&& currentUser.typeOf
+							.equals(UserType.TEACHER.getUserType())
+					&& currentUser.school != null) {
+				List<TeacherClassCourse> teacherClasses = TeacherClassCourse
+						.find("teacher=? and accademicYearDevision=?",
+								currentUser,
+								AcademicYearDevisions.getCurrentDivision())
+						.fetch();
+				for (TeacherClassCourse classe : teacherClasses)
+					paginator.add(classe.classe);
+
+			} else {
+				paginator = Classe.find("school=? and creator=?",
+						currentUser.school, currentUser).fetch();
 			}
 			if (paginator != null && paginator.size() > 0) {
 				results = new ValuePaginator(paginator);

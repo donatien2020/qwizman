@@ -4,11 +4,13 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import models.AcademicYearDevision;
+import models.Classe;
 import models.Course;
 import models.Evaluation;
 import models.Operator;
 import models.Question;
 import models.QuestionOption;
+import models.TeacherClassCourse;
 import play.modules.paginate.ValuePaginator;
 import play.mvc.Controller;
 import utils.helpers.CustomerException;
@@ -29,7 +31,7 @@ public class Evaluations extends Controller {
 				paginator = Evaluation.find("school=?", currentUser.school)
 						.fetch();
 			} else
-				paginator = Evaluation.find("creator=?", currentUser).fetch();
+				paginator = Evaluation.find("createdBy=?", currentUser).fetch();
 
 			if (paginator != null && paginator.size() > 0) {
 				results = new ValuePaginator(paginator);
@@ -100,12 +102,19 @@ public class Evaluations extends Controller {
 			if (creator != null && creator.school != null
 					&& Utils.isLong(course)) {
 				Course courseObj = Course.findById(Long.parseLong(course));
-				Evaluation evaluation = new Evaluation(name, description,
-						evalType, new BigDecimal(totalMarks), new BigDecimal(
-								duration), courseObj,
-						AcademicYearDevisions.getCurrentDivision(),
-						creator.school, creator);
-				evaluation = evaluation.save();
+				TeacherClassCourse classe = TeacherClassCourse.find(
+						"teacher=? and course=? and accademicYearDevision=?",
+						creator, courseObj,
+						AcademicYearDevisions.getCurrentDivision()).first();
+				if (classe != null) {
+					System.out.println(" savingggggggggggggggggggggggggggggggggggg");
+					Evaluation evaluation = new Evaluation(name, description,
+							evalType, new BigDecimal(totalMarks),
+							new BigDecimal(duration), courseObj,
+							AcademicYearDevisions.getCurrentDivision(),
+							creator.school, creator,classe.classe);
+					evaluation = evaluation.save();
+				}
 			}
 		} catch (Exception e) {
 		}
@@ -161,15 +170,18 @@ public class Evaluations extends Controller {
 				Evaluation evaluation = Evaluation.find("id=?", evaluationId)
 						.first();
 				if (evaluation != null) {
-					BigDecimal currentMarks=getEvaluationMark(evaluationId).add(new BigDecimal(marks));
-					if(currentMarks.doubleValue()<=evaluation.totalMarks.doubleValue()){
-					Question question = new Question(content, new BigDecimal(
-							maxOptions), new BigDecimal(marks), evaluation,
-							Operators.getCurrentUser());
-					question = question.save();
-					msg = "Quession " + question.content
-							+ "Successifully added !";
-					}else
+					BigDecimal currentMarks = getEvaluationMark(evaluationId)
+							.add(new BigDecimal(marks));
+					if (currentMarks.doubleValue() <= evaluation.totalMarks
+							.doubleValue()) {
+						Question question = new Question(content,
+								new BigDecimal(maxOptions), new BigDecimal(
+										marks), evaluation,
+								Operators.getCurrentUser());
+						question = question.save();
+						msg = "Quession " + question.content
+								+ "Successifully added !";
+					} else
 						msg = "Total Evaluation Marks Unbalanced !";
 
 				} else
@@ -242,21 +254,22 @@ public class Evaluations extends Controller {
 			if (qestionId != null && content != null && marks != null
 					&& Utils.isDouble(marks)) {
 				Question question = Question.find("id=?", qestionId).first();
-				BigDecimal currentMarks=getQuestionMark(qestionId).add(new BigDecimal(marks));
-				
-				if (question != null ) {
-					if(currentMarks.doubleValue()<=question.marks.doubleValue()){
-					QuestionOption option = new QuestionOption(content,
-							new BigDecimal(marks), question,
-							Operators.getCurrentUser());
-					option = option.save();
-					msg = "Quession Option " + option.content
-							+ " Successifully added !";
-					}else
+				BigDecimal currentMarks = getQuestionMark(qestionId).add(
+						new BigDecimal(marks));
+
+				if (question != null) {
+					if (currentMarks.doubleValue() <= question.marks
+							.doubleValue()) {
+						QuestionOption option = new QuestionOption(content,
+								new BigDecimal(marks), question,
+								Operators.getCurrentUser());
+						option = option.save();
+						msg = "Quession Option " + option.content
+								+ " Successifully added !";
+					} else
 						msg = "The Sum Of total Marks Unbalanced !";
 				} else
 					msg = "Question not found";
-				
 
 			} else
 				msg = "Invalid Parameters";
@@ -296,7 +309,7 @@ public class Evaluations extends Controller {
 	public static BigDecimal getQuestionMark(String questionId) {
 		BigDecimal totalMarks = new BigDecimal("0.0");
 		try {
-			
+
 			if (questionId != null) {
 				Question question = Question.find("id=?", questionId).first();
 				if (question != null) {
@@ -313,11 +326,13 @@ public class Evaluations extends Controller {
 		}
 		return totalMarks;
 	}
-	public static BigDecimal getEvaluationMark(String evaluationId){
+
+	public static BigDecimal getEvaluationMark(String evaluationId) {
 		BigDecimal totalMarks = new BigDecimal("0.0");
 		try {
 			if (evaluationId != null) {
-				Evaluation evaluation = Evaluation.find("id=?", evaluationId).first();
+				Evaluation evaluation = Evaluation.find("id=?", evaluationId)
+						.first();
 				if (evaluation != null) {
 
 					for (Question question : evaluation.questions) {
@@ -332,6 +347,7 @@ public class Evaluations extends Controller {
 		}
 		return totalMarks;
 	}
+
 	public static void getMyEvaluations() {
 	}
 }
