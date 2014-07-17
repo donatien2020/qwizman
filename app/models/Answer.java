@@ -18,9 +18,9 @@ import play.modules.search.Indexed;
 @Table(name = "proc_answer")
 public class Answer extends GenericModel {
 	@Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    public String id;
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	public String id;
 	@ManyToOne
 	public AssesmentProcess assesmentProcess;
 	@ManyToOne
@@ -28,5 +28,16 @@ public class Answer extends GenericModel {
 	public Date answeredOn;
 	@ManyToOne
 	public Operator attendant;
-	
+
+	public Answer() {
+	}
+
+	public Answer(AssesmentProcess assesmentProcess,
+			QuestionOption questionOption, Operator attendant) {
+		this.assesmentProcess = assesmentProcess;
+		this.questionOption = questionOption;
+		this.attendant = attendant;
+		this.answeredOn = new Date();
+	}
+
 }

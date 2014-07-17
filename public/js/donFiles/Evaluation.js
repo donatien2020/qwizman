@@ -114,3 +114,22 @@ function removeQuestionOption(event){
 	  },async:false
 	});
 }
+function answerQuestion(event){
+	var assessmentProc=event.name;
+	var option=event.id
+	if(assessmentProc!="" && assessmentProc!=" " && option!=" "&& option!=""){
+		$.ajax({type : 'GET',
+		    url : getAppContetGlobal()+'/evaluations/answerQuestion',
+		    data : {optionId:option,assessmentProcId:assessmentProc},
+		    success : function(data){
+		    	if(data.message!=undefined){
+		    	$("#evaluationTakingAlert").html(data.message);
+		    	}else
+		    		$("#evaluationTakingAlert").html("Internal Proccessing Error");
+		  },error:function(e){
+			  $("#evaluationTakingAlert").html(JSON.stringify(e));
+		  },async:false
+		});
+	}else
+		$("#evaluationTakingAlert").html("Invalid Actors !")
+}
