@@ -29,9 +29,8 @@ public class AccademicYears extends Controller {
 					&& currentUser.typeOf.equals(UserType.SUPERADMIN
 							.getUserType()) && currentUser.school == null) {
 				paginator = AccademicYear.findAll();
-			} else if (currentUser != null
-					&& currentUser.typeOf.equals(UserType.ADMIN.getUserType())
-					&& currentUser.school == null) {
+			} else if(currentUser != null
+					&& (currentUser.typeOf.equals(UserType.ADMIN.getUserType()) || currentUser.typeOf.equals(UserType.REPRESENTATOR.getUserType()))) {
 				paginator = AccademicYear.findAll();
 			} else if (currentUser != null
 					&& currentUser.typeOf.equals(UserType.HEADTEACHER

@@ -16,6 +16,7 @@ import models.QuestionOption;
 import models.TeacherClassCourse;
 import play.modules.paginate.ValuePaginator;
 import play.mvc.Controller;
+import utils.helpers.AssesmentStatus;
 import utils.helpers.CustomerException;
 import utils.helpers.UserRole;
 import utils.helpers.UserType;
@@ -24,6 +25,7 @@ import utils.helpers.Utils;
 public class Evaluations extends Controller {
 	public static void index() {
 		ValuePaginator results = null;
+		
 		try {
 			AcademicYearDevision division = AcademicYearDevisions
 					.getCurrentDivision();
@@ -38,6 +40,7 @@ public class Evaluations extends Controller {
 					&& currentUser.typeOf != null
 					&& currentUser.typeOf.equals(UserType.HEADTEACHER
 							.getUserType()) && currentUser.school != null) {
+				System.out.println(" conditionverfied ");
 				paginator = Evaluation.find(
 						"school=? and accademicYearDevision=?",
 						currentUser.school, division).fetch();
@@ -63,6 +66,7 @@ public class Evaluations extends Controller {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		render("Evaluations/index.html", results);
 	}
@@ -77,6 +81,7 @@ public class Evaluations extends Controller {
 				&& currentUser.school != null) {
 			evaluations = Evaluation.find("school=?", currentUser.school)
 					.fetch();
+			System.out.println(" evaluations :"+evaluations);
 		} else
 			evaluations = Evaluation.find("creator=? and school=?",
 					currentUser, currentUser.school).fetch();
@@ -458,9 +463,16 @@ public class Evaluations extends Controller {
 		String msg = "Your Result Are As Follow : ";
 		assessment = Assesment.find("id=?", assesmentId).first();
 		if (assessment != null) {
-			// compute elapsedTime if not teminated
-			assessment.elapsedTime = new BigDecimal("0.0");
-			assessment = assessment.save();
+			if (assessment.aStatus == null
+					|| assessment.aStatus.equals(AssesmentStatus.STARTED
+							.getAssesmentStatus())) {
+				// compute elapsedTime if not teminated
+				assessment.aStatus = AssesmentStatus.TERMINATED
+						.getAssesmentStatus();
+				assessment.elapsedTime = new BigDecimal("0.0");
+				assessment = assessment.save();
+			}
+
 		} else
 			msg = "Assesment Not Available";
 		render("Evaluations/checkout.html", assessment, msg);

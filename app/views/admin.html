@@ -144,10 +144,11 @@ Loged In As ${session.get('type')}
 <ul>
 #{deadbolt.restrict
 roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER'],['STUDENT']]}
-#{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN']]}
-<li><a href="#">&{'scholCategories'}</a></li>
+#{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR']]}
 <li><a href="@{Schools.index()}">&{'schools'}</a></li>
 <li><a href="@{Operators.index()}">&{'operators'}</a></li>
+
+#{deadbolt.restrict roles:[['SUPERADMIN']]}
 <li><a href="@{Operators.getTeachers()}">&{'teachers'}</a></li>
 <li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
 <li><a href="@{Classes.index()}">&{'classes'}</a></li>
@@ -155,6 +156,7 @@ roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER'],['
 <li><a href="@{AcademicYearDevisions.index()}">&{'accYearDivisions'}</a></li>
 <li><a href="@{Courses.index()}">&{'courses'}</a></li>
 <li><a href="@{Evaluations.index()}">&{'evaluations'}</a></li>
+#{/deadbolt.restrict}
 <li><a href="#">&{'departments'}</a></li> #{/deadbolt.restrict}
 #{deadbolt.restrict roles:[['HEADTEACHER']]}
 <li><a href="@{Operators.getTeachers()}">&{'teachers'}</a></li>

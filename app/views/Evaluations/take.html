@@ -48,6 +48,13 @@ title:'Add Class' /}
 									>*</font>:</td>
 									<td>${assessment?.evaluation?.totalMarks}</td>
 								</tr>
+								<tr>
+									<td>&{'status'}<font
+										size="2"
+										color="red"
+									>*</font>:</td>
+									<td>${assessment?.aStatus}</td>
+								</tr>
 							</table>
 						</td>
 					</tr>
@@ -105,7 +112,7 @@ title:'Add Class' /}
 							</tr>
 							#{/list}
 							<tr>
-								<td><a href="@{Evaluations.checkout(assessment?.id)}" rel="${assessment?.id}" >Checkout</a>
+								<td colspan="2"><a href="@{Evaluations.checkout(assessment?.id)}" rel="${assessment?.id}" >Checkout</a>
 								</td>
 							</tr>
 						</tbody>

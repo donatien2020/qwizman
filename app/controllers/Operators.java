@@ -39,7 +39,6 @@ public class Operators extends Controller {
 							.getUserType()) && currentUser.school == null) {
 				paginator = Operator.findAll();
 			} else if (currentUser != null
-					&& currentUser.school == null
 					&& (currentUser.typeOf.equals(UserType.ADMIN.getUserType()) || currentUser.typeOf
 							.equals(UserType.REPRESENTATOR.getUserType())))
 				paginator = Operator.find(
