@@ -572,3 +572,5 @@ input{float: left; display: inline;}
     font-style: italic ;
     color: blue;
 }
+.odd { background-color:#fbfbfb } /*odd*/
+.even  { background-color:#e8ecee } /* even*/

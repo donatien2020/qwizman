@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import models.AcademicYearDevision;
+import models.Answer;
 import models.Assesment;
 import models.AssesmentProcess;
 import models.Classe;
@@ -249,15 +250,14 @@ public class Evaluations extends Controller {
 			if (questionId != null) {
 				Question question = Question.find("id=?", questionId).first();
 				if (question != null) {
-					if (question.assesments == null
-							|| question.assesments.size() == 0) {
-						if (question.options != null)
-							for (QuestionOption option : question.options)
-								option.delete();
-						question.delete();
-					} else
-						msg = "This Question Can't be deleted!";
-
+					for (AssesmentProcess processes : question.assesments) {
+						for (Answer answer : processes.answers)
+							answer.delete();
+						processes.delete();
+					}
+					for (QuestionOption option : question.options)
+						option.delete();
+					question.delete();
 					msg = "Question Successifully Deleted !";
 
 				} else
@@ -375,12 +375,12 @@ public class Evaluations extends Controller {
 	public static void takeEvaluation(String id) {
 		String msg = "Evaluation not available";
 		Evaluation evaluation = null;
+		Assesment assessment = null;
 		try {
 			Operator attendnt = Operators.getCurrentUser();
 			evaluation = Evaluation.find("id=?", id).first();
 			if (evaluation != null) {
 
-				Assesment assessment = null;
 				Assesment assessmentExist = Assesment.find(
 						"evaluation=? and attendant=?", evaluation, attendnt)
 						.first();
@@ -407,7 +407,7 @@ public class Evaluations extends Controller {
 						} else
 							msg = "Assesment Failed Inthe Midle";
 					}
-					render("Evaluations/dashboard.html", assessment, msg);
+					render("Evaluations/take.html", assessment, msg);
 				} else
 					msg = "Assesment Completly Failed ";
 
@@ -415,6 +415,41 @@ public class Evaluations extends Controller {
 				msg = "This Evaluation is not ready";
 		} catch (Exception e) {
 		}
-		render("Evaluations/dashboard.html", evaluation, msg);
+		System.out.println(" i am here ok ;");
+		render("Evaluations/take.html", assessment, msg);
+	}
+
+	public static void answerQuestion(String optionId, String assessmentProcId) {
+		String msg = "Answer Not Saved;Try Again Later !";
+		try {
+			AssesmentProcess assesmentProcess = AssesmentProcess.find("id=?",
+					assessmentProcId).first();
+			QuestionOption option = QuestionOption.find("id=?", optionId)
+					.first();
+
+			if (assesmentProcess != null && option != null) {
+				int answers = 0;
+				if (assesmentProcess.answers != null)
+					answers = assesmentProcess.answers.size();
+				BigDecimal maxAllowedOptions = option.question.maxAllowedOptions;
+				if(answers<Math.round(maxAllowedOptions.intValue())){
+				Answer answerExist = Answer.find(
+						"assesmentProcess=? and questionOption=?",
+						assesmentProcess, option).first();
+				if (answerExist == null || answerExist.id == null) {
+					Answer answer = new Answer(assesmentProcess, option,
+							Operators.getCurrentUser());
+					answer = answer.save();
+					msg = "Successifully Answerd: !" + option.content;
+				} else
+					msg = "You have already Picked This Option; Thank You !";}
+				else
+					msg="You Can not go beyond The Max Allowed Option Number!";
+			} else
+				msg = "Assesment Proccess for this option; is not available! Cntact your administartor";
+		} catch (Exception e) {
+			msg = "Internal Proccessing Error :" + e.getMessage();
+		}
+		renderJSON(new CustomerException(msg));
 	}
 }

@@ -3,6 +3,12 @@ title:'Add Class' /}
 <div class="formContainer">
 	<table>
 		<tr>
+			<td><span id="evaluationTaking">${msg}</span><span
+				id="evaluationTakingAlert"
+				class="red"
+			></span></td>
+		</tr>
+		<tr>
 			<td valign="top">
 				<table>
 					<tr>
@@ -15,118 +21,88 @@ title:'Add Class' /}
 									>*</font>:</td>
 									<td><input
 										type="hidden"
-										name="evaluationIdDasbord"
-										id="evaluationIdDasbord"
-										value="${evaluation?.id}"
-									>${evaluation?.name}</td>
+										name="assessimentId"
+										id="assessimentId"
+										value="${assessment?.id}"
+									>${assessment?.evaluation?.name}</td>
 								</tr>
 								<tr>
 									<td>&{'description'}<font
 										size="2"
 										color="red"
 									>*</font>:</td>
-									<td>${evaluation?.description}</td>
+									<td>${assessment?.evaluation?.description}</td>
 								</tr>
 								<tr>
 									<td>&{'type'}<font
 										size="2"
 										color="red"
 									>*</font>:</td>
-									<td>${evaluation?.evalType}</td>
+									<td>${assessment?.evaluation?.evalType}</td>
 								</tr>
 								<tr>
 									<td>&{'totalMarks'}<font
 										size="2"
 										color="red"
 									>*</font>:</td>
-									<td>${evaluation?.totalMarks}</td>
+									<td>${assessment?.evaluation?.totalMarks}</td>
 								</tr>
-							</table>
-						</td>
+							</table></td>
 					</tr>
-				</table>
-			</td>
+				</table></td>
 		</tr>
 		<tr>
 			<td>
-				<table>
-					<tr>
-						<td><span id="questionAdded">List Of Questions</span><a
-							href="#"
-							onclick="loadQuestions();"
-						>Load</a></td>
-					</tr>
-					<tr>
-						<td>
-							<div id="questionList">List Of Questions</div>
-							<div id="questionOptionDialog">
-								<table>
+				<div id="questionListAssessiment">
+					<table>
+						<thead>
+							<tr>
+								<th>Questions</th>
+								<th>Answers</th>
+						</thead>
+						<tbody>
+							#{list items:assessment?.processes, as:'process'}
+							<tr>
+								<td><span class="${process_parity}">${process_index}&nbsp;.&nbsp;${process?.question?.content}</span>
+								</td>
+								<td>
+									<table>
 									<tr>
-										<td>Option<span class="crudListAdd"><a
-												href="#"
-												onclick="addQuestionOption();"
-											>Add</a> </span><span id="optionAdded"></span></td>
+											<td>Max :${process?.question?.maxAllowedOptions}</td>
+										</tr>
+										#{if process?.question?.options != null &&
+										process?.question?.options?.size()>0 &&
+										process?.question?.maxAllowedOptions>1} #{list
+										items:process?.question?.options, as:'option'}
+										<tr>
+											<td><span class="${option_parity}">${option_index}&nbsp;.&nbsp;${option?.content}</span><input
+												type="checkbox"
+												name="${process?.id}"
+												id="${option?.id}"
+												onclick="answerQuestion(this);"
+											></td>
+										</tr>
+										#{/list} #{/if} #{if process?.question?.options != null &&
+										process?.question?.options?.size()>0 &&
+										process?.question?.maxAllowedOptions==1} #{list
+										items:process?.question?.options, as:'option'}
 										
-									</tr>
-									<tr>
-										<td><textarea
-												name="contentOption"
-												id="contentOption"
-												cols="5"
-											></textarea></td>
-									</tr>
-									<tr>
-										<td><input
-											type="text"
-											name="marksOption"
-											id="marksOption"
-											size="3"
-										/><input
-											type="text"
-											name="questionIdOption"
-											id="questionIdOption"
-											size="3"
-										/></td>
-									</tr>
-								</table>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<table>
-								<tr>
-									<td>Question<span class="crudListAdd"><a
-											href="#"
-											onclick="addQuestion();"
-										>Add</a> </span></td>
-									<td>Marks</td>
-									<td>Max Options</td>
-								</tr>
-								<tr>
-									<td><textarea
-											name="content"
-											id="content"
-											cols="5"
-										></textarea></td>
-									<td><input
-										type="text"
-										name="marks"
-										id="marks"
-										size="3"
-									/></td>
-									<td><input
-										type="text"
-										name="maxAllowedOptions"
-										id="maxAllowedOptions"
-										size="3"
-									/></td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-				</table>
-			</td>
+										<tr>
+											<td><span class="${option_parity}">${option_index}&nbsp;.&nbsp;${option?.content}</span><input
+												type="radio"
+												name="${process?.id}"
+												id="${option?.id}"
+												onclick="answerQuestion(this);"
+											></td>
+										</tr>
+										#{/list} #{/if}
+									</table></td>
+							</tr>
+							#{/list}
+							<tr><td>Checkou</td></tr>
+						</tbody>
+					</table>
+				</div></td>
 		</tr>
 	</table>
 </div>
