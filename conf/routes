@@ -94,5 +94,6 @@ GET     ${ctx}/evaluations/removeQuestion 					Evaluations.removeQuestion
 GET     ${ctx}/evaluations/addQuestionOption  			    Evaluations.addQuestionOption
 GET     ${ctx}/evaluations/removeQuestionOption             Evaluations.removeQuestionOption
 GET     ${ctx}/evaluations/answerQuestion                   Evaluations.answerQuestion
+GET     ${ctx}/evaluations/checkout 						Evaluations.checkout
 
 

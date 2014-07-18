@@ -390,7 +390,6 @@ public class Evaluations extends Controller {
 				} else
 					assessment = assessmentExist;
 				if (assessment.id != null) {
-
 					for (Question question : evaluation.questions) {
 						AssesmentProcess process = null;
 						AssesmentProcess processExist = AssesmentProcess.find(
@@ -414,6 +413,7 @@ public class Evaluations extends Controller {
 			} else
 				msg = "This Evaluation is not ready";
 		} catch (Exception e) {
+			msg = "Internal Processing error :" + e.getMessage();
 		}
 		System.out.println(" i am here ok ;");
 		render("Evaluations/take.html", assessment, msg);
@@ -432,24 +432,37 @@ public class Evaluations extends Controller {
 				if (assesmentProcess.answers != null)
 					answers = assesmentProcess.answers.size();
 				BigDecimal maxAllowedOptions = option.question.maxAllowedOptions;
-				if(answers<Math.round(maxAllowedOptions.intValue())){
-				Answer answerExist = Answer.find(
-						"assesmentProcess=? and questionOption=?",
-						assesmentProcess, option).first();
-				if (answerExist == null || answerExist.id == null) {
-					Answer answer = new Answer(assesmentProcess, option,
-							Operators.getCurrentUser());
-					answer = answer.save();
-					msg = "Successifully Answerd: !" + option.content;
+				if (answers < Math.round(maxAllowedOptions.intValue())) {
+					Answer answerExist = Answer.find(
+							"assesmentProcess=? and questionOption=?",
+							assesmentProcess, option).first();
+					if (answerExist == null || answerExist.id == null) {
+						Answer answer = new Answer(assesmentProcess, option,
+								Operators.getCurrentUser());
+						answer = answer.save();
+						msg = "Successifully Answerd: !" + option.content;
+					} else
+						msg = "You have already Picked This Option; Thank You !";
 				} else
-					msg = "You have already Picked This Option; Thank You !";}
-				else
-					msg="You Can not go beyond The Max Allowed Option Number!";
+					msg = "You Can not go beyond The Max Allowed Option Number!";
 			} else
 				msg = "Assesment Proccess for this option; is not available! Cntact your administartor";
 		} catch (Exception e) {
 			msg = "Internal Proccessing Error :" + e.getMessage();
 		}
 		renderJSON(new CustomerException(msg));
+	}
+
+	public static void checkout(String assesmentId) {
+		Assesment assessment = null;
+		String msg = "Your Result Are As Follow : ";
+		assessment = Assesment.find("id=?", assesmentId).first();
+		if (assessment != null) {
+			// compute elapsedTime if not teminated
+			assessment.elapsedTime = new BigDecimal("0.0");
+			assessment = assessment.save();
+		} else
+			msg = "Assesment Not Available";
+		render("Evaluations/checkout.html", assessment, msg);
 	}
 }
