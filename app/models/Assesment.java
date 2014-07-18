@@ -18,7 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import play.db.jpa.GenericModel;
 import play.modules.search.Indexed;
-
+import utils.helpers.AssesmentStatus;
 @Indexed
 @Entity
 @Table(name = "proc_assesment")
@@ -38,21 +38,25 @@ public class Assesment extends GenericModel {
 	public BigDecimal obtainedMarks;
 	@NotNull
 	public Date attendedOn;
+
 	public Date terminetedOn;
 	@Transient
 	public BigDecimal elapsedTime;
 	@OneToMany(mappedBy = "assesment")
 	public List<AssesmentProcess> processes = new ArrayList<AssesmentProcess>();
-
-	public Assesment() {
+	public Assesment() {}
+	@NotNull
+	public String aStatus;
+	
+	public Assesment(Evaluation evaluation,Operator attendant){
+		this.evaluation=evaluation;
+		this.attendant=attendant;
+		this.obtainedMarks=new BigDecimal("0.0");
+		this.attendedOn=new Date();
+		this.assesmentNote="Start";
+		this.aStatus=AssesmentStatus.STARTED.getAssesmentStatus();
 	}
 
-	public Assesment(Evaluation evaluation, Operator attendant) {
-		this.evaluation = evaluation;
-		this.attendant = attendant;
-		this.obtainedMarks = new BigDecimal("0.0");
-		this.attendedOn = new Date();
-		this.assesmentNote = "Start";
-	}
+	
 
 }
