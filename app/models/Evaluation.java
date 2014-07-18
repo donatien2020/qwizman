@@ -21,6 +21,7 @@ import play.data.validation.Required;
 import play.db.jpa.GenericModel;
 import play.db.jpa.Model;
 import play.modules.search.Indexed;
+import utils.helpers.EvaluationStatus;
 
 @Indexed
 @Entity
@@ -64,13 +65,15 @@ public class Evaluation extends GenericModel {
 	@ManyToOne
 	@NotNull
 	public School school;
+	public String eStatus;
 
 	public Evaluation() {
 	}
 
 	public Evaluation(String name, String description, String evalType,
-			BigDecimal totalMarks,BigDecimal duration, Course course,
-			AcademicYearDevision accademicYearDevision, School school,Operator createdBy,Classe classe) {
+			BigDecimal totalMarks, BigDecimal duration, Course course,
+			AcademicYearDevision accademicYearDevision, School school,
+			Operator createdBy, Classe classe) {
 		this.name = name;
 		this.description = description;
 		this.evalType = evalType;
@@ -79,9 +82,10 @@ public class Evaluation extends GenericModel {
 		this.accademicYearDevision = accademicYearDevision;
 		this.createdBy = createdBy;
 		this.createdOn = new Date();
-		this.school=school;
-		this.duration=duration;
-		this.classe=classe;
+		this.school = school;
+		this.duration = duration;
+		this.classe = classe;
+		this.eStatus = EvaluationStatus.PENDING.getEvaluationStatus();
 	}
 
 	@Override
