@@ -1,0 +1,32 @@
+#{extends '/admin.html' /} #{set title:'Edit School' /}
+<body>
+	<div chapter="formContainer">
+		<span chapter="msgAlert" id="msgAlertClass">${msg}</span>
+		<form action="/chapters/modifyChapter" method="post" onsubmit="return checkForm(this);">
+			<table>
+			<tr>
+				<td colspan="2"><p id="crudListAdd">
+						<a>Fill In the Form To Modify This Chapter</a>
+					</p></td>
+			</tr>
+				<tr>
+					<td>&{'name'}<font size="2" color="red">*</font>:
+					</td>
+					<td><input type="hidden" name="chapterid" id="chapterid"
+						value="${chapter?.id}"><input type="text" name="name" value="${chapter?.name}"><span
+						chapter="error">#{error 'name'/}</span></td>
+				</tr>
+				<tr>
+					<td>&{'content'}<font size="2" color="red">*</font>:
+					</td>
+					<td><textarea name="content" id="content">${chapter?.descrition}</textarea><span id="contentError"
+						class="error">#{error 'content' /}</span> <span id="contentValid"
+						class="valid"></span></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" name="editCourse"
+					value="Modify"></td>
+				</tr>
+			</table>
+		</form>
+	</div>

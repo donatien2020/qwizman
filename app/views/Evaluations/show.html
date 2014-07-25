@@ -5,6 +5,11 @@
 		<form action="/evaluations/modifyEvaluation" method="post"
 			onsubmit="return checkForm(this);">
 			<table>
+			<tr>
+				<td colspan="2"><p id="crudListAdd">
+						<a>Fill In the Form To Modify This Evaluation</a>
+					</p></td>
+			</tr>
 				<tr>
 					<td>&{'name'}<font size="2" color="red">*</font>:
 					</td>
@@ -16,7 +21,7 @@
 				<tr>
 					<td>&{'description'}<font size="2" color="red">*</font>:
 					</td>
-					<td><textarea name="description" id="description">${evaluation?.description}</textarea><span
+					<td><input type="text" name="description" id="description" value="${evaluation?.description}"><span
 						id="descriptionError" class="error">#{error 'content' /}</span> <span
 						id="descriptionValid" class="valid"></span></td>
 				</tr>

@@ -5,6 +5,11 @@
 				<form action="create" method="post" onsubmit="return checkForm(this);">
 		<table>
 		<tr>
+				<td colspan="2"><p id="crudListAdd">
+						<a>Fill In the Form To Add Modify The Academic Year </a>
+					</p></td>
+			</tr>
+		<tr>
 				<td>&{'description'}<font size="2" color="red">*</font>:
 				</td>
 				<td><input
@@ -12,8 +17,8 @@
 						name="yearId"
 						id="yearId"
 						value="${accademicYear?.id}"
-					><textarea name="description" id="yearaccdescription"
-						>${accademicYear?.description}</textarea><span
+					><input  name="description" id="yearaccdescription" value="${accademicYear?.description}"
+						><span
 					id="descriptionError" class="error">#{error 'description' /}</span>
 					<span id="descriptionValid" class="valid"></span></td>
 			</tr>

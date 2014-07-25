@@ -6,7 +6,6 @@ public enum EvaluationStatus {
 	private EvaluationStatus(String evaluationStatus) {
 		this.evaluationStatus = evaluationStatus;
 	}
-
 	public String getEvaluationStatus() {
 		return this.evaluationStatus;
 	}

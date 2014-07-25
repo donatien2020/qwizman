@@ -1,0 +1,21 @@
+#{extends '/admin.html' /} #{set title:'Class dashbord' /} #{set
+title:'Add Class' /}
+<div chapter="formContainer">
+	<table>
+		<tr>
+			<td>
+				<table>
+					<tr>
+						
+						<td><h3>${chapter?.name}</h3></td>
+					</tr>
+					<tr>
+						<td>#{verbatim}
+    
+${chapter?.descrition}#{/verbatim}</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>

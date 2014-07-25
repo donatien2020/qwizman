@@ -11,6 +11,11 @@
 			onsubmit="return checkForm(this);"
 		>
 			<table>
+			<tr>
+				<td colspan="2"><p id="crudListAdd">
+						<a>Fill In the Form To Modify The New Academic Year Division</a>
+					</p></td>
+			</tr>
 				<tr>
 					<td>&{'description'}<font
 						size="2"
@@ -22,10 +27,10 @@
 						id="yearIdDiv"
 						value="${accademicYearDivision?.id}"
 					>
-					<textarea
+					<input type="text"
 							name="description"
 							id="yearaccdescriptionDiv"
-						>${accademicYearDivision?.description}</textarea><span
+						 value="${accademicYearDivision?.description}" ><span
 						id="descriptionError"
 						class="error"
 					>#{error 'description' /}</span> <span
