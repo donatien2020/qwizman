@@ -48,12 +48,9 @@ title:'Add Class' /}
 									>*</font>:</td>
 									<td>${evaluation?.eStatus}</td>
 								</tr>
-								
-							</table>
-						</td>
+							</table></td>
 					</tr>
-				</table>
-			</td>
+				</table></td>
 		</tr>
 		<tr>
 			<td>
@@ -62,7 +59,8 @@ title:'Add Class' /}
 						<td><span id="questionAdded">List Of Questions</span><a
 							href="#"
 							onclick="loadQuestions();"
-						>Load</a></td>
+						>Load</a>
+						</td>
 					</tr>
 					<tr>
 						<td>
@@ -73,32 +71,33 @@ title:'Add Class' /}
 										<td>Option<span class="crudListAdd"><a
 												href="#"
 												onclick="addQuestionOption();"
-											>Add</a> </span><span id="optionAdded"></span></td>
-										
+											>Add</a> </span><span id="optionAdded"></span>
+										</td>
 									</tr>
 									<tr>
-										<td><textarea
-												name="contentOption"
-												id="contentOption"
-												cols="5"
-											></textarea></td>
+										<td><input
+											type="text"
+											name="contentOption"
+											id="contentOption"
+										>
+										</td>
 									</tr>
 									<tr>
 										<td><input
 											type="text"
 											name="marksOption"
-											id="marksOption"
+											id="marksOption" 
 											size="3"
 										/><input
-											type="text"
+											type="hidden"
 											name="questionIdOption"
 											id="questionIdOption"
 											size="3"
-										/></td>
+										/>
+										</td>
 									</tr>
 								</table>
-							</div>
-						</td>
+							</div></td>
 					</tr>
 					<tr>
 						<td>
@@ -107,34 +106,36 @@ title:'Add Class' /}
 									<td>Question<span class="crudListAdd"><a
 											href="#"
 											onclick="addQuestion();"
-										>Add</a> </span></td>
+										>Add</a> </span>
+									</td>
 									<td>Marks</td>
 									<td>Max Options</td>
 								</tr>
 								<tr>
-									<td><textarea
-											name="content"
-											id="content"
-											cols="5"
-										></textarea></td>
+									<td><input
+										type="text"
+										name="content"
+										id="content" size="50"
+									>
+									</td>
 									<td><input
 										type="text"
 										name="marks"
 										id="marks"
 										size="3"
-									/></td>
+									/>
+									</td>
 									<td><input
 										type="text"
 										name="maxAllowedOptions"
 										id="maxAllowedOptions"
 										size="3"
-									/></td>
+									/>
+									</td>
 								</tr>
-							</table>
-						</td>
+							</table></td>
 					</tr>
-				</table>
-			</td>
+				</table></td>
 		</tr>
 	</table>
 </div>
