@@ -10,18 +10,16 @@
 					</p></td>
 			</tr>
 				<tr>
-					<td>&{'name'}<font size="2" color="red">*</font>:
+					<td>&{'course'}<font size="2" color="red">*</font>:
 					</td>
 					<td><input type="hidden" name="courseId" id="courseId"
-						value="${course?.id}"><input type="text" name="name" value="${course?.name}"><span
-						course="error">#{error 'name'/}</span></td>
+						value="${course?.id}"><input type="text" name="name" value="${course?.name}"></td>
 				</tr>
 				<tr>
 					<td>&{'content'}<font size="2" color="red">*</font>:
 					</td>
-					<td><input type="text" name="content" id="content" value="${course?.content}"><span id="contentError"
-						class="error">#{error 'content' /}</span> <span id="contentValid"
-						class="valid"></span></td>
+					<td><textarea  name="content" id="content"> ${course?.content}</textarea><span id="contentError"
+						class="error">#{error 'content' /}</span></td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="submit" name="editCourse"

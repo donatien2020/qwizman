@@ -34,7 +34,6 @@ title:'Courses' /}
 			<tr>
 				<th>&{'code'}</th>
 				<th>&{'name'}</th>
-				<th>&{'content'}</th>
 				<th>&{'creator'}</th>
 				<th colspan="2">&{'createdOn'}</th>
 			</tr>
@@ -44,7 +43,6 @@ title:'Courses' /}
 			<td>${course?.code}</td>
 			<td><a href="@{Courses.dashboard(course?.id)}">${course?.name}</a>
 			</td>
-			<td>${course?.content}</td>
 			<td>${course?.creator.username}</td>
 			<td>${course?.createdOn}</td>
 			<td><span class="crudListEdit"><a

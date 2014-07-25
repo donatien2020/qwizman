@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -33,6 +34,7 @@ public class Course extends Model {
 	@NotNull
 	public String name;
 	@NotNull
+	@Column(columnDefinition="TEXT", name="content_c")
 	public String content;
 	@ManyToOne
 	@NotNull
