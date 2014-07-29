@@ -33,9 +33,10 @@ import utils.helpers.Utils;
 @With(Deadbolt.class)
 public class Classes extends Controller {
 	public static void index() {
+		ValuePaginator results = null;
+
 		try {
 			Operator currentUser = Operators.getCurrentUser();
-			ValuePaginator results = null;
 			List<Classe> paginator = new ArrayList<Classe>();
 			if (currentUser != null
 					&& currentUser.typeOf.equals(UserType.HEADTEACHER
@@ -50,8 +51,7 @@ public class Classes extends Controller {
 				paginator = getTeacherClasses(currentUser);
 
 			} else {
-				paginator = Classe.find("school=? and creator=?",
-						currentUser.school, currentUser).fetch();
+				paginator = Classe.findAll();
 			}
 			if (paginator != null && paginator.size() > 0) {
 				results = new ValuePaginator(paginator);
@@ -61,6 +61,7 @@ public class Classes extends Controller {
 			}
 			render("Classes/index.html", results);
 		} catch (Exception e) {
+			render("Classes/index.html", results);
 		}
 
 	}
