@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -38,6 +39,7 @@ import utils.helpers.Utils;
 public class Operator extends Model implements RoleHolder {
 	public String code;
 	@Unique
+	@Column(name="username",unique=true)
 	public String username;
 	public String password;
 	@Required
