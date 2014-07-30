@@ -26,7 +26,7 @@ public class Schools extends Controller {
 		try {
 			List<School> paginator = School.findAll();
 			results = new ValuePaginator(paginator);
-			results.setPageSize(3);
+			results.setPageSize(10);
 			results.setBoundaryControlsEnabled(true);
 			results.setPagesDisplayed(0);
 		} catch (Exception e) {
