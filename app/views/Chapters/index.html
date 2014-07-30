@@ -6,7 +6,7 @@ title:'Chapters' /}
 		#{deadbolt.restrict
 		roles:[['SUPERADMIN'],['ADMIN'],['HEADTEACHER'],['TEACHER']]} <a
 			href="@{Chapters.addNew(course?.id,'Add New Chapter')}"
-		>Add New</a>#{/deadbolt.restrict}
+		>&{'addNew'}</a>#{/deadbolt.restrict}
 	</p>
 	#{if results != null && results?.size()>0}
 	<table>

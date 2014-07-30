@@ -3,7 +3,7 @@ title:'Classes' /}
 <div id="contentListing">
 #{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER']]}
 	<p id="crudListAdd">
-		<a href="@{Classes.addNew()}">Add New</a>
+		<a href="@{Classes.addNew()}">&{'addNew'}</a>
 	</p>
 	#{/deadbolt.restrict}
 	#{if results != null && results?.size()>0}

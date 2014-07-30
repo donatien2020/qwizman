@@ -4,7 +4,7 @@ title:'Courses' /}
 	#{deadbolt.restrict
 	roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER']]}
 	<p id="crudListAdd">
-		<a href="@{Courses.addNew()}">Add New</a>
+		<a href="@{Courses.addNew()}">&{'addNew'}</a>
 	</p>
 	#{/deadbolt.restrict} #{if results != null && results?.size()>0}
 	<table>

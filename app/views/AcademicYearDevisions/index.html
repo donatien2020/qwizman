@@ -2,7 +2,10 @@
 title:'AcademicYearDevisions' /}
 <div id="contentListing">
 	<p id="crudListAdd">
-		<a href="@{AcademicYearDevisions.addNew()}">Add New</a>
+	#{deadbolt.restrict
+		roles:[['SUPERADMIN'],['HEADTEACHER']]}
+		<a href="@{AcademicYearDevisions.addNew()}">&{'addNew'}</a>
+		#{/deadbolt.restrict}
 	</p>
 	#{if results != null && results?.size()>0}
 	<table

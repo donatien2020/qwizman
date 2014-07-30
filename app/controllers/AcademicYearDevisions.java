@@ -19,26 +19,32 @@ public class AcademicYearDevisions extends Controller {
 	public static SimpleDateFormat formater = new SimpleDateFormat("MM/dd/yyyy");
 
 	public static void index() {
+		ValuePaginator results = null;
 		try {
 			Operator currentUser = Operators.getCurrentUser();
-			ValuePaginator results = null;
+			
 			List<AcademicYearDevision> paginator = null;
-			AccademicYear yearExist = AccademicYear.find(
-					"school=? and yearStatus=?", currentUser.school,
-					new Boolean(true)).first();
-			if (yearExist != null) {
-				paginator = yearExist.devisions;
-			}
+			if (currentUser.school != null) {
+				AccademicYear yearExist = AccademicYear.find(
+						"school=? and yearStatus=?", currentUser.school,
+						new Boolean(true)).first();
+				if (yearExist != null) {
+					paginator = yearExist.devisions;
+				}
+			} else if (currentUser.school == null
+					&& currentUser.typeOf.equals(UserType.SUPERADMIN
+							.getUserType()))
+				paginator = AcademicYearDevision.findAll();
 			if (paginator != null && paginator.size() > 0) {
 				results = new ValuePaginator(paginator);
 				results.setPageSize(50);
 				results.setBoundaryControlsEnabled(true);
 				results.setPagesDisplayed(0);
 			}
-			render("AcademicYearDevisions/index.html", results);
+			
 		} catch (Exception e) {
 		}
-
+		render("AcademicYearDevisions/index.html", results);
 	}
 
 	public static void addNew() {
