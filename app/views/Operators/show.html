@@ -119,7 +119,8 @@
 				value="${user.physicalAddress}"
 			><span class="error">#{error 'physicalAddress' /}</span></td>
 		</tr>
-		#{if session.get('type') != null && session.get('type')=='SUPERADMIN'}
+			#{deadbolt.restrict
+				roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR']]}
 		
 		<tr>
 			<td>&{'school'}:<font
@@ -132,22 +133,27 @@
 					'role' /}</span>
 			</td>
 		</tr>
-		#{/if}
+		#{/deadbolt.restrict}
 		<tr>
 					<td>&{'degree'}:</td>
 					<td><select
 						name="degree"
 						id="degree"
 					>
-							<option value="STUDENT">STUDENT</option>
+							#{deadbolt.restrict
+							roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR']]}
+							#{deadbolt.restrict roles:[['SUPERADMIN'],['HEADTEACHER']]}
+							#{deadbolt.restrict roles:[['SUPERADMIN']]}
+							<option value="ANY">ANY</option>
+							<option value="SYSTEM">SYSTEM</option> #{/deadbolt.restrict}
+							<option value="STUDENT">STUDENT</option> #{/deadbolt.restrict}
 							<option value="A0">A0</option>
 							<option value="A1">A1</option>
 							<option value="A2">A2</option>
-							<option value="SYSTEM">SYSTEM</option>
 							<option value="MUSTERS">MUSTER'S</option>
 							<option value="PHD">PhD</option>
 							<option value="POSTGRADUATE">POSTG RADUATE</option>
-							<option value="ANY">ANY</option>
+							#{/deadbolt.restrict}
 					</select>
 					</td>
 				</tr>

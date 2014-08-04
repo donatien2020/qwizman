@@ -333,7 +333,13 @@ public class Operators extends Controller {
 						.equals(UserType.SUPERADMIN.getUserType())
 						&& currentUser.school == null) {
 					return School.findAll();
-				} else if (currentUser.school != null) {
+				} else if (currentUser.typeOf.equals(UserType.REPRESENTATOR
+						.getUserType())
+						|| currentUser.typeOf.equals(UserType.ADMIN
+								.getUserType())) {
+					return School.find("creator=?", currentUser).fetch();
+				} else if (currentUser.typeOf.equals(UserType.HEADTEACHER
+						.getUserType()) && currentUser.school != null) {
 					return School.find("code=?", currentUser.school.code)
 							.fetch();
 				}

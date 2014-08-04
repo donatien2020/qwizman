@@ -10,12 +10,12 @@
 			onsubmit="return checkForm(this);"
 		>
 			<table>
-			<tr>
-				<td colspan="2"><p id="crudListAdd">
-						<a>Fill In the Form To Add A new User</a>
-					</p></td>
-			</tr>
-			
+				<tr>
+					<td colspan="2"><p id="crudListAdd">
+							<a>Fill In the Form To Add A new User</a>
+						</p>
+					</td>
+				</tr>
 				<tr>
 					<td>&{'firstName'}<font
 						size="2"
@@ -25,8 +25,7 @@
 						type="text"
 						name="firstName"
 						value="${flash.firstName}"
-					><span class="error">#{error 'firstName'/}</span>
-					</td>
+					><span class="error">#{error 'firstName'/}</span></td>
 				</tr>
 				<tr>
 					<td>&{'lastName'}<font
@@ -37,8 +36,7 @@
 						type="text"
 						name="lastName"
 						value="${flash.lastName}"
-					><span class="error">#{error 'lastName'/}</span>
-					</td>
+					><span class="error">#{error 'lastName'/}</span></td>
 				</tr>
 				<tr>
 					<td>&{'username'}<font
@@ -57,8 +55,7 @@
 					>#{error 'username' /}</span> <span
 						id="usernameValid"
 						class="valid"
-					></span>
-					</td>
+					></span></td>
 				</tr>
 				<tr>
 					<td>&{'password'}<font
@@ -84,8 +81,7 @@
 					>#{error 'password' /}</span><span
 						id="passwordValid"
 						class="valid"
-					></span>
-					</td>
+					></span></td>
 				</tr>
 				<tr>
 					<td>&{'phoneNumber'}:</td>
@@ -93,8 +89,7 @@
 						type="text"
 						name="phoneNumber"
 						value="${flash.phoneNumber}"
-					> <span class="error">#{error 'phoneNumber' /}</span>
-					</td>
+					> <span class="error">#{error 'phoneNumber' /}</span></td>
 				</tr>
 				<tr>
 					<td>&{'emailAddress'}:</td>
@@ -102,8 +97,7 @@
 						type="text"
 						name="emailAddress"
 						value="${flash.emailAddress}"
-					> <span class="error">#{error 'emailAddress' /}</span>
-					</td>
+					> <span class="error">#{error 'emailAddress' /}</span></td>
 				</tr>
 				<tr>
 					<td>&{'box'}:</td>
@@ -111,8 +105,7 @@
 						type="text"
 						name="box"
 						value="${flash.box}"
-					><span class="error">#{error 'box' /}</span>
-					</td>
+					><span class="error">#{error 'box' /}</span></td>
 				</tr>
 				<tr>
 					<td>&{'webSite'}:</td>
@@ -120,8 +113,7 @@
 						type="text"
 						name="webSite"
 						value="${flash.webSite}"
-					><span class="error">#{error 'webSite' /}</span>
-					</td>
+					><span class="error">#{error 'webSite' /}</span></td>
 				</tr>
 				<tr>
 					<td>&{'physicalAddress'}:</td>
@@ -129,22 +121,19 @@
 						type="text"
 						name="physicalAddress"
 						value="${flash.physicalAddress}"
-					><span class="error">#{error 'physicalAddress' /}</span>
-					</td>
+					><span class="error">#{error 'physicalAddress' /}</span></td>
 				</tr>
-					<tr>
-			<td>&{'role'}<font
-				size="2"
-				color="red"
-			>*</font>:
-			</td>
-			<td>#{select 'role', items: roles, valueProperty: 'id',
-				labelProperty: 'name',id:'select-Role' /} <span class="error">#{error
-					'role' /}</span>
-			</td>
-		</tr>
-				#{if session.get('type') != null &&
-				(session.get('type')=='SUPERADMIN' || session.get('type')=='ADMIN')}
+				<tr>
+					<td>&{'role'}<font
+						size="2"
+						color="red"
+					>*</font>:</td>
+					<td>#{select 'role', items: roles, valueProperty: 'id',
+						labelProperty: 'name',id:'select-Role' /} <span class="error">#{error
+							'role' /}</span></td>
+				</tr>
+				#{deadbolt.restrict
+				roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR']]}
 				<tr>
 					<td>&{'school'}:<font
 						size="2"
@@ -152,34 +141,37 @@
 					>*</font>:</td>
 					<td>#{select 'school', items: schools, valueProperty: 'id',
 						labelProperty: 'name',id:'select-School' /} <span class="error">#{error
-							'school' /}</span></td>
+							'school' /}</span>
+					</td>
 				</tr>
-				#{/if}
+				#{/deadbolt.restrict}
 				<tr>
 					<td>&{'degree'}:</td>
 					<td><select
 						name="degree"
 						id="degree"
-					>
-							<option value="STUDENT">STUDENT</option>
+					> #{deadbolt.restrict
+							roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR']]}
+							#{deadbolt.restrict roles:[['SUPERADMIN'],['HEADTEACHER']]}
+							#{deadbolt.restrict roles:[['SUPERADMIN']]}
+							<option value="ANY">ANY</option>
+							<option value="SYSTEM">SYSTEM</option> #{/deadbolt.restrict}
+							<option value="STUDENT">STUDENT</option> #{/deadbolt.restrict}
 							<option value="A0">A0</option>
 							<option value="A1">A1</option>
 							<option value="A2">A2</option>
-							<option value="SYSTEM">SYSTEM</option>
 							<option value="MUSTERS">MUSTER'S</option>
 							<option value="PHD">PhD</option>
 							<option value="POSTGRADUATE">POSTG RADUATE</option>
-							<option value="ANY">ANY</option>
-					</select>
-					</td>
+							#{/deadbolt.restrict}
+					</select></td>
 				</tr>
 				<tr>
 					<td colspan="2"><input
 						type="submit"
 						name="createOperator"
 						value="Create"
-					>
-					</td>
+					></td>
 				</tr>
 			</table>
 		</form>
