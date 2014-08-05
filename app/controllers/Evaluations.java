@@ -18,6 +18,7 @@ import play.modules.paginate.ValuePaginator;
 import play.mvc.Controller;
 import utils.helpers.AssesmentStatus;
 import utils.helpers.CustomerException;
+import utils.helpers.EvaluationStatus;
 import utils.helpers.UserRole;
 import utils.helpers.UserType;
 import utils.helpers.Utils;
@@ -25,7 +26,7 @@ import utils.helpers.Utils;
 public class Evaluations extends Controller {
 	public static void index() {
 		ValuePaginator results = null;
-		
+
 		try {
 			AcademicYearDevision division = AcademicYearDevisions
 					.getCurrentDivision();
@@ -40,7 +41,6 @@ public class Evaluations extends Controller {
 					&& currentUser.typeOf != null
 					&& currentUser.typeOf.equals(UserType.HEADTEACHER
 							.getUserType()) && currentUser.school != null) {
-				System.out.println(" conditionverfied ");
 				paginator = Evaluation.find(
 						"school=? and accademicYearDevision=?",
 						currentUser.school, division).fetch();
@@ -51,9 +51,12 @@ public class Evaluations extends Controller {
 				Classe Classe = Classes.getStudenClasse();
 				if (Classe != null && division != null) {
 					paginator = Evaluation
-							.find("school=? and classe=? and accademicYearDevision=?",
-									currentUser.school, Classe, division)
-							.fetch();
+							.find("school=? and classe=? and accademicYearDevision=? and eStatus=?",
+									currentUser.school,
+									Classe,
+									division,
+									EvaluationStatus.READY
+											.getEvaluationStatus()).fetch();
 				}
 			} else
 				paginator = Evaluation.find("createdBy=?", currentUser).fetch();
@@ -81,7 +84,7 @@ public class Evaluations extends Controller {
 				&& currentUser.school != null) {
 			evaluations = Evaluation.find("school=?", currentUser.school)
 					.fetch();
-			System.out.println(" evaluations :"+evaluations);
+			System.out.println(" evaluations :" + evaluations);
 		} else
 			evaluations = Evaluation.find("creator=? and school=?",
 					currentUser, currentUser.school).fetch();
@@ -466,15 +469,90 @@ public class Evaluations extends Controller {
 			if (assessment.aStatus == null
 					|| assessment.aStatus.equals(AssesmentStatus.STARTED
 							.getAssesmentStatus())) {
-				// compute elapsedTime if not teminated
-				assessment.aStatus = AssesmentStatus.TERMINATED
-						.getAssesmentStatus();
-				assessment.elapsedTime = new BigDecimal("0.0");
-				assessment = assessment.save();
-			}
+				if (assessment.evaluation.questions.size() == assessment.processes
+						.size()) {
 
+					assessment.aStatus = AssesmentStatus.TERMINATED
+							.getAssesmentStatus();
+					assessment.elapsedTime = new BigDecimal("0.0");
+					assessment = assessment.save();
+				} else
+					msg = "Continue Doing Your Assessment !";
+			} else
+				msg = "The Assesment Cycle is Closed!";
 		} else
-			msg = "Assesment Not Available";
+			msg = "Assesment Not Available !";
 		render("Evaluations/checkout.html", assessment, msg);
+	}
+
+	public static void terminateEvaluation(String evelId) {
+		String msg = "Evaluation not available";
+		Evaluation evaluation = null;
+		try {
+			evaluation = Evaluation.find("id=?", evelId).first();
+			if (evaluation != null) {
+				BigDecimal totalMaks = new BigDecimal("0.0");
+				for (Question question : evaluation.questions)
+					totalMaks = totalMaks.add(question.marks);
+				if (!totalMaks.equals(evaluation.totalMarks))
+					msg = "Can Not terminate A non Balance Evaluation";
+				else {
+					evaluation.eStatus = EvaluationStatus.READY
+							.getEvaluationStatus();
+					evaluation = evaluation.save();
+					msg = "The Evaluation Is Now Ready";
+				}
+			} else
+				msg = "This Evaluation is not ready";
+		} catch (Exception e) {
+			msg = "Internal Processing error :" + e.getMessage();
+		}
+		renderJSON(new CustomerException(msg));
+	}
+
+	public static void resetEvaluation(String evelId) {
+		String msg = "Evaluation not available";
+		Evaluation evaluation = null;
+		try {
+			evaluation = Evaluation.find("id=?", evelId).first();
+			if (evaluation != null) {
+				evaluation.eStatus = EvaluationStatus.CANCELED
+						.getEvaluationStatus();
+				evaluation = evaluation.save();
+				msg = "The Evaluation Is Now CANCELED";
+			} else
+				msg = "This Evaluation is not ready";
+		} catch (Exception e) {
+			msg = "Internal Processing error :" + e.getMessage();
+		}
+		renderJSON(new CustomerException(msg));
+	}
+
+	public static void resetAssesment(String assId) {
+		String msg = "Evaluation not available";
+		Assesment assesment = null;
+		try {
+			assesment = Assesment.find("id=?", assId).first();
+			if (assesment != null) {
+				for (AssesmentProcess process : assesment.processes) {
+					try {
+						for (Answer answer : process.answers)
+							answer.delete();
+						process.delete();
+					} catch (Exception e) {
+						continue;
+					}
+				}
+
+				assesment.aStatus = AssesmentStatus.STARTED
+						.getAssesmentStatus();
+				assesment = assesment.save();
+				msg = "The Assesment Is Now RESTARTED";
+			} else
+				msg = "This Assesment is not ready";
+		} catch (Exception e) {
+			msg = "Internal Processing error :" + e.getMessage();
+		}
+		renderJSON(new CustomerException(msg));
 	}
 }

@@ -426,3 +426,32 @@ function editOperator(){
             },async:false
         });
 }
+
+
+function printAnyThing(anyid,title){
+	var printContents = document.getElementById(anyid).innerHTML;
+	var originalContents = document.body.innerHTML;
+	document.body.innerHTML = printContents;
+	window.print();
+	document.body.innerHTML = originalContents;
+	AutoRefresh(1000);
+}
+
+function printAnyDiv(divName){
+	var printContents = document.getElementById(divName).innerHTML;
+	var originalContents = document.body.innerHTML;
+	document.body.innerHTML = printContents;
+	window.print();
+	document.body.innerHTML = originalContents;
+	AutoRefresh(1000);
+}
+
+function AutoRefresh(t){
+	setTimeout("location.reload(true);",t);
+}
+
+
+function confirmAnyThing(action) {
+	  var answer=confirm("Do you realy want to "+action+" ?");
+	   return answer;
+	  }

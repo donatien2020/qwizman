@@ -1,0 +1,73 @@
+#{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
+title:'Fees' /}
+<div id="contentListing">
+#{deadbolt.restrict roles:[['SUPERADMIN']]}
+	<p id="crudListAdd">
+		<a href="@{Fees.addNew()}">&{'addNew'}</a>
+	</p>
+	#{/deadbolt.restrict}
+	#{if results != null && results?.size()>0}
+	<table>
+		<tr>
+			<td>
+				<h2 id="crudListTitle">
+					#{if results != null && results?.size()>0} &{'totalFees'}:<span>${results?.size()}</span>
+					#{/if}
+				</h2></td>
+			<td>#{deadbolt.restrict roles:[['SUPERADMIN']]}<input
+				type="text"
+				name="search"
+				class="search rounded"
+				value="Search"
+				id="search"
+				onkeyup="getFees(this);"
+			/>
+				#{/deadbolt.restrict}
+			</td>
+		</tr>
+	</table>
+	<table
+		id="feeList"
+		style="overflow: auto;"
+	>
+		<thead>
+			<tr>
+				<th>&{'fullName'}</th>
+				<th>&{'emailAddress'}</th>
+				<th>&{'phoneNumber'}</th>
+				<th>&{'physicalAddress'}</th>
+				<th>&{'classlabel'}</th>
+				<th>&{'classlevel'}</th>
+				<th>&{'tuturaire'}</th>
+				<th>&{'createdBy'}</th>
+				<th colspan="2">&{'createdOn'}&nbsp;&nbsp;</th>
+			</tr>
+		</thead>
+		#{paginate.list items:results, as:'fee' }
+		<tr>
+			<td><a href="@{Fees.dashboard(fee?.id)}">${fee?.fullName}</a>
+			</td>
+			<td>${fee?.emailAddress}</td>
+			<td>${fee?.phoneNumber}</td>
+			<td>${fee?.physicalAddress}</td>
+			<td>${fee?.classlabel}</td>
+			<td>${fee?.classlevel}</td>
+			<td>${fee?.tuturaire?.lastName}&nbsp;${fee?.tuturaire?.username}</td>
+			<td>${fee?.creator.username}</td>
+			<td>${fee?.createdOn}</td>
+			<td>#{deadbolt.restrict roles:[['SUPERADMIN']]}<span class="crudListEdit"><a
+					href="@{Fees.show(fee?.id,'Editing')}"
+				>Edit</a>
+			</span>#{/deadbolt.restrict}
+			</td>
+		</tr>
+		#{/paginate.list}
+		<tr>
+			<td colspan="10">#{paginate.controls items:results /}
+				#{paginate.summary items:results/}</td>
+		</tr>
+		#{/if} #{else}
+		<h1>&{'nofee'}</h1>
+		#{/else}
+	</table>
+</div>

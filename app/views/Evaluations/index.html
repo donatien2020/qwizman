@@ -1,20 +1,19 @@
 #{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
 title:'Evaluations' /}
 <div id="descriptionListing">
-#{deadbolt.restrict
-				roles:[['TEACHER']]}
+	#{deadbolt.restrict roles:[['TEACHER']]}
 	<p id="crudListAdd">
 		<a href="@{Evaluations.addNew()}">&{'addNew'}</a>
 	</p>
-	#{/deadbolt.restrict}
-	#{if results != null && results?.size()>0}
+	#{/deadbolt.restrict} #{if results != null && results?.size()>0}
 	<table>
 		<tr>
 			<td>
 				<h2 id="crudListTitle">
 					#{if results != null && results?.size()>0} &{'totalEvaluations'}:<span>${results?.size()}</span>
 					#{/if}
-				</h2></td>
+				</h2>
+			</td>
 			<td>#{deadbolt.restrict
 				roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER']]}<input
 				type="text"
@@ -37,7 +36,8 @@ title:'Evaluations' /}
 				<th>&{'totalMarks'}</th>
 				<th>&{'course'}</th>
 				<th>&{'creator'}</th>
-				<th colspan="2">&{'createdOn'}</th>
+				<th >&{'createdOn'}</th>
+				<th colspan="2">&{'status'}</th>
 			</tr>
 		</thead>
 		#{paginate.list items:results, as:'evaluation' }
@@ -52,16 +52,16 @@ title:'Evaluations' /}
 			<td>${evaluation?.totalMarks}</td>
 			<td>${evaluation?.course?.name}</td>
 			<td>${evaluation?.createdBy.username}</td>
-			<td>${evaluation?.createdOn}</td> #{deadbolt.restrict
+			<td>${evaluation?.createdOn}</td>
+			<td>${evaluation?.eStatus}</td>#{deadbolt.restrict
 			roles:[['SUPERADMIN'],['ADMIN'],['HEADTEACHER'],['TEACHER']]}
 			<td><span class="crudListEdit"><a
 					href="@{Evaluations.show(evaluation?.id,'Editing')}"
-				>Edit</a> </span>
-			</td>#{/deadbolt.restrict} #{deadbolt.restrict roles:[['STUDENT']]}
+				>Edit</a> </span></td>#{/deadbolt.restrict} #{deadbolt.restrict
+			roles:[['STUDENT']]}
 			<td><span class="crudListEdit"><a
 					href="@{Evaluations.takeEvaluation(evaluation?.id)}"
-				>Take</a> </span>
-			</td> #{/deadbolt.restrict}
+				>Take</a> </span></td> #{/deadbolt.restrict}
 		</tr>
 		#{/paginate.list}
 		<tr>

@@ -1,5 +1,5 @@
 #{extends '/admin.html' /} #{set title:'Class dashbord' /} #{set
-title:'Add Class' /}
+title:'Evaluation' /}
 <div class="formContainer">
 	<table>
 		<tr>
@@ -46,21 +46,35 @@ title:'Add Class' /}
 										size="2"
 										color="red"
 									>*</font>:</td>
-									<td>${evaluation?.eStatus}</td>
+									<td><span id="evelStatus">${evaluation?.eStatus}</span></td>
 								</tr>
-							</table></td>
+							</table>
+						</td>
+						
 					</tr>
-				</table></td>
+				</table>
+			</td><td>
+			
+			<p><span class="crudListAdd"><a
+												href="#" rel="${evaluation?.id}"
+												onclick="terminateEvaluation(this);"
+											>Terminate </a> </span></p>
+											<p><span class="crudListAdd"><a
+												href="#" rel="${evaluation?.id}"
+												onclick="resetEvaluation(this);"
+											>Reset</a> </span></p><p><span id="evalMsg"></span></p>
+			
+			
+			</td>
 		</tr>
 		<tr>
-			<td>
+			<td colspan="2">
 				<table>
 					<tr>
 						<td><span id="questionAdded">List Of Questions</span><a
 							href="#"
 							onclick="loadQuestions();"
-						>Load</a>
-						</td>
+						>Load</a></td>
 					</tr>
 					<tr>
 						<td>
@@ -71,33 +85,31 @@ title:'Add Class' /}
 										<td>Option<span class="crudListAdd"><a
 												href="#"
 												onclick="addQuestionOption();"
-											>Add</a> </span><span id="optionAdded"></span>
-										</td>
+											>Add</a> </span><span id="optionAdded"></span></td>
 									</tr>
 									<tr>
 										<td><input
 											type="text"
 											name="contentOption"
 											id="contentOption"
-										>
-										</td>
+										></td>
 									</tr>
 									<tr>
 										<td><input
 											type="text"
 											name="marksOption"
-											id="marksOption" 
+											id="marksOption"
 											size="3"
 										/><input
 											type="hidden"
 											name="questionIdOption"
 											id="questionIdOption"
 											size="3"
-										/>
-										</td>
+										/></td>
 									</tr>
 								</table>
-							</div></td>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<td>
@@ -106,8 +118,7 @@ title:'Add Class' /}
 									<td>Question<span class="crudListAdd"><a
 											href="#"
 											onclick="addQuestion();"
-										>Add</a> </span>
-									</td>
+										>Add</a> </span></td>
 									<td>Marks</td>
 									<td>Max Options</td>
 								</tr>
@@ -115,27 +126,27 @@ title:'Add Class' /}
 									<td><input
 										type="text"
 										name="content"
-										id="content" size="50"
-									>
-									</td>
+										id="content"
+										size="50"
+									></td>
 									<td><input
 										type="text"
 										name="marks"
 										id="marks"
 										size="3"
-									/>
-									</td>
+									/></td>
 									<td><input
 										type="text"
 										name="maxAllowedOptions"
 										id="maxAllowedOptions"
 										size="3"
-									/>
-									</td>
+									/></td>
 								</tr>
-							</table></td>
+							</table>
+						</td>
 					</tr>
-				</table></td>
+				</table>
+			</td>
 		</tr>
 	</table>
 </div>

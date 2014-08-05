@@ -3,6 +3,7 @@ function addQuestion() {
 	var content = $("#content").val();
 	var marks = $("#marks").val();
 	var maxOptions = $("#maxAllowedOptions").val();
+	if(marks>0){
 	if (evaluationId != "" && evaluationId != " ") {
 		$.ajax({
 			type : 'GET',
@@ -27,6 +28,9 @@ function addQuestion() {
 			},
 			async : false
 		});
+	}
+	}else{
+		$("#questionAdded").html("Zeroed Questions are not allowed!");
 	}
 }
 function loadQuestions() {
@@ -120,6 +124,7 @@ function loadQuestions() {
 
 }
 function removeQuestion(event) {
+	if(confirmAnyThing("Remove This Question")){
 	$.ajax({
 		type : 'GET',
 		url : getAppContetGlobal() + '/evaluations/removeQuestion',
@@ -137,6 +142,7 @@ function removeQuestion(event) {
 		},
 		async : false
 	});
+	}
 }
 function showAddOptionDialog(event) {
 	$('#questionOptionDialog').dialog("open");
@@ -172,6 +178,7 @@ function addQuestionOption() {
 	}
 }
 function removeQuestionOption(event) {
+	if(confirmAnyThing("Remove This Answer")){
 	$.ajax({
 		type : 'GET',
 		url : getAppContetGlobal() + '/evaluations/removeQuestionOption',
@@ -189,6 +196,7 @@ function removeQuestionOption(event) {
 		},
 		async : false
 	});
+	}
 }
 function answerQuestion(event) {
 	var assessmentProc = event.name;
@@ -239,4 +247,55 @@ function checkout(event) {
 		});
 	} else
 		alert("Your Assesment Has Been Cleared !");
+}
+
+
+function terminateEvaluation(event) {
+	alert(" event.rel :"+event.rel);
+	if (event.rel != "" && event.rel != " ") {
+		if(confirmAnyThing("Terminate This Evaluation")){
+		$.ajax({
+			type : 'GET',
+			url : getAppContetGlobal() + '/evaluations/terminateEvaluation',
+			data : {evelId :event.rel},
+			success : function(data) {
+				if (data.message != undefined) {
+					$("#evalMsg").html(data.message);
+					if(data.message=='The Evaluation Is Now Ready')
+					$("#evelStatus").html("READY");
+					loadQuestions();
+				}
+			},
+			error : function(e) {
+				alert("Error  ?" + JSON.stringify(e));
+			},
+			async : false
+		});
+		}
+	}
+}
+
+function resetEvaluation(event) {
+	if (event.rel != "" && event.rel != " ") {
+		if(confirmAnyThing("CANCEL This Evaluation")){
+		$.ajax({
+			type : 'GET',
+			url : getAppContetGlobal() + '/evaluations/resetEvaluation',
+			data : {evelId :event.rel},
+			success : function(data) {
+				alert(JSON.stringify(data));
+				if (data.message != undefined) {
+					$("#evalMsg").html(data.message);
+					if(data.message=='The Evaluation Is Now CANCELED')
+						$("#evelStatus").html("CANCELED");
+					loadQuestions();
+				}
+			},
+			error : function(e) {
+				alert("Error  ?" + JSON.stringify(e));
+			},
+			async : false
+		});
+		}
+	}
 }

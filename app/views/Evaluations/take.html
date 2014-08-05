@@ -1,5 +1,5 @@
 #{extends '/admin.html' /} #{set title:'Class dashbord' /} #{set
-title:'Add Class' /}
+title:'Take Assesment' /}
 <div class="formContainer">
 	<table>
 		<tr>
@@ -112,7 +112,7 @@ title:'Add Class' /}
 							</tr>
 							#{/list}
 							<tr>
-								<td colspan="2"><a href="@{Evaluations.checkout(assessment?.id)}" rel="${assessment?.id}" >Checkout</a>
+								<td colspan="2"><a href="@{Evaluations.checkout(assessment?.id)}" rel="${assessment?.id}" class="button-link-show">Checkout</a>
 								</td>
 							</tr>
 						</tbody>

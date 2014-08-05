@@ -1,0 +1,121 @@
+#{extends '/admin.html' /} #{set title:'Fee dashbord' /} #{set
+title:'Add Fee' /}
+<div class="formContainer">
+	<table>
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td colspan="2"><p id="crudListAdd">
+								<a>${msg}</a>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td>&{'fullName'}<font
+							size="2"
+							color="red"
+						>*</font>:</td>
+						<td><input
+							type="hidden"
+							name="classIdDasbord"
+							id="classIdDasbord"
+							value="${fee?.id}"
+						>${fee?.fullName}</td>
+					</tr>
+					<tr>
+						<td>&{'emailAddress'}<font
+							size="2"
+							color="red"
+						>*</font>:</td>
+						<td>${fee?.emailAddress}</td>
+					</tr>
+					<tr>
+						<td>&{'phoneNumber'}:</td>
+						<td>${fee?.phoneNumber}</td>
+					</tr>
+					<tr>
+						<td>&{'physicalAddress'}:</td>
+						<td>${fee?.physicalAddress}</td>
+					</tr>
+					<tr>
+						<td>&{'box'}:</td>
+						<td>${fee?.box}</td>
+					</tr>
+					<tr>
+						<td>&{'webSite'}:</td>
+						<td>${fee?.webSite}</td>
+					</tr>
+					<tr>
+						<td>&{'classlabel'}:</td>
+						<td>${fee?.classlabel}</td>
+					</tr>
+					<tr>
+						<td>&{'classlevel'}:</td>
+						<td>${fee?.classlevel}</td>
+					</tr>
+					<tr>
+						<td>&{'tuturaire'}:</td>
+						<td>${fee?.tuturaire?.lastName}&nbsp;${fee?.tuturaire?.username}</td>
+					</tr>
+				</table></td>
+			<td valign="top">
+				<table>
+					#{deadbolt.restrict
+					roles:[['HEADTEACHER'],['TEACHER'],['STUDENT']]}
+					#{deadbolt.restrict roles:[['HEADTEACHER'],['TEACHER']]}
+					#{deadbolt.restrict roles:[['HEADTEACHER']]}
+					<tr>
+						<td><p id="crudListAdd">
+								<a
+									href="#"
+									onclick="getFeeTechers();"
+								>Teachers</a>
+							</p>
+						</td>
+					</tr>
+					#{/deadbolt.restrict}
+					<tr>
+						<td><p id="crudListAdd">
+								<a
+									href="#"
+									onclick="getFeeStudents();"
+								>Students</a>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td><p id="crudListAdd">
+								<a
+									href="#"
+									onclick="getFeeStudents();"
+								>Course Materials</a>
+							</p>
+						</td>
+					</tr>
+					#{/deadbolt.restrict}
+					<tr>
+						<td><p id="crudListAdd">
+								<a href="@{Courses.index()}">Courses</a>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td><p id="crudListAdd">
+								<a href="@{Evaluations.index()}">Evaluations</a>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td><p id="crudListAdd">
+								<a href="#">School Reports</a>
+							</p>
+						</td>
+					</tr>
+					#{/deadbolt.restrict}
+				</table></td>
+		</tr>
+	</table>
+	
+
+</div>

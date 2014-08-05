@@ -1,0 +1,88 @@
+#{extends '/admin.html' /} #{set title:'Add New Operator' /} #{set
+title:'Add Class' /}
+<div class="formContainer">
+	<form
+		action="create"
+		method="post"
+		onsubmit="return checkForm(this);"
+	>
+		<table>
+		<tr>
+				<td colspan="2"><p id="crudListAdd">
+						<a>Fill In the Form To Add A New Class</a>
+					</p></td>
+			</tr>
+			
+			<tr>
+				<td>&{'fullName'}<font
+					size="2"
+					color="red"
+				>*</font>:</td>
+				<td><input
+					type="text"
+					name="fullName"
+					value="${flash.fullName}"
+				><span class="error">#{error 'name'/}</span></td>
+			</tr>
+			<tr>
+				<td>&{'emailAddress'}<font
+					size="2"
+					color="red"
+				>*</font>:</td>
+				<td><input
+					type="text"
+					name="emailAddress"
+					id="emailAddress"
+					value="${flash.emailAddress}"
+				><span
+					id="emailAddressError"
+					class="error"
+				>#{error 'description' /}</span> <span
+					id="emailAddressValid"
+					class="valid"
+				></span></td>
+			</tr>
+			<tr>
+				<td>&{'phoneNumber'}:</td>
+				<td><input
+					type="text"
+					name="phoneNumber"
+					value="${flash.phoneNumber}"
+				> <span class="error">#{error 'phoneNumber' /}</span></td>
+			</tr>
+			<tr>
+				<td>&{'physicalAddress'}:</td>
+				<td><input
+					type="text"
+					name="physicalAddress"
+					value="${flash.physicalAddress}"
+				> <span class="error">#{error 'physicalAddress' /}</span></td>
+			</tr>
+			<tr>
+				<td>&{'box'}:</td>
+				<td><input
+					type="text"
+					name="box"
+					value="${flash.box}"
+				><span class="error">#{error 'box' /}</span></td>
+			</tr>
+			<tr>
+				<td>&{'webSite'}:</td>
+				<td><input
+					type="text"
+					name="webSite"
+					value="${flash.webSite}"
+				><span class="error">#{error 'webSite' /}</span></td>
+			</tr>
+			
+			
+			<tr>
+				<td colspan="2"><input
+					type="submit"
+					name="createClass"
+					value="Create"
+				></td>
+			</tr>
+		</table>
+	</form>
+</div>

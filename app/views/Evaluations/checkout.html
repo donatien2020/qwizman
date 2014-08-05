@@ -1,5 +1,5 @@
 #{extends '/admin.html' /} #{set title:'Class dashbord' /} #{set
-title:'Add Class' /}
+title:'Your Results' /}
 <div class="formContainer">
 	<table>
 		<tr>
@@ -86,6 +86,7 @@ title:'Add Class' /}
 							</tr>
 							#{/list}
 							<tr><td colspan="2">Elapsed Time :${assessment?.elapsedTime}</td></tr>
+							<tr><td colspan="2">Obtained Marks:${assessment?.elapsedTime} &nbsp;/&nbsp; ${assessment?.evaluation?.totalMarks}</td></tr>
 						</tbody>
 					</table>
 				</div></td>
