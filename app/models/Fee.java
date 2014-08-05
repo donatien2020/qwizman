@@ -1,7 +1,9 @@
 package models;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -28,4 +30,6 @@ public class Fee  extends Model{
 	public Date createdOn;
 	@ManyToOne
 	public Operator creator;
+	public List<Payment> payment = new ArrayList<Payment>();
+
 }
