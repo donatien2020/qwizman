@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -30,6 +31,7 @@ public class Fee  extends Model{
 	public Date createdOn;
 	@ManyToOne
 	public Operator creator;
-	public List<Payment> payment = new ArrayList<Payment>();
+	@OneToMany(mappedBy = "fee")
+	public List<Payment> payments = new ArrayList<Payment>();
 
 }
