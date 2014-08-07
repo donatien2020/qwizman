@@ -405,4 +405,17 @@ public class Operators extends Controller {
 		}
 	}
 
+	public static void getOperator(String username) {
+		Operator operator = null;
+		try {
+			if (username != null && !username.isEmpty()) {
+				operator = Operator.find("byUsername", username).first();
+			} else
+				operator = getCurrentUser();
+
+		} catch (Exception e) {
+
+		}
+		render("Operators/dashboard.html", operator);
+	}
 }

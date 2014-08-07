@@ -29,6 +29,7 @@ GET     /operators/show/{id}/{msg}                      	Operators.show
 PUT     /operators/create                               	Operators.create
 GET     ${ctx}/operators/modifyUser                     	Operators.modifyUser
 GET     ${ctx}/operators/getUsersByCriterion            	Operators.getUsersByCriterion
+GET     /operators/getOperator                      		Operators.getOperator
 #SCHOOL Routes Normal Call
 GET     /schools/index                      			    Schools.index
 GET     /schools/addNew                     				Schools.addNew
@@ -98,5 +99,6 @@ GET     ${ctx}/evaluations/checkout 						Evaluations.checkout
 GET     ${ctx}/evaluations/terminateEvaluation 				Evaluations.terminateEvaluation
 GET     ${ctx}/evaluations/resetEvaluation 					Evaluations.resetEvaluation
 GET     ${ctx}/evaluations/resetAssesment                   Evaluations.resetAssesment
-
+#SCHOOL REPORTS ROUTES
+GET     ${ctx}/reports/getSchoolReports                     Reports.getSchoolReports
 

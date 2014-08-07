@@ -251,7 +251,6 @@ function checkout(event) {
 
 
 function terminateEvaluation(event) {
-	alert(" event.rel :"+event.rel);
 	if (event.rel != "" && event.rel != " ") {
 		if(confirmAnyThing("Terminate This Evaluation")){
 		$.ajax({

@@ -1,0 +1,65 @@
+#{extends '/admin.html' /} #{set title:'Class dashbord' /} #{set
+title:'Operator View' /}
+<div class="formContainer">
+	<table>
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td colspan="2"><p id="crudListAdd">
+								<a>${msg} </a>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td>&{'firstName'}</td>
+						<td>${operator?.firstName}</td>
+					</tr>
+					<tr>
+						<td>&{'lastName'}</td>
+						<td>${operator?.lastName}</td>
+					</tr>
+					<tr>
+						<td>&{'emailAddress'}</td>
+						<td>${operator?.emailAddress}</td>
+					</tr>
+					<tr>
+						<td>&{'phoneNumber'}:</td>
+						<td>${operator?.phoneNumber}</td>
+					</tr>
+					<tr>
+						<td>&{'role'}:</td>
+						<td>${operator?.role?.name}</td>
+					</tr>
+				</table></td>
+			<td valign="top">
+				<table>
+					#{deadbolt.restrict
+					roles:[['HEADTEACHER'],['TEACHER'],['STUDENT']]}
+					<tr>
+						<td><p id="crudListAdd">
+								<a
+									rel="${operator?.id}"
+									href="#"
+									onclick="getSchoolReports(this);"
+								>School Reports</a>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td><p id="crudListAdd">
+								<a href="@{Courses.index()}">Courses</a>
+							</p>
+						</td>
+					</tr>
+					<tr>
+						<td><p id="crudListAdd">
+								<a href="@{Evaluations.index()}">Evaluations</a>
+							</p>
+						</td>
+					</tr>
+					#{/deadbolt.restrict}
+				</table></td>
+		</tr>
+	</table>
+</div>

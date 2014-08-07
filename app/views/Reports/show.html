@@ -1,0 +1,59 @@
+#{extends '/admin.html' /} #{set title:'Edit School' /}
+<body>
+	<div evaluation="formContainer">
+		<span evaluation="msgAlert" id="msgAlertClass">${msg}</span>
+		<form action="/evaluations/modifyEvaluation" method="post"
+			onsubmit="return checkForm(this);">
+			<table>
+			<tr>
+				<td colspan="2"><p id="crudListAdd">
+						<a>Fill In the Form To Modify This Evaluation</a>
+					</p></td>
+			</tr>
+				<tr>
+					<td>&{'name'}<font size="2" color="red">*</font>:
+					</td>
+					<td><input type="hidden" name="evaluationId" id="evaluationId"
+						value="${evaluation?.id}"><input type="text" name="name"
+						value="${evaluation?.name}"><span class="error">#{error
+							'name'/}</span></td>
+				</tr>
+				<tr>
+					<td>&{'description'}<font size="2" color="red">*</font>:
+					</td>
+					<td><input type="text" name="description" id="description" value="${evaluation?.description}"><span
+						id="descriptionError" class="error">#{error 'content' /}</span> <span
+						id="descriptionValid" class="valid"></span></td>
+				</tr>
+				<tr>
+					<td>&{'evalType'}:</td>
+					<td><select name="evalType" id="evalType">
+							<option value="EXERCISE">EXERCISE</option>
+							<option value="QUIZ">QUIZ</option>
+							<option value="GENERAL-QUIZ">GENERAL-QUIZ</option>
+							<option value="EXAM">EXAM</option>
+
+
+					</select></td>
+				</tr>
+				<tr>
+					<td>&{'totalMarks'}<font size="2" color="red">*</font>:
+					</td>
+					<td><input type="text" name="totalMarks"
+						value="${evaluation?.totalMarks}"><span class="error">#{error 'totalMarks'/}</span></td>
+				</tr>
+				<tr>
+					<td>&{'duration'}<font size="2" color="red">*</font>:
+					</td>
+					<td><input type="text" name="duration"
+						value="${evaluation?.duration}"><span class="error">#{error
+							'duration'/}</span></td>
+				</tr>
+			
+				<tr>
+					<td colspan="2"><input type="submit" name="editEvaluation"
+						value="Modify"></td>
+				</tr>
+			</table>
+		</form>
+	</div>

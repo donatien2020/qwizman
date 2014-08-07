@@ -48,7 +48,7 @@ public class Evaluations extends Controller {
 					&& currentUser.school != null
 					&& currentUser.role.name.equals(UserRole.STUDENT
 							.getUserRole())) {
-				Classe Classe = Classes.getStudenClasse();
+				Classe Classe = Classes.getStudentClasse(currentUser);
 				if (Classe != null && division != null) {
 					paginator = Evaluation
 							.find("school=? and classe=? and accademicYearDevision=? and eStatus=?",

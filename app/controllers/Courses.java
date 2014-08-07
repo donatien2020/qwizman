@@ -70,7 +70,7 @@ public class Courses extends Controller {
 				&& currentUser.typeOf.equals(UserType.STUDENT.getUserType())
 				&& currentUser.school != null) {
 			List<TeacherClassCourse> teacherClasses = TeacherClassCourse.find(
-					"classe=? and accademicYearDevision=?", Classes.getStudenClasse(),
+					"classe=? and accademicYearDevision=?", Classes.getStudentClasse(currentUser),
 					AcademicYearDevisions.getCurrentDivision()).fetch();
 			for (TeacherClassCourse classee : teacherClasses)
 				paginator.add(classee.course);

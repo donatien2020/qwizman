@@ -119,19 +119,20 @@ public class Classes extends Controller {
 	}
 
 	public static void getStudenClass() {
-		Classe classe =  getStudenClasse();
+		Classe classe =  null;
 		String msg = "Your Class Room Is Ready !";
 		try {
-			classe =  getStudenClasse();
+			Operator student = Operators.getCurrentUser();
+			classe =  getStudentClasse(student);
 		} catch (Exception e) {
 		}
 		render("Classes/dashboard.html", classe, msg);
 	}
 
-	public static Classe getStudenClasse() {
+	public static Classe getStudentClasse(Operator student) {
 		Classe classe = null;
 		try {
-			Operator student = Operators.getCurrentUser();
+			
 			if (student != null && student.school != null
 					&& student.role.name.equals(UserRole.STUDENT.getUserRole())) {
 				AcademicYearDevision division = AcademicYearDevisions

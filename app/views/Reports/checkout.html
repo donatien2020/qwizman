@@ -68,35 +68,25 @@ title:'Your Results' /}
 								<th>Answers</th>
 						</thead>
 						<tbody>
-							 %{ totalMartks=0; }% 
 							#{list items:assessment?.processes, as:'process'}
 							<tr>
 								<td><span class="${process_parity}">${process_index}&nbsp;.&nbsp;${process?.question?.content}</span>
 								</td>
 								<td>
 									<table>
-										#{if process?.answers!= null && process?.answers?.size()>0}
-										#{list items:process?.answers, as:'answer'}
+									
+										#{if process?.answers!= null &&
+										process?.answers?.size()>0} #{list
+										items:process?.answers, as:'answer'}
 										<tr>
-											<td><span class="${answer_parity}">${answer_index}&nbsp;.&nbsp;${answer?.questionOption?.content}</span>
-											</td>
-											<td><span class="${answer_parity}">${answer?.questionOption?.marks}</span>
-											</td>
+											<td><span class="${answer_parity}">${answer_index}&nbsp;.&nbsp;${answer?.questionOption?.content}</span></td><td><span class="${answer_parity}">${answer?.questionOption?.marks}</span></td>
 										</tr>
-										 %{ 
-										totalMartks=totalMartks+answer?.questionOption?.marks
-										 }% 
-										#{/list}
-										#{/if}
+										#{/list} #{/if}
 									</table></td>
 							</tr>
 							#{/list}
-							<tr>
-								<td colspan="2">Elapsed Time :${assessment?.elapsedTime}</td>
-							</tr>
-							<tr>
-								<td colspan="2"><h2>Obtained Marks:&nbsp;&nbsp;%{ out.print(''+totalMartks+''); }% &nbsp;/&nbsp;${assessment?.evaluation?.totalMarks} </h2></td>
-							</tr>
+							<tr><td colspan="2">Elapsed Time :${assessment?.elapsedTime}</td></tr>
+							<tr><td colspan="2">Obtained Marks:${assessment?.elapsedTime} &nbsp;/&nbsp; ${assessment?.evaluation?.totalMarks}</td></tr>
 						</tbody>
 					</table>
 				</div></td>

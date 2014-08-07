@@ -1,0 +1,97 @@
+#{extends '/admin.html' /} #{set title:'Add New Operator' /} #{set
+title:'Add Class' /}
+<div class="formContainer">
+	<form
+		action="create"
+		method="post"
+		onsubmit="return checkForm(this);"
+	>
+		<table>
+		<tr>
+				<td colspan="2"><p id="crudListAdd">
+						<a>Fill In the Form To Add A New Evaluation</a>
+					</p></td>
+			</tr>
+			<tr>
+				<td>&{'name'}<font
+					size="2"
+					color="red"
+				>*</font>:</td>
+				<td><input
+					type="text"
+					name="name"
+					value="${flash.name}"
+				><span class="error">#{error 'name'/}</span>
+				</td>
+			</tr>
+			<tr>
+				<td>&{'description'}<font
+					size="2"
+					color="red"
+				>*</font>:</td>
+				<td><input type="text"
+						name="description"
+						id="description"
+					><span
+					id="descriptionError"
+					class="error"
+				>#{error 'content' /}</span> <span
+					id="descriptionValid"
+					class="valid"
+				></span>
+				</td>
+			</tr>
+			<tr>
+				<td>&{'evalType'}:</td>
+				<td><select
+					name="evalType"
+					id="evalType"
+				>
+						<option value="EXERCISE">EXERCISE</option>
+						<option value="QUIZ">QUIZ</option>
+						<option value="GENERAL-QUIZ">GENERAL-QUIZ</option>
+						<option value="EXAM">EXAM</option>
+				</select>
+				</td>
+			</tr>
+			<tr>
+				<td>&{'totalMarks'}<font
+					size="2"
+					color="red"
+				>*</font>:</td>
+				<td><input
+					type="text"
+					name="totalMarks"
+					value="${flash.totalMarks}"
+				><span class="error">#{error 'name'/}</span>
+				</td>
+			</tr>
+			<tr>
+				<td>&{'duration'}<font
+					size="2"
+					color="red"
+				>*</font>:</td>
+				<td><input
+					type="text"
+					name="duration"
+					value="${flash.duration}"
+				><span class="error">#{error 'duration'/}</span>
+				</td>
+			</tr>
+			<tr>
+				<td>&{'course'}:</td>
+				<td>#{select 'course', items: courses, valueProperty: 'id',
+					labelProperty: 'name',id:'select-course' /} <span class="error">#{error
+						'role' /}</span></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input
+					type="submit"
+					name="createCourse"
+					value="Create"
+				>
+				</td>
+			</tr>
+		</table>
+	</form>
+</div>

@@ -1,0 +1,75 @@
+#{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
+title:'Evaluations' /}
+<div id="descriptionListing">
+	#{deadbolt.restrict roles:[['TEACHER']]}
+	<p id="crudListAdd">
+		<a href="@{Evaluations.addNew()}">&{'addNew'}</a>
+	</p>
+	#{/deadbolt.restrict} #{if results != null && results?.size()>0}
+	<table>
+		<tr>
+			<td>
+				<h2 id="crudListTitle">
+					#{if results != null && results?.size()>0} &{'totalEvaluations'}:<span>${results?.size()}</span>
+					#{/if}
+				</h2>
+			</td>
+			<td>#{deadbolt.restrict
+				roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER']]}<input
+				type="text"
+				name="search"
+				class="search rounded"
+				value="Search"
+				id="search"
+				onkeyup="getEvaluations(this);"
+			/>#{/deadbolt.restrict}</td>
+		</tr>
+	</table>
+	<table
+		id="evaluationList"
+		style="overflow: auto;"
+	>
+		<thead>
+			<tr>
+				<th>&{'name'}</th>
+				<th>&{'description'}</th>
+				<th>&{'totalMarks'}</th>
+				<th>&{'course'}</th>
+				<th>&{'creator'}</th>
+				<th >&{'createdOn'}</th>
+				<th colspan="2">&{'status'}</th>
+			</tr>
+		</thead>
+		#{paginate.list items:results, as:'evaluation' }
+		<tr>
+			<td>#{deadbolt.restrict
+				roles:[['SUPERADMIN'],['ADMIN'],['HEADTEACHER'],['TEACHER']]} <a
+				href="@{Evaluations.dashboard(evaluation?.id)}"
+			>${evaluation?.name}</a> #{/deadbolt.restrict} #{deadbolt.restrict
+				roles:[['REPRESENTATOR'],['STUDENT']]} ${evaluation?.name}
+				#{/deadbolt.restrict}</td>
+			<td>${evaluation?.description}</td>
+			<td>${evaluation?.totalMarks}</td>
+			<td>${evaluation?.course?.name}</td>
+			<td>${evaluation?.createdBy.username}</td>
+			<td>${evaluation?.createdOn}</td>
+			<td>${evaluation?.eStatus}</td>#{deadbolt.restrict
+			roles:[['SUPERADMIN'],['ADMIN'],['HEADTEACHER'],['TEACHER']]}
+			<td><span class="crudListEdit"><a
+					href="@{Evaluations.show(evaluation?.id,'Editing')}"
+				>Edit</a> </span></td>#{/deadbolt.restrict} #{deadbolt.restrict
+			roles:[['STUDENT']]}
+			<td><span class="crudListEdit"><a
+					href="@{Evaluations.takeEvaluation(evaluation?.id)}"
+				>Take</a> </span></td> #{/deadbolt.restrict}
+		</tr>
+		#{/paginate.list}
+		<tr>
+			<td colspan="10">#{paginate.controls items:results /}
+				#{paginate.summary items:results/}</td>
+		</tr>
+		#{/if} #{else}
+		<h1>&{'noevaluation'}</h1>
+		#{/else}
+	</table>
+</div>

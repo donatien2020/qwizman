@@ -42,6 +42,8 @@ public class AccademicYear extends GenericModel {
 	public Date createdOn;
 	@OneToMany(mappedBy = "accademicYear")
 	public List<AcademicYearDevision> devisions = new ArrayList<AcademicYearDevision>();
+	@OneToMany(mappedBy = "accademicYear")
+	public List<SchoolReport> reports = new ArrayList<SchoolReport>();
 	public AccademicYear(){}
 	public AccademicYear(String description,Date startAt,Date endAt,School school,Operator createdBy){
 		this.createdBy=createdBy;

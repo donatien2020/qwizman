@@ -66,6 +66,8 @@ public class Operator extends Model implements RoleHolder {
 	public ApplicationRole role;
 	@OneToMany(mappedBy = "teacher")
 	public List<TeacherClassCourse> courses = new ArrayList<TeacherClassCourse>();
+	@OneToMany(mappedBy = "student")
+	public List<SchoolReport> schoolReports = new ArrayList<SchoolReport>();
 	public Date createdOn;
 	@ManyToOne
 	public Operator createdBy;
