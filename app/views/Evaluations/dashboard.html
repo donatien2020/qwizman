@@ -50,21 +50,27 @@ title:'Evaluation' /}
 								</tr>
 							</table>
 						</td>
-						
 					</tr>
 				</table>
-			</td><td>
-			
-			<p><span class="crudListAdd"><a
-												href="#" rel="${evaluation?.id}"
-												onclick="terminateEvaluation(this);"
-											>Terminate </a> </span></p>
-											<p><span class="crudListAdd"><a
-												href="#" rel="${evaluation?.id}"
-												onclick="resetEvaluation(this);"
-											>Reset</a> </span></p><p><span id="evalMsg"></span></p>
-			
-			
+			</td>
+			<td>
+				<p>
+					<span class="crudListAdd"><a
+						href="#"
+						rel="${evaluation?.id}"
+						onclick="terminateEvaluation(this);"
+					>Terminate </a> </span>
+				</p>
+				<p>
+					<span class="crudListAdd"><a
+						href="#"
+						rel="${evaluation?.id}"
+						onclick="resetEvaluation(this);"
+					>Reset</a> </span>
+				</p>
+				<p>
+					<span id="evalMsg"></span>
+				</p>
 			</td>
 		</tr>
 		<tr>
@@ -148,5 +154,6 @@ title:'Evaluation' /}
 				</table>
 			</td>
 		</tr>
+		
 	</table>
 </div>

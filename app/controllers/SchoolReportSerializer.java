@@ -40,8 +40,10 @@ public class SchoolReportSerializer extends Controller implements
 					&& !f.getName().toLowerCase().equals("student")
 					&& !f.getName().toLowerCase().equals("creatorteacher")
 					&& !f.getName().toLowerCase().equals("classe")
+					&& !f.getName().toLowerCase().equals("description")
 					&& !f.getName().toLowerCase().equals("accademicyear")
-					&& !f.getName().toLowerCase().equals("accademicyeardevision")
+					&& !f.getName().toLowerCase()
+							.equals("accademicyeardevision")
 					&& !f.getName().toLowerCase().equals("marks")
 					&& !f.getName().toLowerCase().equals("reportlabel")
 					&& !f.getName().toLowerCase().equals("fullname")
@@ -55,11 +57,11 @@ public class SchoolReportSerializer extends Controller implements
 					&& !f.getName().toLowerCase().equals("lastname")
 					&& !f.getName().toLowerCase().equals("course")
 					&& !f.getName().toLowerCase().equals("updatorteacher")
-					&& !f.getName().toLowerCase().equals("divtonetj")
-					&& !f.getName().toLowerCase().equals("divtnetx")
-					&& !f.getName().toLowerCase().equals("divtnetot")
+					&& !f.getName().toLowerCase().equals("divonetj")
+					&& !f.getName().toLowerCase().equals("divoneex")
+					&& !f.getName().toLowerCase().equals("divonetot")
 					&& !f.getName().toLowerCase().equals("divtwotj")
-					&& !f.getName().toLowerCase().equals("divtwotx")
+					&& !f.getName().toLowerCase().equals("divtwoex")
 					&& !f.getName().toLowerCase().equals("divtwotot")
 					&& !f.getName().toLowerCase().equals("divthreetj")
 					&& !f.getName().toLowerCase().equals("divthreeex")
@@ -67,7 +69,7 @@ public class SchoolReportSerializer extends Controller implements
 					&& !f.getName().toLowerCase().equals("yeartj")
 					&& !f.getName().toLowerCase().equals("yearex")
 					&& !f.getName().toLowerCase().equals("yearavg")
-					&& !f.getName().toLowerCase().equals("yeartot");
+					&& !f.getName().toLowerCase().equals("yeartot")&& !f.getName().toLowerCase().equals("name");
 		}
 	}
 

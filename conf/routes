@@ -101,4 +101,6 @@ GET     ${ctx}/evaluations/resetEvaluation 					Evaluations.resetEvaluation
 GET     ${ctx}/evaluations/resetAssesment                   Evaluations.resetAssesment
 #SCHOOL REPORTS ROUTES
 GET     ${ctx}/reports/getSchoolReports                     Reports.getSchoolReports
+GET     ${ctx}/reports/getSchoolReportView                  Reports.getSchoolReportView
+GET     ${ctx}/reports/addReportMarks           			Reports.addReportMarks
 

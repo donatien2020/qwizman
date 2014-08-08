@@ -66,7 +66,6 @@ public class SchoolReportMark extends GenericModel {
 
 	public SchoolReportMark() {
 	}
-
 	public SchoolReportMark(SchoolReport schoolReport, Course course,
 			String observation, Operator updatorTeacher) {
 		BigDecimal defaultValue = new BigDecimal("0.0");

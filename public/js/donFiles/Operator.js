@@ -1,5 +1,65 @@
 
 $(function() {
+	$("#schoolReports").dialog({
+		overlay : {
+			backgroundColor : "#000",
+			opacity : 0.5
+		},
+		position : {
+			my : "left+100",
+			at : "left top+200",
+			of : window
+		},
+		title : 'Your School Reports',
+		autoOpen : false,
+		closeOnEscape : true,
+		height : 'auto',
+		width : 1000,
+		modal : true,
+		draggable : true,
+		resizable : true,
+		buttons : {
+			Cancel : function() {
+				$(this).dialog("close");
+			}
+		},
+		close : function() {
+			$(this).dialog("close");
+		}
+	}).dialogExtend({
+		minimizable : true,
+		collapsable : true
+	});
+	$("#schoolReportView").dialog({
+		overlay : {
+			backgroundColor : "#000",
+			opacity : 0.5
+		},
+		position : {
+			my : "left+100",
+			at : "left top+200",
+			of : window
+		},
+		title : 'School Report Manager',
+		autoOpen : false,
+		closeOnEscape : true,
+		height : 'auto',
+		width : 1000,
+		modal : true,
+		draggable : true,
+		resizable : true,
+		buttons : {
+			Cancel : function() {
+				$(this).dialog("close");
+			}
+		},
+		close : function() {
+			$(this).dialog("close");
+		}
+	}).dialogExtend({
+		minimizable : true,
+		collapsable : true
+	});
 	$("#teachersDialog").dialog({
 		overlay : {
 			backgroundColor : "#000",
