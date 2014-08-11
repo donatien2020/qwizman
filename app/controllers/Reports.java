@@ -20,15 +20,11 @@ public class Reports extends Controller {
 	public static void getSchoolReports(String operatorId) {
 		List<SchoolReport> reports = null;
 		try {
-			System.out.println(" started=========================================");
 			Operator user = Operator.findById(Long.parseLong(operatorId));
 			if (user != null) {
 				if (user.typeOf.equals(UserType.STUDENT.getUserType())
 						&& user.school != null) {
-			//if (getCurrentSchoolReport(user) == null) {
 						createCurrentSchoolReport(user);
-//					}else
-//						System.out.println(" will not add course");
 					reports = SchoolReport.find("student=?", user).fetch();
 				} else if (user.typeOf.equals(UserType.TEACHER.getUserType())
 						&& user.school != null) {
