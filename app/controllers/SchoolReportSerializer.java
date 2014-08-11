@@ -68,7 +68,7 @@ public class SchoolReportSerializer extends Controller implements
 					&& !f.getName().toLowerCase().equals("divthreetot")
 					&& !f.getName().toLowerCase().equals("yeartj")
 					&& !f.getName().toLowerCase().equals("yearex")
-					&& !f.getName().toLowerCase().equals("yearavg")
+					&& !f.getName().toLowerCase().equals("yearavg")&& !f.getName().toLowerCase().equals("overtj")&& !f.getName().toLowerCase().equals("overex")
 					&& !f.getName().toLowerCase().equals("yeartot")&& !f.getName().toLowerCase().equals("name");
 		}
 	}

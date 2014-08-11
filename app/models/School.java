@@ -1,11 +1,8 @@
 package models;
-
 import static javax.persistence.CascadeType.PERSIST;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -17,7 +14,6 @@ import play.data.validation.Phone;
 import play.data.validation.Required;
 import play.db.jpa.Model;
 import play.modules.search.Field;
-
 @Entity
 @Table(name = "core_school")
 public class School extends Model {
@@ -61,10 +57,8 @@ public class School extends Model {
 	public List<AccademicYear> accademicYears = new ArrayList<AccademicYear>();
 	@OneToMany(mappedBy = "school")
 	public List<Evaluation> evaluations = new ArrayList<Evaluation>();
-
 	public School() {
 	}
-
 	public School(String category, String code, String typeOf, String schoolName,
 			String description, String ownerFirstName, String ownerLastName,
 			String ownerPhoneNumber, String ownerEmail, String poBox,

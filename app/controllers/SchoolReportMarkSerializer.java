@@ -55,7 +55,9 @@ public class SchoolReportMarkSerializer extends Controller implements
 					&& !f.getName().toLowerCase().equals("yearavg")
 					&& !f.getName().toLowerCase().equals("yeartot")
 					&& !f.getName().toLowerCase().equals("observation")
-					&& !f.getName().toLowerCase().equals("lastupdatedon");
+					&& !f.getName().toLowerCase().equals("lastupdatedon")
+					&& !f.getName().toLowerCase().equals("overtj")
+					&& !f.getName().toLowerCase().equals("overex");
 		}
 	}
 

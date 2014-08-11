@@ -3,11 +3,24 @@ title:'AcademicYearDevisions' /}
 <div id="contentListing">
 	<p id="crudListAdd">
 	#{deadbolt.restrict
-		roles:[['SUPERADMIN'],['HEADTEACHER']]}
+		roles:[['HEADTEACHER']]}
 		<a href="@{AcademicYearDevisions.addNew()}">&{'addNew'}</a>
 		#{/deadbolt.restrict}
 	</p>
 	#{if results != null && results?.size()>0}
+	
+	
+	<table>
+		<tr>
+			<td>
+				<h2 id="crudListTitle">
+					#{if results != null && results?.size()>0} &{'totalAccademicYearsDiv'}:<span>${results?.size()}</span>
+					#{/if}
+				</h2>
+			</td>
+			
+		</tr>
+	</table>
 	<table
 		id="accYearDevList"
 		style="overflow: auto;"
@@ -18,7 +31,7 @@ title:'AcademicYearDevisions' /}
 				<th>&{'devisionLabel'}</th>
 				<th>&{'startAt'}</th>
 				<th>&{'endAt'}</th>
-				<th>&{'createdBy'}</th>
+				<th>&{'createdBy'}</th><th>&{'school'}</th>
 				<th colspan="2">&{'createdOn'}&nbsp;&nbsp;</th>
 			</tr>
 		</thead>
@@ -28,7 +41,7 @@ title:'AcademicYearDevisions' /}
 			<td>${accYearDev?.devisionLabel}</td>
 			<td>${accYearDev?.startAt}</td>
 			<td>${accYearDev?.endAt}</td>
-			<td>${accYearDev?.createdBy?.username}</td>
+			<td>${accYearDev?.createdBy?.username}</td><td>${accYearDev?.accademicYear?.school?.schoolName}</td>
 			<td>${accYearDev?.createdOn}</td>
 			<td><span class="crudListEdit"><a
 					href="@{AcademicYearDevisions.show(accYearDev?.id,'Editing')}"
@@ -38,7 +51,7 @@ title:'AcademicYearDevisions' /}
 		</tr>
 		#{/paginate.list}
 		<tr>
-			<td colspan="7">#{paginate.controls items:results /}
+			<td colspan="8">#{paginate.controls items:results /}
 				#{paginate.summary items:results/}</td>
 		</tr>
 		#{/if} #{else}

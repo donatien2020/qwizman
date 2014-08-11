@@ -10,6 +10,7 @@ import org.h2.constant.SysProperties;
 
 import controllers.deadbolt.Deadbolt;
 import models.AcademicYearDevision;
+import models.AccademicYear;
 import models.ApplicationRole;
 import models.Classe;
 import models.Operator;
@@ -136,31 +137,60 @@ public class Operators extends Controller {
 
 	public static List<Operator> getStudentsList() {
 		List<Operator> paginator = null;
-		Operator currentUser = Operators.getCurrentUser();
+		try {
+			Operator currentUser = Operators.getCurrentUser();
 
-		if (currentUser != null
-				&& currentUser.typeOf.equals(UserType.SUPERADMIN.getUserType())
-				&& currentUser.school == null) {
-			paginator = Operator.find("typeOf=? ",
-					UserType.STUDENT.getUserType()).fetch();
-		} else if (currentUser != null
-				&& currentUser.school == null
-				&& (currentUser.typeOf.equals(UserType.ADMIN.getUserType()) || currentUser.typeOf
-						.equals(UserType.REPRESENTATOR.getUserType())))
-			paginator = Operator.find("typeOf=? AND createdBy=? ",
-					UserType.STUDENT.getUserType(), currentUser).fetch();
-		else if (currentUser != null
-				&& currentUser.school != null
-				&& currentUser.typeOf
-						.equals(UserType.HEADTEACHER.getUserType()))
-			paginator = Operator.find("school=? AND typeOf=?",
-					currentUser.school, UserType.STUDENT.getUserType()).fetch();
-		else if (currentUser != null && currentUser.school != null
-				&& currentUser.typeOf.equals(UserType.TEACHER.getUserType()))
-			paginator = Operator.find("school=? AND typeOf=? AND createdBy=? ",
-					currentUser.school, UserType.STUDENT.getUserType(),
-					currentUser).fetch();
+			if (currentUser != null
+					&& currentUser.typeOf.equals(UserType.SUPERADMIN
+							.getUserType()) && currentUser.school == null) {
+				paginator = Operator.find("typeOf=? ",
+						UserType.STUDENT.getUserType()).fetch();
+			} else if (currentUser != null
+					&& currentUser.school == null
+					&& (currentUser.typeOf.equals(UserType.ADMIN.getUserType()) || currentUser.typeOf
+							.equals(UserType.REPRESENTATOR.getUserType())))
+				paginator = Operator.find("typeOf=? AND createdBy=? ",
+						UserType.STUDENT.getUserType(), currentUser).fetch();
+			else if (currentUser != null
+					&& currentUser.school != null
+					&& currentUser.typeOf.equals(UserType.HEADTEACHER
+							.getUserType()))
+				paginator = Operator.find("school=? AND typeOf=?",
+						currentUser.school, UserType.STUDENT.getUserType())
+						.fetch();
+			else if (currentUser != null
+					&& currentUser.school != null
+					&& currentUser.typeOf
+							.equals(UserType.TEACHER.getUserType()))
+				paginator = Operator.find(
+						"school=? AND typeOf=? AND createdBy=? ",
+						currentUser.school, UserType.STUDENT.getUserType(),
+						currentUser).fetch();
+		} catch (Exception e) {
+		}
 		return paginator;
+	}
+
+	public static List<Operator> getNotAssigndStudentsList() {
+		List<Operator> students = null;
+		try {
+			Operator currentUser = Operators.getCurrentUser();
+			if (currentUser != null) {
+				AccademicYear accYear = AccademicYears.getCurrentYear();
+				if (accYear != null) {
+					EntityManager em = JPA.em();
+					students = em
+							.createQuery(
+									"select DISTINCT op from Operator op where op NOT IN (select DISTINCT sc.student from StudentClasse sc where (sc.accademicYear=:accYear OR sc.accademicYear IS NULL)) AND op.typeOf='STUDENT' AND op.school=:school ORDER BY op.firstName ASC LIMIT 100")
+							.setParameter("accYear", accYear)
+							.setParameter("school", currentUser.school)
+							.getResultList();
+				}
+			}
+		} catch (Exception e) {
+
+		}
+		return students;
 	}
 
 	public static void addNew(String pageParam) {
@@ -176,10 +206,11 @@ public class Operators extends Controller {
 		Operator user = null;
 		List<ApplicationRole> roles = null;
 		List<School> schools = new ArrayList<School>();
+		try {
 		schools.add(new School("", "", "", "Select School", "", "", "", "", "",
 				"", "", null));
 		schools.addAll(getSchools());
-		try {
+		
 			if (Utils.isLong(id)) {
 				user = Operator.findById(Long.parseLong(id));
 				roles = getRoles(msg);
@@ -380,7 +411,7 @@ public class Operators extends Controller {
 					.getCurrentDivision();
 			List<StudentClasse> stds = em
 					.createQuery(
-							"select ts from StudentClasse ts where ts.classe in (:classes) and ts.accademicYearDevision=:devision")
+							"select ts from StudentClasse ts where ts.classe IN (:classes) and ts.accademicYearDevision=:devision")
 					.setParameter("classes", classes)
 					.setParameter("devision", division).getResultList();
 			for (StudentClasse student : stds)

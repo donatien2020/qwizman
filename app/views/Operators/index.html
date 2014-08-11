@@ -10,29 +10,22 @@ title:'Loyalty Users' /}
 			<td>
 				<h2 id="crudListTitle">
 					&{'totalUsers'}:<span>${results.size()}</span>
-				</h2></td>
-			<td>&nbsp;<input
-				type="text"
-				name="search"
-				class="search rounded"
-				value="Search"
-				id="search"
-				onkeyup="getUsers(this);"
-			/></td>
+				</h2>
+			</td>
+			<td>&nbsp;<input type="text" name="search"
+				class="search rounded" value="Search" id="search"
+				onkeyup="getUsers(this);" /></td>
 		</tr>
 	</table>
-	<table
-		id="operatoList"
-		style="overflow: auto;"
-	>
+	<table id="operatoList" style="overflow: auto;">
 		<thead>
 			<tr>
-				<th>&{'username'}
-				</th>
+				<th>&{'username'}</th>
 				<th>&{'firstName'}</th>
 				<th>&{'lastName'}</th>
 				<th>&{'emailAddress'}</th>
 				<th>&{'phoneNumber'}</th>
+				<th>&{'school'}</th>
 				<th colspan="2">&{'role'}&nbsp;</th>
 			</tr>
 		</thead>
@@ -43,18 +36,16 @@ title:'Loyalty Users' /}
 			<td>${user?.lastName}</td>
 			<td>${user?.emailAddress}</td>
 			<td>${user?.phoneNumber}</td>
+			<td>${user?.school?.schoolName}</td>
 			<td>${user?.role?.name}</td>
 			<td><span class="crudListEdit"><a
-					href="@{Operators.show(user.id,'Editing')}"
-				>&{'edit'}</a>
-			</span>
-			</td>
+					href="@{Operators.show(user.id,'Editing')}">&{'edit'}</a> </span></td>
 		</tr>
 		#{/paginate.list} #{/if} #{else}
 		<h1>&{'nouser'}</h1>
 		#{/else}
 		<tr>
-			<td colspan="7">#{paginate.controls items:results /}
+			<td colspan="8">#{paginate.controls items:results /}
 				#{paginate.summary items:results/}</td>
 		</tr>
 	</table>

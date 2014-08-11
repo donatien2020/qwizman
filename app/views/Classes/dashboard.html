@@ -96,7 +96,7 @@ title:'Class View' /}
 					#{/deadbolt.restrict}
 					<tr>
 						<td><p id="crudListAdd">
-								<a href="@{Courses.index()}">Courses</a>
+								<a href="@{Classes.getMyClassCourses(classe?.id)}">Courses</a>
 							</p>
 						</td>
 					</tr>
@@ -136,7 +136,7 @@ title:'Class View' /}
 					id="courseId"
 					name="courseId"
 				>
-						<option value="">Choose Course</option> #{list items:classes,
+						<option value="">Choose Course</option> #{list items:courses,
 						as:'course'}
 						<option value="${course.id}">${course}</option> #{/list}
 				</select>
@@ -178,7 +178,7 @@ title:'Class View' /}
 				>
 						<option value="">Choose Student</option> #{list items:students,
 						as:'student'}
-						<option value="${student.id}">${student}</option> #{/list}
+						<option value="${student.id}">${student.firstName}</option> #{/list}
 				</select>
 				</td>
 			</tr>

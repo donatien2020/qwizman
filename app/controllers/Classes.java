@@ -68,13 +68,15 @@ public class Classes extends Controller {
 
 	public static List<Classe> getTeacherClasses(Operator teacher) {
 		List<Classe> classes = new ArrayList<Classe>();
-		try {			
+		try {
 			EntityManager em = JPA.em();
-			classes=em
-			.createQuery(
-					"select DISTINCT ts.classe from TeacherClassCourse ts where ts.teacher=:teacher and ts.accademicYearDevision=:devision")
-			.setParameter("teacher", teacher)
-			.setParameter("devision", AcademicYearDevisions.getCurrentDivision()).getResultList();
+			classes = em
+					.createQuery(
+							"select DISTINCT ts.classe from TeacherClassCourse ts where ts.teacher=:teacher and ts.accademicYearDevision=:devision")
+					.setParameter("teacher", teacher)
+					.setParameter("devision",
+							AcademicYearDevisions.getCurrentDivision())
+					.getResultList();
 		} catch (Exception e) {
 
 		}
@@ -103,27 +105,32 @@ public class Classes extends Controller {
 
 	public static void dashboard(String id) {
 		String msg = "Class Dashboard";
-		List<Operator> techers = Operators.getTeachersList();
-		List<Operator> students = Operators.getStudentsList();
-		List<Course> classes = Courses.getCourses();
+		List<Operator> techers = null;
+		List<Operator> students = null;
+		List<Course> courses = null;
 		Classe classe = null;
 		try {
+			techers = Operators.getTeachersList();
+			students = Operators.getNotAssigndStudentsList();
+			courses = Courses.getCourses();
 			if (Utils.isLong(id)) {
 				classe = Classe.findById(Long.parseLong(id));
+				if (classe != null)
+					courses = Courses.getNotAssignedCoursesByClasse(classe);
 				msg = "Class " + classe.fullName + " Dashbord";
 			}
 		} catch (Exception e) {
 		}
 		render("Classes/dashboard.html", classe, msg, techers, students,
-				classes);
+				courses);
 	}
 
 	public static void getStudenClass() {
-		Classe classe =  null;
+		Classe classe = null;
 		String msg = "Your Class Room Is Ready !";
 		try {
 			Operator student = Operators.getCurrentUser();
-			classe =  getStudentClasse(student);
+			classe = getStudentClasse(student);
 		} catch (Exception e) {
 		}
 		render("Classes/dashboard.html", classe, msg);
@@ -132,7 +139,7 @@ public class Classes extends Controller {
 	public static Classe getStudentClasse(Operator student) {
 		Classe classe = null;
 		try {
-			
+
 			if (student != null && student.school != null
 					&& student.role.name.equals(UserRole.STUDENT.getUserRole())) {
 				AcademicYearDevision division = AcademicYearDevisions
@@ -253,8 +260,9 @@ public class Classes extends Controller {
 				Operator student = Operator.findById(Long.parseLong(studentId));
 				if (division != null && classe != null && student != null) {
 					StudentClasse studentClassExist = StudentClasse
-							.find("student=? and classe=? and accademicYearDevision=?",
-									student, classe, division).first();
+							.find("student=? and classe=? and (accademicYear=? or accademicYear is null)",
+									student, classe, division.accademicYear)
+							.first();
 					if (studentClassExist == null) {
 						StudentClasse studentClass = new StudentClasse(student,
 								classe,
@@ -317,16 +325,19 @@ public class Classes extends Controller {
 				if (division != null && classe != null && teacher != null
 						&& course != null) {
 					TeacherClassCourse teacherClassExist = TeacherClassCourse
-							.find("teacher=? and classe=? and course=? and accademicYearDevision=?",
-									teacher, classe, course, division).first();
+							.find("classe=? and course=? and (accademicYear=? or accademicYear is null)",
+									classe, course, division.accademicYear)
+							.first();
 					if (teacherClassExist == null) {
 						TeacherClassCourse teacherClassCourse = new TeacherClassCourse(
-								teacher, classe, course, division,
+								teacher, classe, course,
+								division.accademicYear, division,
 								Operators.getCurrentUser());
 						teacherClassCourse = teacherClassCourse.save();
 						if (teacherClassCourse != null
 								&& teacherClassCourse.teacher != null)
-							msg = "Teacher successifully added";
+							msg = "Teacher And Course successifully added to this Class :"
+									+ classe.fullName;
 						else
 							msg = "This Class Is Empty";
 					} else
@@ -342,6 +353,48 @@ public class Classes extends Controller {
 		renderJSON(new CustomerException(msg));
 	}
 
-	public static void getMyClassCourses() {
+	public static void getMyClassCourses(String classeid) {
+		List<Course> courses = new ArrayList<Course>();
+
+		ValuePaginator results = null;
+
+		try {
+			Operator user = Operators.getCurrentUser();
+			if (user != null) {
+				Classe classe = Classe.findById(Long.parseLong(classeid));
+				AcademicYearDevision division = AcademicYearDevisions
+						.getCurrentDivision();
+				EntityManager em = JPA.em();
+				if (user.typeOf.equals(UserType.HEADTEACHER.getUserType())) {
+					courses = em
+							.createQuery(
+									"select DISTINCT ts.course from TeacherClassCourse ts where ts.classe=:classe and (ts.accademicYear=:accYear or ts.accademicYear is null)")
+							.setParameter("classe", classe)
+							.setParameter("accYear", division.accademicYear)
+							.getResultList();
+				} else if (user.typeOf.equals(UserType.TEACHER.getUserType())) {
+					courses = em
+							.createQuery(
+									"select DISTINCT ts.course from TeacherClassCourse ts where ts.classe=:classe and ts.teacher=:teacher and (ts.accademicYear=:accYear or ts.accademicYear is null)")
+							.setParameter("classe", classe)
+							.setParameter("teacher", user)
+							.setParameter("accYear", division.accademicYear)
+							.getResultList();
+				}
+
+				if (courses != null && courses.size() > 0) {
+					results = new ValuePaginator(courses);
+					results.setPageSize(10);
+					results.setBoundaryControlsEnabled(true);
+					results.setPagesDisplayed(0);
+				}
+			}
+
+		} catch (Exception e) {
+
+		}
+
+		render("Courses/index.html", results);
+
 	}
 }

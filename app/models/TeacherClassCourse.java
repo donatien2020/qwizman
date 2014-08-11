@@ -28,6 +28,8 @@ public class TeacherClassCourse extends Model {
 	@ManyToOne
 	@NotNull
 	public AcademicYearDevision accademicYearDevision;
+	@ManyToOne
+	public AccademicYear accademicYear;
 	public Date createdOn;
 	@ManyToOne
 	public Operator creator;
@@ -38,11 +40,12 @@ public class TeacherClassCourse extends Model {
 	public TeacherClassCourse() {
 	}
 
-	public TeacherClassCourse(Operator teacher, Classe classe, Course course,
+	public TeacherClassCourse(Operator teacher, Classe classe, Course course,AccademicYear accademicYear,
 			AcademicYearDevision accademicYearDevision, Operator creator) {
 		this.teacher = teacher;
 		this.classe = classe;
 		this.course = course;
+		this.accademicYear=accademicYear;
 		this.accademicYearDevision = accademicYearDevision;
 		this.creator = creator;
 		this.status=TeacherStatus.PERMANANTRYACTIVE.getTeacherStatus();
