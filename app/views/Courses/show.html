@@ -21,6 +21,21 @@
 					<td><textarea  name="content" id="content"> ${course?.content}</textarea><span id="contentError"
 						class="error">#{error 'content' /}</span></td>
 				</tr>
+				#{deadbolt.restrict
+				roles:[['HEADTEACHER']]}
+				<tr>
+					<td>&{'overTj'}<font size="2" color="red">*</font>:
+					</td>
+					<td><input   name="overTj" id="overTj" type="text" value="${course?.overTj}"/> <span id="overTjError"
+						class="error">#{error 'overTj' /}</span></td>
+				</tr>
+				<tr>
+					<td>&{'overEx'}<font size="2" color="red">*</font>:
+					</td>
+					<td><input  name="overEx" id="overEx" type="text" value="${course?.overEx}"/> <span id="overExError"
+						class="error">#{error 'overEx' /}</span></td>
+				</tr>
+				 #{/deadbolt.restrict}
 				<tr>
 					<td colspan="2"><input type="submit" name="editCourse"
 					value="Modify"></td>

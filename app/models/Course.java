@@ -1,5 +1,6 @@
 package models;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +23,6 @@ import play.modules.search.Indexed;
 @Entity
 @Table(name = "scool_course")
 /**
- * 
  * @author donatien
  *Each school will define its own courses
  */
@@ -33,8 +33,10 @@ public class Course extends Model {
 	@Required
 	@NotNull
 	public String name;
+	public BigDecimal overTj;
+	public BigDecimal overEx;
 	@NotNull
-	@Column(columnDefinition="TEXT", name="content_c")
+	@Column(columnDefinition = "TEXT", name = "content_c")
 	public String content;
 	@ManyToOne
 	@NotNull
@@ -48,19 +50,20 @@ public class Course extends Model {
 	public Date createdOn;
 	@ManyToOne
 	public Operator creator;
-
 	public Course() {
 	}
-
 	public Course(String code, String name, String content, School school,
-			Operator creator) {
+			BigDecimal overTj,BigDecimal overEx,Operator creator) {
 		this.code = code;
 		this.name = name;
 		this.content = content;
 		this.school = school;
+		this.overTj = overTj;
+		this.overEx = overEx;
 		this.creator = creator;
 		this.createdOn = new Date();
 	}
+
 	@Override
 	public String toString() {
 		return this.name;

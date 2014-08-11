@@ -32,11 +32,12 @@ public class StudentClasse extends Model {
 	// when an accademic year is closed it load all student, teachers with the
 	// same status
 	public AcademicYearDevision accademicYearDevision;
+	@ManyToOne
+	public AccademicYear accademicYear;
 	public Date lastUpdateOn;
 
 	public StudentClasse() {
 	}
-
 	public StudentClasse(Operator student, Classe classe, String status,
 			Operator creator, AcademicYearDevision accademicYearDevision) {
 		this.status = status;
@@ -45,6 +46,8 @@ public class StudentClasse extends Model {
 		this.creator = creator;
 		this.lastUpdatedBy = creator;
 		this.lastUpdateOn = new Date();
+		if (accademicYearDevision != null)
+			this.accademicYear = accademicYearDevision.accademicYear;
 		this.accademicYearDevision = accademicYearDevision;
 	}
 }

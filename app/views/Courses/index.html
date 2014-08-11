@@ -2,7 +2,7 @@
 title:'Courses' /}
 <div id="contentListing">
 	#{deadbolt.restrict
-	roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER']]}
+	roles:[['HEADTEACHER']]}
 	<p id="crudListAdd">
 		<a href="@{Courses.addNew()}">&{'addNew'}</a>
 	</p>
@@ -34,7 +34,7 @@ title:'Courses' /}
 			<tr>
 				<th>&{'code'}</th>
 				<th>&{'name'}</th>
-				<th>&{'creator'}</th>
+				<th>&{'creator'}</th><th>&{'school'}</th>
 				<th colspan="2">&{'createdOn'}</th>
 			</tr>
 		</thead>
@@ -43,11 +43,12 @@ title:'Courses' /}
 			<td>${course?.code}</td>
 			<td><a href="@{Courses.dashboard(course?.id)}">${course?.name}</a>
 			</td>
-			<td>${course?.creator.username}</td>
+			<td>${course?.creator.username}</td><td>${course?.school?.schoolName}</td>
 			<td>${course?.createdOn}</td>
-			<td><span class="crudListEdit"><a
+			<td>#{deadbolt.restrict
+				roles:[['HEADTEACHER'],['TEACHER']]}<span class="crudListEdit"><a
 					href="@{Courses.show(course?.id,'Editing')}"
-				>Edit</a> </span>
+				>Edit</a> </span>#{/deadbolt.restrict}
 			</td>
 		</tr>
 		#{/paginate.list}

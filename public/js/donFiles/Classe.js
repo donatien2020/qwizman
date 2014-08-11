@@ -57,7 +57,10 @@ function loadClassStudents(){
 	    success : function(data){
 	    	if(data.length>0)
 	    	 for(var i in data){
-	     	tableRows=tableRows+"<tr><td>"+data[i].student.username+""+data[i].student.firstName+"</td><td>"+data[i].student.lastName+"</td><td>"+data[i].student.emailAddress+"</td></tr>";
+	    		 if(i==0){
+		             tableRows=tableRows+"<tr><th> Username   First name</th><th>Last Name</th><th>E-mail Address</th></tr>";
+		    		 }
+	     	     tableRows=tableRows+"<tr><td>"+data[i].student.username+"&nbsp;&nbsp;&nbsp;"+data[i].student.firstName+"</td><td>"+data[i].student.lastName+"</td><td>"+data[i].student.emailAddress+"</td></tr>";
 	           }
 	  },error:function(e){
 		  alert("Error  ?"+JSON.stringify(e));
@@ -83,7 +86,6 @@ function addStudentToClass(event){
 	});
 	}
 }
-
 function getClassTechers(){
 	$("#teachersDialog").dialog("open");
 	loadClassTeacherCourses();
@@ -99,7 +101,11 @@ function loadClassTeacherCourses(){
 	    success : function(data){
 	    	if(data.length>0)
 	    	 for(var i in data){
-	     	tableRows=tableRows+"<tr><td>"+data[i].teacher.username+""+data[i].teacher.firstName+"</td><td>"+data[i].teacher.lastName+"</td><td>"+data[i].teacher.emailAddress+"</td><td>"+data[i].course.code+"</td><td>"+data[i].course.name+"</td></tr>";
+	    		 if(i==0){
+		           tableRows=tableRows+"<tr><th colspan=\"3\">Teacher</th><th colspan=\"2\">Course</th></tr>";
+	               tableRows=tableRows+"<tr><td> Username ; First name</td><td>Last Name</td><td>E-mail Address</td><td> Code</td><td> Name</td></tr>";
+	    		 }
+	    		 tableRows=tableRows+"<tr><td>"+data[i].teacher.username+""+data[i].teacher.firstName+"</td><td>"+data[i].teacher.lastName+"</td><td>"+data[i].teacher.emailAddress+"</td><td>"+data[i].course.code+"</td><td>"+data[i].course.name+"</td></tr>";
 	           }
 	  },error:function(e){
 		  alert("Error  ?"+JSON.stringify(e));

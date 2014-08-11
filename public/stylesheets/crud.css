@@ -459,13 +459,6 @@ ul li:hover {
     animation-name:slidein;
     
 }
-
-.error {
-	color: red;
-	font-size: 10px;
-	font-style: oblique;
-}
-
 .valid {
 	color: green;
 	font-size: 10px;

@@ -78,6 +78,7 @@ PUT     /courses/create                               		Courses.create
 GET     /courses/dashboard                            		Courses.dashboard
 GET     /courses/dashboard/{id}                       		Courses.dashboard
 GET     /courses/modifyCourse                  		        Courses.modifyCourse
+GET     /courses/getMyClassCourses                          Courses.Courses.getMyClassCourses
 GET     ${ctx}/courses/show/{id}/modify                     Courses.show
 GET     ${ctx}/courses/getCoursesByCriterion         		Courses.getCoursesByCriterion
 #EVALUATIONS Routes Normal Call

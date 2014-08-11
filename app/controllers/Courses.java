@@ -1,16 +1,22 @@
 package controllers;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import com.sun.org.apache.bcel.internal.generic.LSTORE;
 
 import models.AcademicYearDevision;
+import models.AccademicYear;
 import models.Classe;
 import models.Course;
 import models.Operator;
 import models.School;
+import models.StudentClasse;
 import models.TeacherClassCourse;
+import play.db.jpa.JPA;
 import play.modules.paginate.ValuePaginator;
 import play.mvc.Controller;
 import utils.helpers.CustomerException;
@@ -21,7 +27,6 @@ import utils.helpers.Utils;
 public class Courses extends Controller {
 	public static void index() {
 		ValuePaginator results = null;
-
 		try {
 			List<Course> paginator = getCourses();
 			if (paginator != null && paginator.size() > 0) {
@@ -39,6 +44,9 @@ public class Courses extends Controller {
 	public static List<Course> getCourses() {
 		Operator currentUser = Operators.getCurrentUser();
 		List<Course> paginator = new ArrayList<Course>();
+		AcademicYearDevision accDiv = AcademicYearDevisions
+				.getCurrentDivision();
+
 		if (currentUser != null
 				&& currentUser.typeOf != null
 				&& (currentUser.typeOf
@@ -57,24 +65,28 @@ public class Courses extends Controller {
 		} else if (currentUser != null && currentUser.typeOf != null
 				&& currentUser.typeOf.equals(UserType.TEACHER.getUserType())
 				&& currentUser.school != null) {
-			List<TeacherClassCourse> teacherClasses = TeacherClassCourse.find(
-					"teacher=? and accademicYearDevision=?", currentUser,
-					AcademicYearDevisions.getCurrentDivision()).fetch();
-			for (TeacherClassCourse classe : teacherClasses)
-				paginator.add(classe.course);
-			List<Course> courses = new ArrayList<Course>();
-			courses = Course.find("creator=?", currentUser).fetch();
-			if (courses != null)
-				paginator.addAll(courses);
+			if (accDiv != null) {
+				List<TeacherClassCourse> teacherClasses = TeacherClassCourse
+						.find("teacher=? and (accademicYear=? or accademicYear is null)",
+								currentUser, accDiv.accademicYear).fetch();
+				for (TeacherClassCourse classe : teacherClasses)
+					paginator.add(classe.course);
+				List<Course> courses = new ArrayList<Course>();
+				courses = Course.find("creator=?", currentUser).fetch();
+				if (courses != null)
+					paginator.addAll(courses);
+			}
 		} else if (currentUser != null && currentUser.typeOf != null
 				&& currentUser.typeOf.equals(UserType.STUDENT.getUserType())
 				&& currentUser.school != null) {
-			List<TeacherClassCourse> teacherClasses = TeacherClassCourse.find(
-					"classe=? and accademicYearDevision=?", Classes.getStudentClasse(currentUser),
-					AcademicYearDevisions.getCurrentDivision()).fetch();
-			for (TeacherClassCourse classee : teacherClasses)
-				paginator.add(classee.course);
-		}else
+			if (accDiv != null) {
+				List<TeacherClassCourse> teacherClasses = TeacherClassCourse
+						.find("teacher=? and (accademicYear=? or accademicYear is null)",
+								currentUser, accDiv.accademicYear).fetch();
+				for (TeacherClassCourse classee : teacherClasses)
+					paginator.add(classee.course);
+			}
+		} else
 			paginator = Course.find("creator=?", currentUser).fetch();
 		return paginator;
 	}
@@ -82,29 +94,26 @@ public class Courses extends Controller {
 	public static List<Course> getMyCourses() {
 		Operator currentUser = Operators.getCurrentUser();
 		List<Course> courses = new ArrayList<Course>();
+		AcademicYearDevision accDiv = AcademicYearDevisions
+				.getCurrentDivision();
 		if (currentUser != null
 				&& currentUser.typeOf != null
 				&& currentUser.typeOf
 						.equals(UserType.HEADTEACHER.getUserType())
 				&& currentUser.school != null) {
 			courses = Course.find("school=?", currentUser.school).fetch();
-			List<TeacherClassCourse> courseTeachers = TeacherClassCourse
-					.find("teacher=? and accademicYearDevision=? and course is not null",
-							currentUser,
-							AcademicYearDevisions.getCurrentDivision()).fetch();
 
-			for (TeacherClassCourse tcc : courseTeachers) {
-				courses.add(tcc.course);
-			}
 		} else {
-			List<TeacherClassCourse> courseTeachers = TeacherClassCourse
-					.find("teacher=? and accademicYearDevision=? and course is not null",
-							currentUser,
-							AcademicYearDevisions.getCurrentDivision()).fetch();
+			if (accDiv != null) {
+				List<TeacherClassCourse> teacherClasses = TeacherClassCourse
+						.find("teacher=? and (accademicYear=? or accademicYear is null)",
+								currentUser, accDiv.accademicYear).fetch();
 
-			for (TeacherClassCourse tcc : courseTeachers) {
-				courses.add(tcc.course);
+				for (TeacherClassCourse tcc : teacherClasses) {
+					courses.add(tcc.course);
+				}
 			}
+
 		}
 
 		return courses;
@@ -143,13 +152,20 @@ public class Courses extends Controller {
 		render("Courses/dashboard.html", course, msg);
 	}
 
-	public static void create(String name, String content) {
+	public static void create(String name, String content, String overTj,
+			String overEx) {
 		try {
 			Operator creator = Operators.getCurrentUser();
-			if (creator != null && creator.school != null) {
-				Course course = new Course(Utils.idGenerator(name), name,
-						content, creator.school, creator);
-				course = course.save();
+			if (name != "" && content != "" && creator != null
+					&& creator.school != null && Utils.isDouble(overTj)
+					&& Utils.isDouble(overEx)) {
+				if (Double.parseDouble(overTj) >= 5
+						&& Double.parseDouble(overEx) >= 5) {
+					Course course = new Course(Utils.idGenerator(name), name,
+							content, creator.school, new BigDecimal(overTj),
+							new BigDecimal(overEx), creator);
+					course = course.save();
+				}
 			}
 		} catch (Exception e) {
 		}
@@ -157,12 +173,21 @@ public class Courses extends Controller {
 		index();
 	}
 
-	public static void modifyCourse(String courseId, String name, String content) {
+	public static void modifyCourse(String courseId, String name,
+			String content, String overTj, String overEx) {
 		try {
 			if (Utils.isLong(courseId)) {
 				Course course = Course.findById(Long.parseLong(courseId));
-				if (course != null) {
+				if (course != null && Utils.isDouble(overTj)
+						&& Utils.isDouble(overEx) && name != ""
+						&& content != "") {
+
 					course.name = name;
+					if (Double.parseDouble(overTj) >= 5
+							&& Double.parseDouble(overEx) >= 5) {
+						course.overTj = new BigDecimal(overTj);
+						course.overEx = new BigDecimal(overEx);
+					}
 					course.content = content;
 					course = course.save();
 
@@ -188,6 +213,25 @@ public class Courses extends Controller {
 		} else
 			renderJSON(new CustomerException("Invalid Search Criterion!"));
 
+	}
+
+	public static List<Course> getNotAssignedCoursesByClasse(Classe classe) {
+
+		List<Course> courses = new ArrayList<Course>();
+		try {
+			AccademicYear accYear = AccademicYears.getCurrentYear();
+			if (accYear != null && classe != null) {
+				EntityManager em = JPA.em();
+				courses = em
+						.createQuery(
+								"select DISTINCT crs from Course crs where crs NOT IN (select DISTINCT course.course from TeacherClassCourse course where course.classe =:classe and (course.accademicYear=:accYear OR course.accademicYear IS NULL))")
+						.setParameter("classe", classe)
+						.setParameter("accYear", accYear).getResultList();
+			}
+
+		} catch (Exception e) {
+		}
+		return courses;
 	}
 
 }

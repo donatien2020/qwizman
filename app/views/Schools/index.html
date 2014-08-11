@@ -1,41 +1,33 @@
 #{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
 title:'Schools' /}
-<div id="contentListing"><p id="crudListAdd">
-					<a href="@{Schools.addNew()}">&{'addNew'}</a>
-				</p>
-	#{if results != null && results?.size()>0}<table>
+<div id="contentListing">
+	<p id="crudListAdd">
+		<a href="@{Schools.addNew()}">&{'addNew'}</a>
+	</p>
+	#{if results != null && results?.size()>0}
+	<table>
 		<tr>
 			<td>
 				<h2 id="crudListTitle">
-				#{if results != null && results?.size()>0}
-		
-					&{'totalSchools'}:<span>${results?.size()}</span>
+					#{if results != null && results?.size()>0} &{'totalSchools'}:<span>${results?.size()}</span>
 					#{/if}
 				</h2>
 			</td>
-			<td><input
-					type="text"
-					name="search"
-					class="search rounded"
-					value="Search"
-					id="search"
-					onkeyup="getCompanies(this);"
-				/>
-				</p></td>
+			<td><input type="text" name="search" class="search rounded"
+				value="Search" id="search" onkeyup="getCompanies(this);" /></td>
 		</tr>
 	</table>
-	<table
-		id="schoolList"
-		style="overflow: auto;"
-	>
-		
+	<table id="schoolList" style="overflow: auto;">
+
 		<thead>
 			<tr>
 				<th>&{'name'}</th>
 				<th>&{'firstName'}</th>
 				<th>&{'lastName'}</th>
 				<th>&{'phoneNumber'}</th>
-				<th>&{'type'}</th><th>&{'category'}</th><th colspan="2">&{'createdOn'}&nbsp;&nbsp;</th>
+				<th>&{'type'}</th>
+				<th>&{'category'}</th>
+				<th colspan="2">&{'createdOn'}&nbsp;&nbsp;</th>
 			</tr>
 		</thead>
 		#{paginate.list items:results, as:'school' }
@@ -44,21 +36,21 @@ title:'Schools' /}
 			<td>${school?.ownerFirstName}</td>
 			<td>${school?.ownerLastName}</td>
 			<td>${school?.ownerPhoneNumber}</td>
-			<td>${school?.typeOf}</td><td>${school?.category}</td>
+			<td>${school?.typeOf}</td>
+			<td>${school?.category}</td>
 			<td>${school?.createdOn}</td>
 			<td><span class="crudListEdit"><a
-					href="@{Schools.show(school?.id,'Editing')}"
-				>Edit</a></span></td>
+					href="@{Schools.show(school?.id,'Editing')}">Edit</a></span></td>
 		</tr>
 		#{/paginate.list}
 		<tr>
 			<td colspan="8">#{paginate.controls items:results /}
 				#{paginate.summary items:results/}</td>
 		</tr>
-		
-		 #{/if} #{else}
+
+		#{/if} #{else}
 		<h1>&{'noschool'}</h1>
 		#{/else}
-		
+
 	</table>
 </div>

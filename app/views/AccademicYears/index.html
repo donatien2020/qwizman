@@ -3,7 +3,7 @@ title:'AccademicYears' /}
 <div id="contentListing">
 	<p id="crudListAdd">
 	#{deadbolt.restrict
-		roles:[['SUPERADMIN'],['HEADTEACHER']]}
+		roles:[['HEADTEACHER']]}
 		<a href="@{AccademicYears.addNew()}">Add New</a>
 		#{/deadbolt.restrict}
 	</p>
@@ -18,7 +18,7 @@ title:'AccademicYears' /}
 			</td>
 			<td><input type="text" name="search" class="search rounded"
 				value="Search" id="search" onkeyup="getAccademicYears(this);" />
-				</p></td>
+				</td>
 		</tr>
 	</table>
 	<table id="accYearList" style="overflow: auto;">
@@ -42,11 +42,11 @@ title:'AccademicYears' /}
 			<td>${accYear?.createdOn}</td>
 			<td><span class="crudListEdit"><a
 					href="@{AccademicYears.show(accYear?.id,'Editing')}">Edit</a></span></td>#{deadbolt.restrict
-				roles:[['SUPERADMIN']]} <th>${accYear?.school?.schoolName}</th>#{/deadbolt.restrict}
+				roles:[['SUPERADMIN']]} <td>${accYear?.school?.schoolName}</td>#{/deadbolt.restrict}
 		</tr>
 		#{/paginate.list}
 		<tr>
-			<td colspan="4">#{paginate.controls items:results /}
+			<td colspan="8">#{paginate.controls items:results /}
 				#{paginate.summary items:results/}</td>
 		</tr>
 

@@ -14,11 +14,11 @@ import controllers.ClassSerializer.LocalExclusionStrategy;
 public class CourseSerializer extends Controller implements
 JsonSerializer<Course> {
 @Override
-public JsonElement serialize(Course role, Type type,
+public JsonElement serialize(Course course, Type type,
 	JsonSerializationContext context) {
 Gson gson = new GsonBuilder().setExclusionStrategies(
 		new LocalExclusionStrategy()).create();
-JsonElement elem = gson.toJsonTree(role);
+JsonElement elem = gson.toJsonTree(course);
 JsonObject obj = elem.getAsJsonObject();
 return elem;
 }
@@ -35,10 +35,11 @@ public boolean shouldSkipField(FieldAttributes f) {
 			&& !f.getName().toLowerCase().equals("name")
 			&& !f.getName().toLowerCase().equals("code")
 			&& !f.getName().toLowerCase().equals("content")
+			&& !f.getName().toLowerCase().equals("overtj")
+			&& !f.getName().toLowerCase().equals("overex")
 			&& !f.getName().toLowerCase().equals("fullname")&& !f.getName().toLowerCase().equals("createdby")&& !f.getName().toLowerCase().equals("creator")
 			&& !f.getName().toLowerCase().equals("tuturaire")
 			&& !f.getName().toLowerCase().equals("createdon")&& !f.getName().toLowerCase().equals("username")&& !f.getName().toLowerCase().equals("firstname")&& !f.getName().toLowerCase().equals("lastname");
 }
 }
-
 }

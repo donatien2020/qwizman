@@ -1,7 +1,7 @@
 #{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
 title:'Classes' /}
 <div id="contentListing">
-#{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER']]}
+#{deadbolt.restrict roles:[['HEADTEACHER']]}
 	<p id="crudListAdd">
 		<a href="@{Classes.addNew()}">&{'addNew'}</a>
 	</p>
@@ -38,7 +38,7 @@ title:'Classes' /}
 				<th>&{'physicalAddress'}</th>
 				<th>&{'classlabel'}</th>
 				<th>&{'classlevel'}</th>
-				<th>&{'tuturaire'}</th>
+				<th>&{'tuturaire'}</th><th>&{'school'}</th>
 				<th>&{'createdBy'}</th>
 				<th colspan="2">&{'createdOn'}&nbsp;&nbsp;</th>
 			</tr>
@@ -53,7 +53,7 @@ title:'Classes' /}
 			<td>${classe?.classlabel}</td>
 			<td>${classe?.classlevel}</td>
 			<td>${classe?.tuturaire?.lastName}&nbsp;${classe?.tuturaire?.username}</td>
-			<td>${classe?.creator.username}</td>
+			<td>${classe?.school?.schoolName}</td><td>${classe?.creator.username}</td>
 			<td>${classe?.createdOn}</td>
 			<td>#{deadbolt.restrict roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER']]}<span class="crudListEdit"><a
 					href="@{Classes.show(classe?.id,'Editing')}"
@@ -63,7 +63,7 @@ title:'Classes' /}
 		</tr>
 		#{/paginate.list}
 		<tr>
-			<td colspan="10">#{paginate.controls items:results /}
+			<td colspan="11">#{paginate.controls items:results /}
 				#{paginate.summary items:results/}</td>
 		</tr>
 		#{/if} #{else}
