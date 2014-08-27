@@ -25,7 +25,7 @@ title:'Loyalty Users' /}
 				<th>&{'lastName'}</th>
 				<th>&{'emailAddress'}</th>
 				<th>&{'phoneNumber'}</th>
-				<th>&{'school'}</th>
+				<th>&{'school'}</th><th>&{'on'}</th>
 				<th colspan="2">&{'role'}&nbsp;</th>
 			</tr>
 		</thead>
@@ -37,7 +37,7 @@ title:'Loyalty Users' /}
 			<td>${user?.emailAddress}</td>
 			<td>${user?.phoneNumber}</td>
 			<td>${user?.school?.schoolName}</td>
-			<td>${user?.role?.name}</td>
+			<td>${user?.createdOn}</td><td>${user?.role?.name}</td>
 			<td><span class="crudListEdit"><a
 					href="@{Operators.show(user.id,'Editing')}">&{'edit'}</a> </span></td>
 		</tr>

@@ -1,14 +1,17 @@
 package models;
 import static javax.persistence.CascadeType.PERSIST;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
 import play.data.validation.Email;
 import play.data.validation.Phone;
 import play.data.validation.Required;
@@ -57,6 +60,10 @@ public class School extends Model {
 	public List<AccademicYear> accademicYears = new ArrayList<AccademicYear>();
 	@OneToMany(mappedBy = "school")
 	public List<Evaluation> evaluations = new ArrayList<Evaluation>();
+	@OneToMany(mappedBy = "school")
+	public List<Fault> faults ;
+	@OneToMany(mappedBy = "school")
+	public List<Sanction> sactions ;
 	public School() {
 	}
 	public School(String category, String code, String typeOf, String schoolName,
