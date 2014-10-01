@@ -33,7 +33,7 @@ title:'Students' /}
 				<th>&{'lastName'}</th>
 				<th>&{'emailAddress'}</th>
 				<th>&{'phoneNumber'}</th>
-				<th colspan="2">&{'role'}&nbsp;</th>
+				<th >&{'role'}&nbsp;</th>
 			</tr>
 		</thead>
 		#{paginate.list items:results, as:'user' }
@@ -50,7 +50,7 @@ title:'Students' /}
 		<h1>&{'nouser'}</h1>
 		#{/else}
 		<tr>
-			<td colspan="7">#{paginate.controls items:results /}
+			<td colspan="6">#{paginate.controls items:results /}
 				#{paginate.summary items:results/}</td>
 		</tr>
 	</table>

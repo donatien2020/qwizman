@@ -2,7 +2,7 @@
 <body>
 	<div class="formContainer">
 		<span class="msgAlert" id="msgAlertClass">${msg}</span>
-		<form action="#" method="GET" onsubmit="return checkForm(this);">
+		<form action="modifyFault" method="post" onsubmit="return checkForm(this);">
 			<table>
 <tr>
 				<td colspan="2"><p id="crudListAdd">
@@ -14,59 +14,49 @@
 					</td>
 					<td><input
 						type="hidden"
-						name="classId"
-						id="classId"
-						value="${classe?.id}"
-					><input type="text" name="fullName" id="fullNameIdClass"
-						value="${classe?.fullName}"><span class="error">#{error
-							'name'/}</span></td>
-				</tr>
+						name="faultId"
+						id="faultId"
+						value="${fault?.id}"
+					><tr>
+				<td>&{'name'}<font
+					size="2"
+					color="red"
+				>*</font>:</td>
+				<td><input
+					type="text"
+					name="name"
+					value="${fault?.name}"
+				><span class="error">#{error 'name'/}</span></td>
+			</tr>
+			<tr>
+				<td>&{'description'}<font
+					size="2"
+					color="red"
+				>*</font>:</td>
+				<td><input
+					type="text"
+					name="description"
+					
+					value="${fault?.description}"
+				><span
+					id="descriptionError"
+					class="error"
+				>#{error 'description' /}</span> </td>
+			</tr>
+			<tr>
+				<td>&{'typeOf'}:</td>
+				<td><select name="type">
+						<option value="NORMAL">NORMAL</option>
+						<option value="HIGHT">HIGHT</option>
+						<option value="MIDLE">MIDLE</option>
+				</select><span class="error">#{error 'phoneNumber' /}</span></td>
+			</tr>
 				<tr>
-					<td>&{'emailAddress'}<font size="2" color="red">*</font>:
-					</td>
-					<td><input type="text" name="emailAddress}" id="emailAddressIdClass"
-						value="${classe?.emailAddress}"><span class="error"></span> <span id="emailAddressValid" class="valid"></span></td>
-				</tr>
-				<tr>
-					<td>&{'phoneNumber'}:</td>
-					<td><input type="text" name="phoneNumber" id="phoneNumberIdClass"
-						value="${classe?.phoneNumber}"> <span class="error">#{error
-							'phoneNumber' /}</span></td>
-				</tr>
-				<tr>
-					<td>&{'physicalAddress'}:</td>
-					<td><input type="text" name="physicalAddress" id="physicalAddressIdClass"
-						value="${classe?.physicalAddress}"> <span class="error">#{error
-							'physicalAddress' /}</span></td>
-				</tr>
-
-				<tr>
-					<td>&{'box'}:</td>
-					<td><input type="text" name="box" value="${classe?.box}" id="boxIdClass"><span
-						class="error">#{error 'box' /}</span></td>
-				</tr>
-				<tr>
-					<td>&{'webSite'}:</td>
-					<td><input type="text" name="webSite" id="webSiteIdClass"
-						value="${classe?.webSite}"><span class="error">#{error
-							'webSite' /}</span></td>
-				</tr>
-				<tr>
-					<td>&{'classlabel'}:</td>
-					<td><input type="text" name="classlabel" id="classlabelIdClass"
-						value="${classe?.classlabel}"><span class="error">#{error
-							'classlabel' /}</span></td>
-				</tr>
-				<tr>
-					<td>&{'classlevel'}:</td>
-					<td><input type="text" name="classlevel" id="classlevelIdClass"
-						value="${classe?.classlevel}"><span class="error">#{error
-							'classlevel' /}</span></td>
-				</tr>
-				<tr>
-					<td colspan="2"><a href="#" class="button-link"
-						id="editClasse" onclick="editClass();"><img
-							src="@{'/public/images/add.png'}" height="25" width="25" /></a></td>
+					<td colspan="2"><input
+					type="submit"
+					name="createFault"
+					value="Create"
+				></td>
 				</tr>
 			</table>
 		</form>

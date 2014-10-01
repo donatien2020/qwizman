@@ -82,3 +82,6 @@ formModelCustomer=Customer
 formModelCompany=Company
 formModelProduct=Product
 formModelCard=Card
+displine=Displine
+nofault=No Faults
+totalFaults=Total Faults

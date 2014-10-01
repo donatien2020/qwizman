@@ -185,6 +185,7 @@ roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER'],['
 <li><a href="@{Operators.index()}">&{'operators'}</a></li>
 
 #{deadbolt.restrict roles:[['SUPERADMIN']]}
+<li><a href="@{Faults.index()}">&{'displine'}</a></li>
 <li><a href="@{Operators.getTeachers()}">&{'teachers'}</a></li>
 <li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
 <li><a href="@{Classes.index()}">&{'classes'}</a></li>
@@ -195,6 +196,7 @@ roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER'],['
 #{/deadbolt.restrict}
 <li><a href="#">&{'departments'}</a></li> #{/deadbolt.restrict}
 #{deadbolt.restrict roles:[['HEADTEACHER']]}
+<li><a href="@{Faults.index()}">&{'displine'}</a></li>
 <li><a href="@{Operators.getTeachers()}">&{'teachers'}</a></li>
 <li><a href="@{Operators.getStudents()}">&{'students'}</a></li>
 <li><a href="@{Classes.index()}">&{'classes'}</a></li>
@@ -204,6 +206,7 @@ roles:[['SUPERADMIN'],['ADMIN'],['REPRESENTATOR'],['HEADTEACHER'],['TEACHER'],['
 <li><a href="@{Evaluations.index()}">&{'evaluations'}</a></li>
 #{/deadbolt.restrict} 
 #{deadbolt.restrict roles:[['TEACHER']]}
+<li><a href="@{Faults.index()}">&{'displine'}</a></li>
 <li><a href="@{Operators.getMyStudentsByClass()}">&{'myStudents'}</a></li>
 <li><a href="@{Classes.index()}">&{'classes'}</a></li>
 <li><a href="@{Courses.index()}">&{'courses'}</a></li>

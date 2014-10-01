@@ -1,5 +1,5 @@
 #{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
-title:'Loyalty Users' /}
+title:'BBS Users' /}
 <div id="contentListing">
 	<p id="crudListAdd">
 		<a href="@{Operators.addNew(msg)}">&{'addNew'}</a>&nbsp;
@@ -25,7 +25,8 @@ title:'Loyalty Users' /}
 				<th>&{'lastName'}</th>
 				<th>&{'emailAddress'}</th>
 				<th>&{'phoneNumber'}</th>
-				<th>&{'school'}</th><th>&{'on'}</th>
+				<th>&{'school'}</th>
+				<th>&{'on'}</th>
 				<th colspan="2">&{'role'}&nbsp;</th>
 			</tr>
 		</thead>
@@ -45,7 +46,7 @@ title:'Loyalty Users' /}
 		<h1>&{'nouser'}</h1>
 		#{/else}
 		<tr>
-			<td colspan="8">#{paginate.controls items:results /}
+			<td colspan="9">#{paginate.controls items:results /}
 				#{paginate.summary items:results/}</td>
 		</tr>
 	</table>
