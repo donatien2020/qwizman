@@ -26,9 +26,6 @@ public class Fault extends Model {
 	@ManyToOne
 	public Operator updator;
 	public Date createdOn;
-
-	@OneToMany(mappedBy = "fault")
-	public List<Sanction> sanctions;
 	@OneToMany(mappedBy = "sanction")
 	public List<Displine> displines;
 

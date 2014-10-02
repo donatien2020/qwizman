@@ -85,3 +85,6 @@ formModelCard=Card
 displine=Displine
 nofault=No Faults
 totalFaults=Total Faults
+totalSanctions=Total Sanctions
+sanctions=Sanctions
+chooseSanction=Choose Sanction

@@ -1,19 +1,21 @@
 #{extends 'admin.html' /} #{set title:'Welcome ${user}! ' /} #{set
 title:'Faults' /}
 <div id="contentListing">
-#{deadbolt.restrict roles:[['HEADTEACHER']]}
+	#{deadbolt.restrict roles:[['HEADTEACHER']]}
 	<p id="crudListAdd">
-		<a href="@{Faults.addNew()}">&{'addNew'}</a>
+		<a href="@{Faults.addNew()}">&{'addNew'}</a>||<a
+			href="@{Sanctions.index()}"
+		>&{'sanctions'}</a>
 	</p>
-	#{/deadbolt.restrict}
-	#{if results != null && results?.size()>0}
+	#{/deadbolt.restrict} #{if results != null && results?.size()>0}
 	<table>
 		<tr>
 			<td>
 				<h2 id="crudListTitle">
 					#{if results != null && results?.size()>0} &{'totalFaults'}:<span>${results?.size()}</span>
 					#{/if}
-				</h2></td>
+				</h2>
+			</td>
 			<td><input
 				type="text"
 				name="search"
@@ -21,9 +23,11 @@ title:'Faults' /}
 				value="Search"
 				id="search"
 				onkeyup="getFaults(this);"
-			/>
-				
-			</td>
+			/><input
+				type="text"
+				id="faultIdAddSanction"
+				name="faultIdAddSanction"
+			></td>
 		</tr>
 	</table>
 	<table
@@ -44,19 +48,22 @@ title:'Faults' /}
 		</thead>
 		#{paginate.list items:results, as:'fault' }
 		<tr>
-			
-			<td>${fault?.name}</td>
+			<td><a
+				href="#"
+				rel="${fault?.id}"
+				onclick="addSanctionDialog(this);"
+			>${fault?.name}</a>
+			</td>
 			<td>${fault?.description}</td>
 			<td>${fault?.type}</td>
-			<td>${fault?.sanctions}</td>
+			<td>${fault?.displines}</td>
 			<td>${fault?.school.schoolName}</td>
 			<td>${fault?.creator?.username}</td>
 			<td>${fault?.updator?.username}</td>
 			<td>${fault?.createdOn}</td>
-			<td>#{deadbolt.restrict roles:[['SUPERADMIN'],['HEADTEACHER']]}<span class="crudListEdit"><a
-					href="@{Faults.show(fault?.id,'Editing')}"
-				>Edit</a>
-			</span>#{/deadbolt.restrict}
+			<td>#{deadbolt.restrict roles:[['SUPERADMIN'],['HEADTEACHER']]}<span
+				class="crudListEdit"
+			><a href="@{Faults.show(fault?.id,'Editing')}">Edit</a> </span>#{/deadbolt.restrict}
 			</td>
 		</tr>
 		#{/paginate.list}
@@ -68,4 +75,24 @@ title:'Faults' /}
 		<h1>&{'nofault'}</h1>
 		#{/else}
 	</table>
+	<div id="addSanctionDialogUi">
+		<table>
+			<tr>
+				<td><span id="addSanctionLabel"></span>
+				</td>
+			</tr>
+			<tr>
+				<td><div id="addSanctionDialogUiContent">
+						<table>
+							<tr>
+								<td>&{'chooseSanction'}</td>
+								<td><select id="choseSanction" name="choseSanction" onchange="addSanction(this)"></select>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
 </div>

@@ -3,9 +3,13 @@ package controllers;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
+import models.Displine;
 import models.Fault;
 import models.Sanction;
 import models.Operator;
+import play.db.jpa.JPA;
 import play.modules.paginate.ValuePaginator;
 import play.mvc.Controller;
 import utils.helpers.CustomerException;
@@ -45,19 +49,17 @@ public class Sanctions extends Controller {
 	}
 
 	public static void create(String type, String name, String description,
-			String marks, String fault) {
+			String marks) {
 		try {
 			Operator creator = Operators.getCurrentUser();
-			if (name != "" && description != "" && marks != "" && fault != ""
-					&& creator != null && fault != null
-					&& Utils.isDouble(marks)) {
-				Fault faultt = Fault.findById(Long.parseLong(fault));
-				if (faultt != null) {
-					Sanction sanction = new Sanction(creator.school, faultt,
-							type, name, description, new BigDecimal(marks),
-							creator);
-					sanction = sanction.save();
-				}
+			if (name != "" && description != "" && marks != ""
+					&& creator != null && Utils.isDouble(marks)
+					&& Double.parseDouble(marks) <= 10) {
+
+				Sanction sanction = new Sanction(creator.school, type, name,
+						description, new BigDecimal(marks), creator);
+				sanction = sanction.save();
+
 			}
 
 		} catch (Exception e) {
@@ -66,23 +68,24 @@ public class Sanctions extends Controller {
 	}
 
 	public static void modifySanction(String sanctionId, String type,
-			String name, String description,String marks,String fault) {
+			String name, String description, String marks) {
 		String msg = "Sanction not modified!";
 		try {
+			System.out.println(" marks modifySanction:" + marks);
+
 			if (sanctionId != null && sanctionId != ""
-					&& Utils.isLong(sanctionId)) {
+					&& Utils.isLong(sanctionId) && marks != null
+					&& Utils.isDouble(marks) && Double.parseDouble(marks) <= 10) {
 				Sanction sanction = Sanction.findById(Long
 						.parseLong(sanctionId));
 				if (sanction != null) {
 					Operator creator = Operators.getCurrentUser();
 					if (creator != null) {
-						Fault faultt = Fault.findById(Long.parseLong(fault));
 						sanction.type = type;
 						sanction.name = name;
+						sanction.marks = new BigDecimal(marks);
 						sanction.description = description;
 						sanction.updatedBy = creator;
-						if(faultt!=null)
-							sanction.fault=faultt;
 						sanction = sanction.save();
 						msg = "Sanction Successifully Modified";
 					} else
@@ -91,10 +94,12 @@ public class Sanctions extends Controller {
 					msg = "Sanction Not Found";
 			} else
 				msg = "Sanction Id Is Invalid!";
+			System.out.println("msg :" + msg);
 		} catch (Exception e) {
 			msg = "Internal processing Error :" + e.getMessage();
 		}
-		renderJSON(new CustomerException(msg));
+		System.out.println("msg :" + msg);
+		index();
 	}
 
 	public static void getSanctionsByCriterion(String criterion) {
@@ -110,6 +115,58 @@ public class Sanctions extends Controller {
 			}
 		} else
 			renderJSON(new CustomerException("Invalid Search Criterion!"));
+
+	}
+
+	public static void getAssignableSanctions(String fault) {
+		if (fault != null && !fault.isEmpty() && Utils.isLong(fault)) {
+			try {
+				Operator currentUser = Operators.getCurrentUser();
+				List<Sanction> sanctions = null;
+				Fault foultObj = Fault.findById(Long.parseLong(fault));
+				if (foultObj != null) {
+					EntityManager em = JPA.em();
+					sanctions = em
+							.createQuery(
+									"select DISTINCT sanct from Sanction sanct where sanct NOT IN (select DISTINCT dsplne.sanction from Displine dsplne where dsplne.fault=:fault) AND sanct.school=:school")
+							.setParameter("fault", foultObj)
+							.setParameter("school", currentUser.school)
+							.getResultList();
+					renderJSON(sanctions, new SanctionSerializer());
+				}
+			} catch (Exception e) {
+				renderJSON(new CustomerException(e.getMessage()));
+			}
+		} else
+			renderJSON(new CustomerException("Invalid Search Criterion!"));
+
+	}
+
+	public static void addSanctionToFault(String fault, String sanction) {
+		String msg = "Assignment Failed";
+		if (fault != null && !fault.isEmpty() && sanction != null
+				&& !sanction.isEmpty() && Utils.isLong(sanction)
+				&& Utils.isLong(fault)) {
+			try {
+				Operator currentUser = Operators.getCurrentUser();
+				if (currentUser != null) {
+					Fault foultObj = Fault.findById(Long.parseLong(fault));
+					Sanction sanctionObj = Sanction.findById(Long
+							.parseLong(sanction));
+					if (foultObj != null && sanctionObj != null) {
+						Displine displine = new Displine(foultObj, sanctionObj,
+								currentUser);
+						displine = displine.save();
+					} else
+						msg = "Objects Not Retrievables";
+				} else
+					msg = "Operator Not Found";
+			} catch (Exception e) {
+				msg = "Internal Proccessing Problem :" + e.getMessage();
+			}
+		} else
+			msg = "Invalid data from form !";
+		renderJSON(new CustomerException(msg));
 
 	}
 

@@ -1,5 +1,5 @@
-#{extends '/admin.html' /} #{set title:'Add New Operator' /} #{set
-title:'Add Class' /}
+#{extends '/admin.html' /} #{set title:'Add New Sanction' /} #{set
+title:'Add Sanction' /}
 <div class="formContainer">
 	<form
 		action="create"
@@ -9,116 +9,62 @@ title:'Add Class' /}
 		<table>
 		<tr>
 				<td colspan="2"><p id="crudListAdd">
-						<a>Fill In the Form To Add A New Class</a>
+						<a>Fill In the Form To Add A New Sanction</a>
 					</p></td>
 			</tr>
 			
 			<tr>
-				<td>&{'fullName'}<font
+				<td>&{'name'}<font
 					size="2"
 					color="red"
 				>*</font>:</td>
 				<td><input
 					type="text"
-					name="fullName"
-					value="${flash.fullName}"
+					name="name"
+					value="${flash.name}"
 				><span class="error">#{error 'name'/}</span></td>
 			</tr>
 			<tr>
-				<td>&{'emailAddress'}<font
+				<td>&{'description'}<font
 					size="2"
 					color="red"
 				>*</font>:</td>
 				<td><input
 					type="text"
-					name="emailAddress"
-					id="emailAddress"
-					value="${flash.emailAddress}"
+					name="description"
+					
+					value="${flash.description}"
 				><span
-					id="emailAddressError"
+					id="descriptionError"
 					class="error"
-				>#{error 'description' /}</span> <span
-					id="emailAddressValid"
-					class="valid"
-				></span></td>
+				>#{error 'description' /}</span> </td>
 			</tr>
 			<tr>
-				<td>&{'phoneNumber'}:</td>
-				<td><input
-					type="text"
-					name="phoneNumber"
-					value="${flash.phoneNumber}"
-				> <span class="error">#{error 'phoneNumber' /}</span></td>
+				<td>&{'typeOf'}:</td>
+				<td><select name="type">
+						<option value="NORMAL">NORMAL</option>
+						<option value="HIGHT">HIGHT</option>
+						<option value="MIDLE">MIDLE</option>
+				</select><span class="error">#{error 'phoneNumber' /}</span></td>
 			</tr>
 			<tr>
-				<td>&{'physicalAddress'}:</td>
-				<td><input
-					type="text"
-					name="physicalAddress"
-					value="${flash.physicalAddress}"
-				> <span class="error">#{error 'physicalAddress' /}</span></td>
-			</tr>
-			<tr>
-				<td>&{'box'}:</td>
-				<td><input
-					type="text"
-					name="box"
-					value="${flash.box}"
-				><span class="error">#{error 'box' /}</span></td>
-			</tr>
-			<tr>
-				<td>&{'webSite'}:</td>
-				<td><input
-					type="text"
-					name="webSite"
-					value="${flash.webSite}"
-				><span class="error">#{error 'webSite' /}</span></td>
-			</tr>
-			<tr>
-				<td>&{'classlabel'}:</td>
-				<td><select
-					name="classlabel"
-					id="classlabel"
-				>
-						<option value="A">A</option>
-						<option value="B">B</option>
-						<option value="C">C</option>
-						<option value="D">D</option>
-						<option value="E">E</option>
-						<option value="F">F</option>
-						<option value="CS">CS</option>
-						<option value="ENG">ENG</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>&{'classlevel'}:</td>
-				<td><select
-					name="classlevel"
-					id="classlevel"
-				>
-						<option value="NURSARY">NURSARY</option>
-						<option value="PRIMARY">PRIMARY</option>
-						<option value="ORDINARY">ORDINARY</option>
-						<option value="SECONDARY">SECONDARY</option>
-						<option value="COLLEDGE">COLLEDGE</option>
-						<option value="UNIVERSITY">UNIVERSITY</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>&{'tuturaire'}<font
+				<td>&{'marks'}<font
 					size="2"
 					color="red"
 				>*</font>:</td>
-				<td>#{select 'tuturaire', items: tuturaires, valueProperty:
-					'id', labelProperty: 'lastName',id:'select-Tuturaire' /} <span
+				<td><input
+					type="text"
+					name="marks"
+					value="${flash.marks}"
+				><span
+					id="marksError"
 					class="error"
-				>#{error 'lastName' /}</span>
-				</td>
+				>#{error 'marks' /}</span></td>
 			</tr>
 			<tr>
 				<td colspan="2"><input
 					type="submit"
-					name="createClass"
+					name="createSanctiont"
 					value="Create"
 				></td>
 			</tr>

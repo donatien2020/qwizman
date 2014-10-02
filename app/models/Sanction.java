@@ -21,8 +21,6 @@ public class Sanction extends Model {
 	public String type;
 	public BigDecimal marks;
 	@ManyToOne
-	public Fault fault;
-	@ManyToOne
 	public School school;
 	@ManyToOne
 	public Operator creator;
@@ -35,11 +33,10 @@ public class Sanction extends Model {
 	public Sanction() {
 	}
 
-	public Sanction(School school, Fault fault, String type, String name,
+	public Sanction(School school, String type, String name,
 			String description, BigDecimal marks, Operator creator) {
 		this.createdOn = new Date();
 		this.school = school;
-		this.fault = fault;
 		this.type = type;
 		this.name = name;
 		this.description = description;

@@ -104,4 +104,8 @@ GET     ${ctx}/evaluations/resetAssesment                   Evaluations.resetAss
 GET     ${ctx}/reports/getSchoolReports                     Reports.getSchoolReports
 GET     ${ctx}/reports/getSchoolReportView                  Reports.getSchoolReportView
 GET     ${ctx}/reports/addReportMarks           			Reports.addReportMarks
+#SANCTION FAULTS and DISPLINARY ROUTES
+GET     ${ctx}/sanctions/getAssignableSanctions             Sanctions.getAssignableSanctions
+GET     ${ctx}/sanctions/addSanctionToFault                 Sanctions.addSanctionToFault
+
 

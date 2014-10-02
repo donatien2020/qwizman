@@ -1,5 +1,34 @@
-
 $(function() {
+	$("#addSanctionDialogUi").dialog({
+		overlay : {
+			backgroundColor : "#000",
+			opacity : 0.5
+		},
+		position : {
+			my : "left+100",
+			at : "left top+200",
+			of : window
+		},
+		title : 'Add Sanction Form',
+		autoOpen : false,
+		closeOnEscape : true,
+		height : 'auto',
+		width : 400,
+		modal : true,
+		draggable : true,
+		resizable : true,
+		buttons : {
+			Cancel : function() {
+				$(this).dialog("close");
+			}
+		},
+		close : function() {
+			$(this).dialog("close");
+		}
+	}).dialogExtend({
+		minimizable : true,
+		collapsable : true
+	});
 	$("#schoolReports").dialog({
 		overlay : {
 			backgroundColor : "#000",
@@ -153,18 +182,6 @@ $(function() {
 		minimizable : true,
 		collapsable : true
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	var closeBtn3 = $('.ui-dialog-titlebar-close');
 	closeBtn3
