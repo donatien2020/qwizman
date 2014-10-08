@@ -27,9 +27,9 @@ function loadAssignableSunctions(fault) {
 		},
 		async : false
 	});
-
 }
 function addSanction(event) {
+	alert(event.value);
 	var falut = $("#faultIdAddSanction").val();
 	if (falut != "" && event.value !="") {
 		$.ajax({
@@ -40,9 +40,11 @@ function addSanction(event) {
 				sanction : event.value
 			},
 			success : function(data) {
-			
-			},complet:function(){
-				
+				alert(JSON.stringify(data));
+				$("#addSanctionDialogUi").dialog("close");
+				AutoRefresh(100);			
+				},complet:function(c){
+					alert(JSON.stringify(c));
 			},
 			error : function(e) {
 				alert("Error  ?" + JSON.stringify(e));

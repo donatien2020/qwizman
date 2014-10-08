@@ -42,5 +42,8 @@ public class Displine extends GenericModel {
 		this.addedOn = new Date();
 		this.status = StatusManager.ACTIVE.getStatus();
 	}
-
+	@Override
+	public String toString() {
+		return " <==> "+sanction.name;
+	}
 }

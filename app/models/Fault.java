@@ -42,5 +42,8 @@ public class Fault extends Model {
 		this.updator = creator;
 		this.createdOn = new Date();
 	}
-
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

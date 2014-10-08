@@ -45,4 +45,9 @@ public class Sanction extends Model {
 		this.updatedBy = creator;
 
 	}
+
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

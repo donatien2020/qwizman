@@ -150,13 +150,24 @@ public class Sanctions extends Controller {
 			try {
 				Operator currentUser = Operators.getCurrentUser();
 				if (currentUser != null) {
+					System.out.println(" ================================3");
+
 					Fault foultObj = Fault.findById(Long.parseLong(fault));
 					Sanction sanctionObj = Sanction.findById(Long
 							.parseLong(sanction));
+					System.out.println(" ================================3 4");
+
 					if (foultObj != null && sanctionObj != null) {
-						Displine displine = new Displine(foultObj, sanctionObj,
-								currentUser);
-						displine = displine.save();
+						try {
+							Displine displine = new Displine(foultObj,
+									sanctionObj, currentUser);
+							displine = displine.save();
+							if (displine.isPersistent())
+								msg = "Assignment Passed Ok";
+						} catch (Exception e) {
+							msg = "Internal Processing Error :"
+									+ e.getMessage();
+						}
 					} else
 						msg = "Objects Not Retrievables";
 				} else
