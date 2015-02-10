@@ -159,12 +159,17 @@ public class Sanctions extends Controller {
 
 					if (foultObj != null && sanctionObj != null) {
 						try {
+							if (!foultObj.isPersistent()
+									|| !sanctionObj.isPersistent())
+								System.out
+										.println(" ok mukemure ikibazo ................");
 							Displine displine = new Displine(foultObj,
 									sanctionObj, currentUser);
 							displine = displine.save();
 							if (displine.isPersistent())
 								msg = "Assignment Passed Ok";
 						} catch (Exception e) {
+							
 							msg = "Internal Processing Error :"
 									+ e.getMessage();
 						}

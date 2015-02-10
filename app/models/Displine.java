@@ -17,7 +17,7 @@ import utils.helpers.StatusManager;
 
 @Indexed
 @Entity
-@Table(name = "core_displine")
+@Table(name = "core_displinee")
 public class Displine extends GenericModel {
 	@Id
 	@GeneratedValue(generator = "system-uuid")
@@ -44,6 +44,6 @@ public class Displine extends GenericModel {
 	}
 	@Override
 	public String toString() {
-		return " <==> "+sanction.name;
+		return " => "+sanction.name;
 	}
 }
